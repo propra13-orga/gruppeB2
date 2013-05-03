@@ -1,12 +1,9 @@
 
-public class Start {
-
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+public class Start 
+{
+	public static void main(String[] args) 
+	{
+		Game_Field start = new Game_Field();
 	}
 
 }
