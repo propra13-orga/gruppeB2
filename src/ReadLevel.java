@@ -67,7 +67,7 @@ public class ReadLevel
 		}
 		catch(IOException e)
 		{
-			System.out.print(""+lines.get(1));
+			return null;
 		}
 		
 		if(!quad)
