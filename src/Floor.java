@@ -1,7 +1,6 @@
 
 public class Floor extends Block
 {
-	private boolean hidden;
 	private double rand;
 	private double posX, posY;
 	
@@ -25,16 +24,6 @@ public class Floor extends Block
 			StdDraw.picture(posX, posY, "images\\arena\\Ground_Tile_"+3+".png");
 		else
 			StdDraw.picture(posX, posY, "images\\arena\\Ground_Tile_"+4+".png");
-	}
-	
-	public boolean isHidden()
-	{
-		return hidden;
-	}
-	
-	public void setHidden(boolean status)
-	{
-		hidden = status;
 	}
 	
 	public boolean isSolid()

@@ -1,20 +1,25 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
 
 public class GameField extends JFrame
 {
+	private static final long serialVersionUID = 9136636406585847854L;
+	
 	char [][] feld;
 	Block[][] field;
 	
 	ReadLevel lvl;
 	
 	int rows, columns;
+	
+	int playerX, playerY;
 			
 	public GameField()
 	{
 		lvl = new ReadLevel();
 		
-		this.loadLevel("lvl2.txt");
+		this.loadLevel("lvl1.txt");
 		this.initField();
 		this.run();
 	}
@@ -63,6 +68,9 @@ public class GameField extends JFrame
 					field[i][j] = new Stairs(posX, posY);
 			}
 		}
+		
+		playerX = 16;
+		playerY = 16;
 	}
 	
     /**
@@ -94,6 +102,18 @@ public class GameField extends JFrame
 			{
 				StdDraw.clear(StdDraw.BLACK);
 				this.drawField();
+				
+				StdDraw.setPenColor(StdDraw.RED);
+				StdDraw.filledCircle(playerX, playerY, 16);
+				
+				if(StdDraw.isKeyPressed(KeyEvent.VK_RIGHT))
+					playerX = playerX + 5;
+				else if(StdDraw.isKeyPressed(KeyEvent.VK_LEFT))
+					playerX = playerX - 5;
+				if(StdDraw.isKeyPressed(KeyEvent.VK_UP))
+					playerY = playerY + 5;
+				else if(StdDraw.isKeyPressed(KeyEvent.VK_DOWN))
+					playerY = playerY - 5;
 			}
 			StdDraw.show();
 		}

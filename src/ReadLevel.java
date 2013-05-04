@@ -24,7 +24,7 @@ public class ReadLevel
      */
 	public char [][] readLevel(String file)
 	{
-		ArrayList lines = new ArrayList();
+		ArrayList<String> lines = new ArrayList<String>();
 		String [] linesString;
 		
 		int l = 0;
