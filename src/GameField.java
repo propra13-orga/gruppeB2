@@ -13,6 +13,7 @@ public class GameField extends JFrame
 	
 	int rows, columns;
 	
+	Player player1;
 	int playerX, playerY;
 			
 	public GameField()
@@ -66,11 +67,15 @@ public class GameField extends JFrame
 					field[i][j] = new Door(posX, posY);
 				else if(feld[i][j] == 't'||feld[i][j] == 'T')
 					field[i][j] = new Stairs(posX, posY);
+				else if(feld[i][j] == 's'||feld[i][j] == 'S')
+				{
+					field[i][j] = new Floor(posX, posY);
+					player1 = new Player(posX, posY);
+					playerX = posX;
+					playerY = posY;
+				}
 			}
 		}
-		
-		playerX = 16;
-		playerY = 16;
 	}
 	
     /**
@@ -96,24 +101,54 @@ public class GameField extends JFrame
      */
 	public void run()
 	{		
+		boolean noMove;
+		
 		while(true)
 		{					
 			StdDraw.show(10);
 			{
 				StdDraw.clear(StdDraw.BLACK);
 				this.drawField();
-				
-				StdDraw.setPenColor(StdDraw.RED);
-				StdDraw.filledCircle(playerX, playerY, 16);
+
+				noMove = true;
 				
 				if(StdDraw.isKeyPressed(KeyEvent.VK_RIGHT))
-					playerX = playerX + 5;
+				{
+					playerX = playerX + 4;
+					player1.setPosX(playerX);
+					if(!StdDraw.isKeyPressed(KeyEvent.VK_UP) && !StdDraw.isKeyPressed(KeyEvent.VK_DOWN))
+						player1.swapImg(Direction.RIGHT);
+					
+					noMove = false;
+				}
 				else if(StdDraw.isKeyPressed(KeyEvent.VK_LEFT))
-					playerX = playerX - 5;
+				{
+					playerX = playerX - 4;
+					player1.setPosX(playerX);
+					if(!StdDraw.isKeyPressed(KeyEvent.VK_UP) && !StdDraw.isKeyPressed(KeyEvent.VK_DOWN))
+						player1.swapImg(Direction.LEFT);
+					
+					noMove = false;
+				}
 				if(StdDraw.isKeyPressed(KeyEvent.VK_UP))
-					playerY = playerY + 5;
+				{
+					playerY = playerY + 4;
+					player1.setPosY(playerY);
+					player1.swapImg(Direction.UP);
+					
+					noMove = false;
+				}
 				else if(StdDraw.isKeyPressed(KeyEvent.VK_DOWN))
-					playerY = playerY - 5;
+				{
+					playerY = playerY - 4;
+					player1.setPosY(playerY);
+					player1.swapImg(Direction.DOWN);
+					
+					noMove = false;
+				}
+
+				if(noMove)
+					player1.draw();
 			}
 			StdDraw.show();
 		}
