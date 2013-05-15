@@ -70,6 +70,7 @@ public class GameField extends JFrame
 				else if(feld[i][j] == 's'||feld[i][j] == 'S')
 				{
 					field[i][j] = new Floor(posX, posY);
+					
 					player1 = new Player(posX, posY);
 					playerX = posX;
 					playerY = posY;
@@ -93,6 +94,8 @@ public class GameField extends JFrame
 			}				
 	}
 	
+	
+	
     /**
      * Spielschleife. Wird während des Spiels permanent durchlaufen. Hier werden
      * Animationen realisiert und spielbezogene (interne) Werte geprüft und ggf.
@@ -101,54 +104,60 @@ public class GameField extends JFrame
      */
 	public void run()
 	{		
-		boolean noMove;
-		
-		while(true)
+		while(player1.getAlive()==true)
 		{					
 			StdDraw.show(10);
 			{
 				StdDraw.clear(StdDraw.BLACK);
 				this.drawField();
 
-				noMove = true;
+				//Kollision und KeyEvents
+//				if(StdDraw.isKeyPressed(KeyEvent.VK_UP)==true)
+				if(StdDraw.isKeyPressed(KeyEvent.VK_UP) && !StdDraw.isKeyPressed(KeyEvent.VK_DOWN) && !StdDraw.isKeyPressed(KeyEvent.VK_RIGHT) && !StdDraw.isKeyPressed(KeyEvent.VK_LEFT))
+				{
+					if(field[(14-((int) player1.getPosY()+player1.getSpeed())/32)][(int) player1.getPosX()/32].isSolid()==false)
+					{
+						player1.moveUp();
+					}else
+						player1.draw();
+				}
+								
+//				if(StdDraw.isKeyPressed(KeyEvent.VK_DOWN)==true)
+				if(StdDraw.isKeyPressed(KeyEvent.VK_DOWN) && !StdDraw.isKeyPressed(KeyEvent.VK_UP) && !StdDraw.isKeyPressed(KeyEvent.VK_RIGHT) && !StdDraw.isKeyPressed(KeyEvent.VK_LEFT) )
+				{
+					if(field[(14-((int) player1.getPosY()-player1.getSpeed())/32)][(int) player1.getPosX()/32].isSolid()==false)
+					{
+						player1.moveDown();
+					}else
+						player1.draw();
+				}
 				
-				if(StdDraw.isKeyPressed(KeyEvent.VK_RIGHT))
+//				if(StdDraw.isKeyPressed(KeyEvent.VK_LEFT)==true)
+				if(StdDraw.isKeyPressed(KeyEvent.VK_LEFT) && !StdDraw.isKeyPressed(KeyEvent.VK_UP) && !StdDraw.isKeyPressed(KeyEvent.VK_RIGHT) && !StdDraw.isKeyPressed(KeyEvent.VK_DOWN))
 				{
-					playerX = playerX + 4;
-					player1.setPosX(playerX);
-					if(!StdDraw.isKeyPressed(KeyEvent.VK_UP) && !StdDraw.isKeyPressed(KeyEvent.VK_DOWN))
-						player1.swapImg(Direction.RIGHT);
-					
-					noMove = false;
+					if(field[(14-((int) player1.getPosY())/32)][((int) player1.getPosX()-player1.getSpeed())/32].isSolid()==false)
+					{
+						player1.moveLeft();
+					}else
+						player1.draw();
 				}
-				else if(StdDraw.isKeyPressed(KeyEvent.VK_LEFT))
+				
+//				if(StdDraw.isKeyPressed(KeyEvent.VK_RIGHT)==true)
+				if(StdDraw.isKeyPressed(KeyEvent.VK_RIGHT) && !StdDraw.isKeyPressed(KeyEvent.VK_UP) && !StdDraw.isKeyPressed(KeyEvent.VK_DOWN) && !StdDraw.isKeyPressed(KeyEvent.VK_LEFT))
 				{
-					playerX = playerX - 4;
-					player1.setPosX(playerX);
-					if(!StdDraw.isKeyPressed(KeyEvent.VK_UP) && !StdDraw.isKeyPressed(KeyEvent.VK_DOWN))
-						player1.swapImg(Direction.LEFT);
-					
-					noMove = false;
+					if(field[(14-((int) player1.getPosY())/32)][((int) player1.getPosX()+player1.getSpeed())/32].isSolid()==false)
+					{
+						player1.moveRight();
+					}else
+						player1.draw();
 				}
-				if(StdDraw.isKeyPressed(KeyEvent.VK_UP))
+	
+				if(StdDraw.isKeyPressed(KeyEvent.VK_RIGHT)==false && StdDraw.isKeyPressed(KeyEvent.VK_LEFT)==false &&StdDraw.isKeyPressed(KeyEvent.VK_UP)==false && StdDraw.isKeyPressed(KeyEvent.VK_DOWN)==false )
 				{
-					playerY = playerY + 4;
-					player1.setPosY(playerY);
-					player1.swapImg(Direction.UP);
-					
-					noMove = false;
-				}
-				else if(StdDraw.isKeyPressed(KeyEvent.VK_DOWN))
-				{
-					playerY = playerY - 4;
-					player1.setPosY(playerY);
-					player1.swapImg(Direction.DOWN);
-					
-					noMove = false;
-				}
-
-				if(noMove)
 					player1.draw();
+				}
+								
+				
 			}
 			StdDraw.show();
 		}
