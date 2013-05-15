@@ -6,21 +6,34 @@ public class GameField extends JFrame
 {
 	private static final long serialVersionUID = 9136636406585847854L;
 	
+	String [] lvlArray;
+	int currentLvl;
+	
 	char [][] feld;
 	Block[][] field;
 	
 	ReadLevel lvl;
 	
 	int rows, columns;
+	int collDir, collDir2;
+	
+	boolean collideLeft, collideRight, collideUp, collideDown;
 	
 	Player player1;
+	double pX, pY, fX, fY;
 	int playerX, playerY;
 			
 	public GameField()
 	{
-		lvl = new ReadLevel();
+		lvlArray = new String[] {
+			"lvl1.txt", "lvl2.txt", "lvl3.txt"
+		};
 		
-		this.loadLevel("lvl1.txt");
+		lvl = new ReadLevel();
+
+		currentLvl = 0;
+		this.loadLevel(lvlArray[currentLvl]);
+		
 		this.initField();
 		this.run();
 	}
@@ -70,7 +83,6 @@ public class GameField extends JFrame
 				else if(feld[i][j] == 's'||feld[i][j] == 'S')
 				{
 					field[i][j] = new Floor(posX, posY);
-					
 					player1 = new Player(posX, posY);
 					playerX = posX;
 					playerY = posY;
@@ -87,14 +99,50 @@ public class GameField extends JFrame
      */	
 	public void drawField()
 	{
+		pX = player1.getCenterX();
+		pY = player1.getCenterY();
+		
 		for(int i = 0; i < rows; i++)
 			for(int j = 0; j < columns; j++)
 			{					
 				field[i][j].drawImg();
+
+				fX = field[i][j].getCenterX();
+				fY = field[i][j].getCenterY();
+				
+				if(player1.intersects(field[i][j]) && field[i][j].isSolid())
+				{
+					if(pX > fX && pY >= fY - 16 && pY <= fY + 16)
+						collideLeft = true;
+					if(pX < fX && pY >= fY - 16 && pY <= fY + 16)
+						collideRight = true;
+					if(pY > fY && pX >= fX - 16 && pX <= fX + 16)
+						collideDown = true;
+					if(pY < fY && pX >= fX - 16 && pX <= fX + 16)
+						collideUp = true;
+				}
+				else if(player1.intersects(field[i][j]) && (field[i][j].toString().equals("door")))
+				{
+					if(currentLvl < lvlArray.length)
+					{
+						currentLvl++;
+						this.loadLevel(lvlArray[currentLvl]);
+						this.initField();						
+					}
+					
+					//StdDraw.show();
+				}
+				/*else if(player1.intersects(field[i][j]) && (field[i][j].toString().equals("stairs")))
+				{					
+					if(currentLvl > 0)
+					{
+						currentLvl--;
+						this.loadLevel(lvlArray[currentLvl]);
+						this.initField();				
+					}
+				}*/
 			}				
 	}
-	
-	
 	
     /**
      * Spielschleife. Wird während des Spiels permanent durchlaufen. Hier werden
@@ -104,60 +152,75 @@ public class GameField extends JFrame
      */
 	public void run()
 	{		
-		while(player1.getAlive()==true)
+		boolean noMove;
+		
+		while(true)
 		{					
 			StdDraw.show(10);
 			{
 				StdDraw.clear(StdDraw.BLACK);
 				this.drawField();
 
-				//Kollision und KeyEvents
-//				if(StdDraw.isKeyPressed(KeyEvent.VK_UP)==true)
-				if(StdDraw.isKeyPressed(KeyEvent.VK_UP) && !StdDraw.isKeyPressed(KeyEvent.VK_DOWN) && !StdDraw.isKeyPressed(KeyEvent.VK_RIGHT) && !StdDraw.isKeyPressed(KeyEvent.VK_LEFT))
-				{
-					if(field[(14-((int) player1.getPosY()+player1.getSpeed())/32)][(int) player1.getPosX()/32].isSolid()==false)
-					{
-						player1.moveUp();
-					}else
-						player1.draw();
-				}
-								
-//				if(StdDraw.isKeyPressed(KeyEvent.VK_DOWN)==true)
-				if(StdDraw.isKeyPressed(KeyEvent.VK_DOWN) && !StdDraw.isKeyPressed(KeyEvent.VK_UP) && !StdDraw.isKeyPressed(KeyEvent.VK_RIGHT) && !StdDraw.isKeyPressed(KeyEvent.VK_LEFT) )
-				{
-					if(field[(14-((int) player1.getPosY()-player1.getSpeed())/32)][(int) player1.getPosX()/32].isSolid()==false)
-					{
-						player1.moveDown();
-					}else
-						player1.draw();
-				}
+				noMove = true;
 				
-//				if(StdDraw.isKeyPressed(KeyEvent.VK_LEFT)==true)
-				if(StdDraw.isKeyPressed(KeyEvent.VK_LEFT) && !StdDraw.isKeyPressed(KeyEvent.VK_UP) && !StdDraw.isKeyPressed(KeyEvent.VK_RIGHT) && !StdDraw.isKeyPressed(KeyEvent.VK_DOWN))
+				if(StdDraw.isKeyPressed(KeyEvent.VK_RIGHT))
 				{
-					if(field[(14-((int) player1.getPosY())/32)][((int) player1.getPosX()-player1.getSpeed())/32].isSolid()==false)
+					if(!collideRight)
 					{
-						player1.moveLeft();
-					}else
-						player1.draw();
+						playerX = playerX + 4;
+						player1.setPosX(playerX);
+					}
+					
+					if(!StdDraw.isKeyPressed(KeyEvent.VK_UP) && !StdDraw.isKeyPressed(KeyEvent.VK_DOWN))
+						player1.swapImg(Direction.RIGHT);
+					
+					noMove = false;
 				}
-				
-//				if(StdDraw.isKeyPressed(KeyEvent.VK_RIGHT)==true)
-				if(StdDraw.isKeyPressed(KeyEvent.VK_RIGHT) && !StdDraw.isKeyPressed(KeyEvent.VK_UP) && !StdDraw.isKeyPressed(KeyEvent.VK_DOWN) && !StdDraw.isKeyPressed(KeyEvent.VK_LEFT))
+				else if(StdDraw.isKeyPressed(KeyEvent.VK_LEFT))
 				{
-					if(field[(14-((int) player1.getPosY())/32)][((int) player1.getPosX()+player1.getSpeed())/32].isSolid()==false)
+					if(!collideLeft)
 					{
-						player1.moveRight();
-					}else
-						player1.draw();
+						playerX = playerX - 4;
+						player1.setPosX(playerX);
+					}
+					
+					if(!StdDraw.isKeyPressed(KeyEvent.VK_UP) && !StdDraw.isKeyPressed(KeyEvent.VK_DOWN))
+						player1.swapImg(Direction.LEFT);
+					
+					noMove = false;
 				}
-	
-				if(StdDraw.isKeyPressed(KeyEvent.VK_RIGHT)==false && StdDraw.isKeyPressed(KeyEvent.VK_LEFT)==false &&StdDraw.isKeyPressed(KeyEvent.VK_UP)==false && StdDraw.isKeyPressed(KeyEvent.VK_DOWN)==false )
+				if(StdDraw.isKeyPressed(KeyEvent.VK_UP))
 				{
+					if(!collideUp)
+					{
+						playerY = playerY + 4;
+						player1.setPosY(playerY);
+					}
+					
+					player1.swapImg(Direction.UP);
+					
+					noMove = false;
+				}
+				else if(StdDraw.isKeyPressed(KeyEvent.VK_DOWN))
+				{
+					if(!collideDown)
+					{
+						playerY = playerY - 4;
+						player1.setPosY(playerY);
+					}
+					
+					player1.swapImg(Direction.DOWN);
+					
+					noMove = false;
+				}
+
+				if(noMove)
 					player1.draw();
-				}
-								
-				
+
+				collideRight = false;
+				collideLeft = false;
+				collideDown = false;
+				collideUp = false;
 			}
 			StdDraw.show();
 		}

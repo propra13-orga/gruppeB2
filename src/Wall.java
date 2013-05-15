@@ -4,8 +4,10 @@ public class Wall extends Block
 	private double rand;
 	private double posX, posY;
 	
-	public Wall(double posX, double posY)
+	public Wall(int posX, int posY)
 	{
+		super(posX, posY, 32, 32);
+		
 		this.posX = posX;
 		this.posY = posY;
 		
@@ -28,5 +30,15 @@ public class Wall extends Block
 	public boolean isSolid()
 	{
 		return true;
+	}
+	
+	public boolean isExit()
+	{
+		return false;
+	}
+	
+	public String toString()
+	{
+		return "wall";
 	}
 }

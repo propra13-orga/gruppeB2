@@ -4,8 +4,10 @@ public class Floor extends Block
 	private double rand;
 	private double posX, posY;
 	
-	public Floor(double posX, double posY)
+	public Floor(int posX, int posY)
 	{
+		super(posX, posY, 32, 32);
+		
 		this.posX = posX;
 		this.posY = posY;
 		
@@ -29,5 +31,15 @@ public class Floor extends Block
 	public boolean isSolid()
 	{
 		return false;
+	}
+	
+	public boolean isExit()
+	{
+		return false;
+	}
+	
+	public String toString()
+	{
+		return "floor";
 	}
 }

@@ -3,8 +3,10 @@ public class Stairs extends Block
 {
 	private double posX, posY;
 	
-	public Stairs(double posX, double posY)
+	public Stairs(int posX, int posY)
 	{
+		super(posX, posY, 32, 32);
+		
 		this.posX = posX;
 		this.posY = posY;
 
@@ -19,5 +21,15 @@ public class Stairs extends Block
 	public boolean isSolid()
 	{
 		return false;
+	}
+	
+	public boolean isExit()
+	{
+		return false;
+	}
+	
+	public String toString()
+	{
+		return "stairs";
 	}
 }

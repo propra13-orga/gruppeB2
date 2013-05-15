@@ -3,10 +3,12 @@ public class Door extends Block
 {
 	private double posX, posY;
 	
-	public Door(double posX, double posY)
+	public Door(int posX, int posY)
 	{
+		super(posX, posY, 32, 32);
+		
 		this.posX = posX;
-		this.posY = posY;
+		this.posY = posY;		
 		
 		hidden = true;
 	}
@@ -19,5 +21,15 @@ public class Door extends Block
 	public boolean isSolid()
 	{
 		return false;
+	}
+	
+	public boolean isExit()
+	{
+		return true;
+	}
+	
+	public String toString()
+	{
+		return "door";
 	}
 }
