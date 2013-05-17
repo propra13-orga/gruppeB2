@@ -10,6 +10,7 @@ public class Player extends Rectangle
 	int swpU = 0;
 	int swpD = 0;
 	
+	
 	public Player(int posX, int posY)
 	{
 		super(posX + 3, posY - 6, 26, 26);

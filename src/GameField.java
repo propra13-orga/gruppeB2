@@ -19,10 +19,13 @@ public class GameField extends JFrame
 	
 	boolean collideLeft, collideRight, collideUp, collideDown;
 	
+	
 	Player player1;
 	double pX, pY, fX, fY;
 	int playerX, playerY;
-			
+	
+	boolean isAlive = true;
+	
 	public GameField()
 	{
 		lvlArray = new String[] {
@@ -80,6 +83,8 @@ public class GameField extends JFrame
 					field[i][j] = new Door(posX, posY);
 				else if(feld[i][j] == 't'||feld[i][j] == 'T')
 					field[i][j] = new Stairs(posX, posY);
+				else if(feld[i][j] == 'r'||feld[i][j] == 'R') //Trap hinzugefuegt
+					field[i][j] = new Trap(posX, posY);
 				else if(feld[i][j] == 's'||feld[i][j] == 'S')
 				{
 					field[i][j] = new Floor(posX, posY);
@@ -131,6 +136,12 @@ public class GameField extends JFrame
 					}
 					
 					//StdDraw.show();
+					
+				//Kollisionsabfrage mit Trap und direkter Neustart	
+				}else if(player1.intersects(field[i][j]) && (field[i][j].toString().equals("trap")))
+				{
+					isAlive = false;
+					new GameField();
 				}
 				/*else if(player1.intersects(field[i][j]) && (field[i][j].toString().equals("stairs")))
 				{					
@@ -154,13 +165,13 @@ public class GameField extends JFrame
 	{		
 		boolean noMove;
 		
-		while(true)
+		while(isAlive)
 		{					
 			StdDraw.show(10);
 			{
 				StdDraw.clear(StdDraw.BLACK);
 				this.drawField();
-
+				
 				noMove = true;
 				
 				if(StdDraw.isKeyPressed(KeyEvent.VK_RIGHT))
