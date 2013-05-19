@@ -1,24 +1,45 @@
 import java.awt.Rectangle;
 
-
+/**
+ *  <i>Player</i>. Respaesentiert das Spieler-Objekt, welches die von Benutzer
+ *  gesteuerte Spielfigut darstellt.
+ */
 public class Player extends Rectangle
 {
+	private static final long serialVersionUID = 1L;
+	
+	//x- und y-Position, an welcher der Spieler sich auf dem Spielfeld befindet.
 	private int posX, posY;
 	
+	//Variablen zur Animation der Bewegung
 	int swpL = 0;
 	int swpR = 0;
 	int swpU = 0;
 	int swpD = 0;
 	
-	
+    /**
+     * Konstruktor eines Player-Objekts
+     *
+     * @param posX - die x-Position des Spielers zu Beginn (Rectangle)
+     * @param posY - die y-Position des Spielers zu Beginn (Rectangle)
+     */
 	public Player(int posX, int posY)
 	{
+		//Das Player-Objekt ist ein Rectangle-Objekt der Groesse 26x26 
+		//(Etwas kleiner als ein Block fuer flexibelere Bewegung). Entsprechend
+		//wird die Position des Rectangles etwas versetzt angegeben
 		super(posX + 3, posY - 6, 26, 26);
 		
 		this.posX = posX;
 		this.posY = posY;
 	}
 	
+	 /**
+     * Methode zum Zeichnen der Bewegungsanimation. Die Bilder wechseln periodisch
+     * je nach Beweungsrichtung
+     * 
+     * @param direction - In welche Richtung bewegt sich der Spieler momentan
+     */
 	public void swapImg(String direction)
 	{
 		if(direction.equalsIgnoreCase(Direction.LEFT))
@@ -87,11 +108,20 @@ public class Player extends Rectangle
 		}
 	}
 	
+	 /**
+     * Methode zum Zeichnen des Players, wenn er sich nicht bewegt
+     */
 	public void draw()
 	{
 		StdDraw.picture(posX, posY, "images\\player\\player_down_"+1+".png");
 	}
 
+	 /**
+     * Methode, welche die Position des Player-Objekts und des Rectangles setzt
+     * 
+     * @param posX - x-Position des Spielers
+     * @param posY - y-Position des Spielers
+     */
 	public void setPos(int posX, int posY)
 	{
 		this.posX = posX;
@@ -100,23 +130,43 @@ public class Player extends Rectangle
 		this.setLocation(posX + 3, posY - 6);
 	}
 
+	 /**
+     * Methode, welche die x-Position des Player-Objekts und des Rectangles setzt
+     *      
+     * @param posX - x-Position des Spielers
+     */
 	public void setPosX(int posX)
 	{
 		this.posX = posX;
 		this.setLocation(posX + 3, posY - 6);
 	}
 
+	 /**
+     * Methode, welche die y-Position des Player-Objekts und des Rectangles setzt
+     *
+     * @param posY - y-Position des Spielers
+     */
 	public void setPosY(int posY)
 	{
 		this.posY = posY;
 		this.setLocation(posX + 3, posY - 6);
 	}
 	
+	 /**
+     * Methode, welche die x-Position des Spielers zurueckgibt
+     *
+     * @return x-Position des Spieler-Objekts
+     */
 	public double getPosX()
 	{
 		return posX;
 	}
 	
+	/**
+    * Methode, welche die y-Position des Spielers zurueckgibt
+    *
+    * @return y-Position des Spieler-Objekts
+    */
 	public double getPosY()
 	{
 		return posY;

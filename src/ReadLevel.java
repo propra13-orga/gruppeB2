@@ -1,13 +1,24 @@
 import java.io.*;
 import java.util.ArrayList;
 
+/**
+ *  <i>ReadLevel</i>. Klasse, welche das Level aus einer Textdatei einliest
+ */
 public class ReadLevel 
 {
+	//FileReader und BufferedReader um die Datei einzulesen
 	private FileReader readFile;
 	private BufferedReader lineRead;
+	
+	//Boolean, welches prueft, ob das eingelesene Feld auch rechteckig ist
 	boolean quad;
+	//das eigentliche Feld, gespeichert als char-Array
 	char [][] field;
 	
+    /**
+     * Konstruktor des ReadLevel-Objekts
+     *
+     */
 	public ReadLevel()
 	{
 	}
@@ -15,10 +26,10 @@ public class ReadLevel
     /**
      * Liest eine Textdatei ein, in der ein quadratisches Spielfeld gespeichert ist.
      *
-     * @param file Einzulesende Datei als String (Dateiname)
+     * @param file - Einzulesende Datei als String (Dateiname)
      * 
-     * @return Ein Array mit den chars, welche das Spielfeld beschreiben -
-     * NULL, wenn das Spielfeld nicht quadratisch ist 
+     * @return Ein Array mit den chars, welche das Spielfeld beschreiben </br>
+     * <b>null</b>, wenn das Spielfeld nicht quadratisch ist 
      * 
      * @throws IOException falls beim Einlesen der Datei ein Fehler auftrat
      */
