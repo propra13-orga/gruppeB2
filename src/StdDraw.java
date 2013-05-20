@@ -203,7 +203,7 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
     }
 
     // create the menu bar (changed to private)
-    private static JMenuBar createMenuBar() {
+    /*private static JMenuBar createMenuBar() {
         JMenuBar menuBar = new JMenuBar();
         JMenu menu = new JMenu("File");
         menuBar.add(menu);
@@ -213,7 +213,7 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
                                 Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
         menu.add(menuItem1);
         return menuBar;
-    }
+    }*/
 
 
    /*************************************************************************

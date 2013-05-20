@@ -42,13 +42,13 @@ public class Wall extends Block
 	public void drawImg()
 	{
 		//if(!this.hidden)
-			if(rand < 0.03)
+			if(rand < 0.05)
 				StdDraw.picture(posX, posY, "images\\arena\\Wall_Tile_"+5+".png");
-			else if(rand < 0.06)
+			else if(rand < 0.1)
 				StdDraw.picture(posX, posY, "images\\arena\\Wall_Tile_"+6+".png");
-			else if(rand < 0.09)
+			else if(rand < 0.15)
 				StdDraw.picture(posX, posY, "images\\arena\\Wall_Tile_"+7+".png");
-			else if(rand < 0.12)
+			else if(rand < 0.2)
 				StdDraw.picture(posX, posY, "images\\arena\\Wall_Tile_"+8+".png");
 			else if(rand < 0.40)
 				StdDraw.picture(posX, posY, "images\\arena\\Wall_Tile_"+1+".png");

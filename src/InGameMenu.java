@@ -1,14 +1,11 @@
-import javax.swing.JOptionPane;
 
-
-public class MainMenu
+public class InGameMenu 
 {
 	private double mouseX, mouseY;
 	
-	public MainMenu(int w, int h)
+	public InGameMenu(int w, int h)
 	{
 		StdDraw.setCanvasSize(w, h);
-		this.intro();
 		this.run();
 	}
 	
@@ -54,27 +51,5 @@ public class MainMenu
 		}
 		if(mouseX < 0.485 && mouseX > 0.289 && mouseY < 0.544 && mouseY > 0.492 && StdDraw.mouseClicked())
 			System.exit(0);
-	}
-	
-	public void intro()
-	{
-		try
-		{
-			for(int i = 1; i < 21; i++)
-			{
-				StdDraw.picture(0.5, 0.5, "images\\intro\\Sponge"+i+".png");
-				Thread.sleep(100);
-			}
-			Thread.sleep(3000);
-			for(int i = 20; i > 0; i--)
-			{
-				StdDraw.picture(0.5, 0.5, "images\\intro\\Sponge"+i+".png");
-				Thread.sleep(100);
-			}
-		}catch(InterruptedException e)
-		{
-			JOptionPane.showMessageDialog(null, "Es trat ein unerwarteter Fehler auf.");
-			System.exit(0);
-		}
 	}
 }

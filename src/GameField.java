@@ -1,4 +1,6 @@
 import javax.swing.*;
+
+import java.awt.Color;
 import java.awt.event.KeyEvent;
 
 /**
@@ -32,7 +34,7 @@ public class GameField extends JFrame
 	
 	//Gibt zurueck, ob an einer Stelle (links, rechts, oben, unten) eine
 	//Kollision auftrat
-	boolean collideLeft, collideRight, collideUp, collideDown;
+	boolean collideLeft, collideRight, collideUp, collideDown, inGameMenu;
 	
 	//Der Spieler
 	Player player1;
@@ -60,6 +62,7 @@ public class GameField extends JFrame
 		
 		//Erzeugt die Hilfsklasse zum Einlesen der Textdateien
 		lvl = new ReadLevel();
+		inGameMenu = false;
 
 		//Lade bei neuem Spielbeginn das erste Level (Array-Position 0)
 		currentLvl = 0;
@@ -242,12 +245,12 @@ public class GameField extends JFrame
 				noMove = true;
 				
 				//Abfrage nach Tastendruecken des Benutzers. Sorgt fuer Bewegung
-				//der Spielfigur
+				//der Spielfigur		
 				if(StdDraw.isKeyPressed(KeyEvent.VK_RIGHT))
 				{
 					if(!collideRight)
 					{
-						playerX = playerX + 4;
+						playerX = playerX + 6;
 						player1.setPosX(playerX);
 					}
 					
@@ -260,7 +263,7 @@ public class GameField extends JFrame
 				{
 					if(!collideLeft)
 					{
-						playerX = playerX - 4;
+						playerX = playerX - 6;
 						player1.setPosX(playerX);
 					}
 					
@@ -273,7 +276,7 @@ public class GameField extends JFrame
 				{
 					if(!collideUp)
 					{
-						playerY = playerY + 4;
+						playerY = playerY + 6;
 						player1.setPosY(playerY);
 					}
 					
@@ -285,7 +288,7 @@ public class GameField extends JFrame
 				{
 					if(!collideDown)
 					{
-						playerY = playerY - 4;
+						playerY = playerY - 6;
 						player1.setPosY(playerY);
 					}
 					
