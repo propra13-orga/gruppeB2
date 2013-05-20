@@ -20,7 +20,7 @@ public class Stairs extends Block
 	{
 		//Das Stairs-Objekt ist ein Block-Objekt an der Position posX und posY
 		//mit der Groesse 32x32 Pixel (Rectangle)
-		super(posX, posY, 32, 32);
+		super(posX, posY, 40, 40);
 		
 		this.posX = posX;
 		this.posY = posY;
@@ -34,7 +34,8 @@ public class Stairs extends Block
      */
 	public void drawImg()
 	{
-		StdDraw.picture(posX, posY, "images\\arena\\Exit_Tile_"+2+".png");
+		//if(!this.hidden)
+			StdDraw.picture(posX, posY, "images\\arena\\Exit_Tile_"+2+".png");
 	}
 	
     /**

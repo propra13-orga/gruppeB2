@@ -23,7 +23,7 @@ public class Wall extends Block
 	{
 		//Das Wall-Objekt ist ein Block-Objekt an der Position posX und posY
 		//mit der Groesse 32x32 Pixel (Rectangle)
-		super(posX, posY, 32, 32);
+		super(posX, posY, 40, 40);
 		
 		this.posX = posX;
 		this.posY = posY;
@@ -41,14 +41,23 @@ public class Wall extends Block
      */
 	public void drawImg()
 	{
-		if(rand < 0.25)
-			StdDraw.picture(posX, posY, "images\\arena\\Wall_Tile_"+1+".png");
-		else if(rand < 0.5)
-			StdDraw.picture(posX, posY, "images\\arena\\Wall_Tile_"+2+".png");
-		else if(rand < 0.75)
-			StdDraw.picture(posX, posY, "images\\arena\\Wall_Tile_"+3+".png");
-		else
-			StdDraw.picture(posX, posY, "images\\arena\\Wall_Tile_"+4+".png");
+		//if(!this.hidden)
+			if(rand < 0.03)
+				StdDraw.picture(posX, posY, "images\\arena\\Wall_Tile_"+5+".png");
+			else if(rand < 0.06)
+				StdDraw.picture(posX, posY, "images\\arena\\Wall_Tile_"+6+".png");
+			else if(rand < 0.09)
+				StdDraw.picture(posX, posY, "images\\arena\\Wall_Tile_"+7+".png");
+			else if(rand < 0.12)
+				StdDraw.picture(posX, posY, "images\\arena\\Wall_Tile_"+8+".png");
+			else if(rand < 0.40)
+				StdDraw.picture(posX, posY, "images\\arena\\Wall_Tile_"+1+".png");
+			else if(rand < 0.60)
+				StdDraw.picture(posX, posY, "images\\arena\\Wall_Tile_"+2+".png");
+			else if(rand < 0.80)
+				StdDraw.picture(posX, posY, "images\\arena\\Wall_Tile_"+3+".png");
+			else
+				StdDraw.picture(posX, posY, "images\\arena\\Wall_Tile_"+4+".png");
 	}
 	
     /**

@@ -103,9 +103,9 @@ public class GameField extends JFrame
 		field = new Block[rows][columns];
 		
 		//Setze die Dimensionen der Zeichenebene
-		StdDraw.setCanvasSize(32 * columns, 32 * rows);
-		StdDraw.setXscale(0, 32 * columns);
-		StdDraw.setYscale(0, 32 * rows);
+		StdDraw.setCanvasSize(40 * columns, 40 * rows);
+		StdDraw.setXscale(0, 40 * columns);
+		StdDraw.setYscale(0, 40 * rows);
 		
 		//Schleifen, die die chars aus dem char-Feld in Objekte uebertraegt
 		for(int i = 0; i < rows; i++)
@@ -113,14 +113,16 @@ public class GameField extends JFrame
 			for(int j = 0; j < columns; j++)
 			{
 				//Position des entsprechenden Blocks
-				int posX = j * 32 + 16;
-				int posY = (32 * rows)-(i * 32 + 16);
+				int posX = j * 40 + 20;
+				int posY = (40 * rows)-(i * 40 + 20);
 				
 				//Je nach Character erzeuge das entsprechende Objekt
 				if(feld[i][j] == ' ')
 					field[i][j] = new Floor(posX, posY);
 				else if(feld[i][j] == 'x'||feld[i][j] == 'X')
+				{
 					field[i][j] = new Wall(posX, posY);
+				}
 				else if(feld[i][j] == 'e'||feld[i][j] == 'E')
 					field[i][j] = new Door(posX, posY);
 				else if(feld[i][j] == 't'||feld[i][j] == 'T')
@@ -137,6 +139,8 @@ public class GameField extends JFrame
 					playerY = posY;
 				}
 			}
+			
+			System.out.println("");
 		}
 	}
 	
@@ -168,13 +172,13 @@ public class GameField extends JFrame
 				if(player1.intersects(field[i][j]) && field[i][j].isSolid())
 				{
 					//Pruefe, wo die Kollision mit dem Spieler auftrat
-					if(pX > fX && pY >= fY - 16 && pY <= fY + 16)
+					if(pX > fX && pY >= fY - 20 && pY <= fY + 20)
 						collideLeft = true;
-					if(pX < fX && pY >= fY - 16 && pY <= fY + 16)
+					if(pX < fX && pY >= fY - 20 && pY <= fY + 20)
 						collideRight = true;
-					if(pY > fY && pX >= fX - 16 && pX <= fX + 16)
+					if(pY > fY && pX >= fX - 20 && pX <= fX + 20)
 						collideDown = true;
-					if(pY < fY && pX >= fX - 16 && pX <= fX + 16)
+					if(pY < fY && pX >= fX - 20 && pX <= fX + 20)
 						collideUp = true;
 				}
 				
@@ -306,4 +310,54 @@ public class GameField extends JFrame
 			StdDraw.show();
 		}
 	}
+	
+	
+	
+	/*
+	public boolean checkRoof(char[][] feld, int i, int j)
+	{
+		if(i < rows - 1)
+		{
+			if(feld[i + 1][j] == 'x' || feld[i + 1][j] == 'X')
+				return true;
+			else 
+				return false;
+		}
+		else
+			return false;
+	}
+	
+	public Roof getRoofTile(char[][] feld, int i, int j)
+	{				
+		int posX = j * 40 + 20;
+		int posY = (40 * rows)-((i) * 40 + 20);
+		if(i > 0 && i < rows && j > 0 && j < columns - 1)
+		{
+			if(checkRoof(feld, i - 1, j))
+				if(checkRoof(feld, i, j - 1))
+					if(checkRoof(feld, i, j + 1))
+						return new Roof(posX, posY, 8);
+					else
+						return new Roof(posX, posY, 5);
+				else
+					if(checkRoof(feld, i, j + 1))
+						return new Roof(posX, posY, 1);
+					else
+						return new Roof(posX, posY, 6);
+			else
+				if(checkRoof(feld, i, j - 1))
+					if(checkRoof(feld, i, j + 1))
+						return new Roof(posX, posY, 3);
+					else
+						return new Roof(posX, posY, 4);
+				else
+					if(checkRoof(feld, i, j + 1))
+						return new Roof(posX, posY, 2);
+					else
+						return new Roof(posX, posY, 7);				
+					
+		}
+		else
+			return new Roof(posX, posY, 8);
+	}*/
 }

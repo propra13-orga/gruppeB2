@@ -19,7 +19,7 @@ public class Trap extends Block
 	{
 		//Das Trap-Objekt ist ein Block-Objekt an der Position posX und posY
 		//mit der Groesse 32x32 Pixel (Rectangle)
-		super(posX, posY, 32, 32);
+		super(posX + 3, posY - 6, 32, 32);
 		
 		this.posX = posX;
 		this.posY = posY;
@@ -33,7 +33,8 @@ public class Trap extends Block
      */	
 	void drawImg()
 	{
-		StdDraw.picture(posX, posY, "images\\arena\\Trap.png");		
+		//if(!this.hidden)
+			StdDraw.picture(posX, posY, "images\\arena\\Trap.png");		
 	}
 	
     /**

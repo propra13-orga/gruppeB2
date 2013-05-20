@@ -189,13 +189,14 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
         draw.addMouseListener(std);
         draw.addMouseMotionListener(std);
 
+        frame.setLocationByPlatform(true);
         frame.setContentPane(draw);
         frame.addKeyListener(std);    // JLabel cannot get keyboard focus
         frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);            // closes all windows
         // frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);      // closes only current window
         frame.setTitle("Standard Draw");
-        frame.setJMenuBar(createMenuBar());
+      //frame.setJMenuBar(createMenuBar());
         frame.pack();
         frame.requestFocusInWindow();
         frame.setVisible(true);
@@ -916,7 +917,7 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
      * Is the mouse being pressed?
      * @return true or false
      */
-    public static boolean mousePressed() {
+    public static boolean mouseClicked() {
         synchronized (mouseLock) {
             return mousePressed;
         }
@@ -946,7 +947,14 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
     /**
      * This method cannot be called directly.
      */
-    public void mouseClicked(MouseEvent e) { }
+    public void mouseClicked(MouseEvent e) 
+    {         
+    	/*synchronized (mouseLock) {
+    		mouseX = StdDraw.userX(e.getX());
+    		mouseY = StdDraw.userY(e.getY());
+    		mousePressed = true;
+    }*/
+    }
 
     /**
      * This method cannot be called directly.

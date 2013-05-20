@@ -23,7 +23,7 @@ public class Floor extends Block
 	{		
 		//Das Floor-Objekt ist ein Block-Objekt an der Position posX und posY
 		//mit der Groesse 32x32 Pixel (Rectangle)
-		super(posX, posY, 32, 32);
+		super(posX, posY, 40, 40);
 		
 		this.posX = posX;
 		this.posY = posY;
@@ -41,15 +41,15 @@ public class Floor extends Block
      */
 	public void drawImg()
 	{
-		
-		if(rand < 0.25)
-			StdDraw.picture(posX, posY, "images\\arena\\Ground_Tile_"+1+".png");
-		else if(rand < 0.5)
-			StdDraw.picture(posX, posY, "images\\arena\\Ground_Tile_"+2+".png");
-		else if(rand < 0.75)
-			StdDraw.picture(posX, posY, "images\\arena\\Ground_Tile_"+3+".png");
-		else
-			StdDraw.picture(posX, posY, "images\\arena\\Ground_Tile_"+4+".png");
+		//if(!this.hidden)
+			if(rand < 0.25)
+				StdDraw.picture(posX, posY, "images\\arena\\Ground_Tile_"+1+".png");
+			else if(rand < 0.5)
+				StdDraw.picture(posX, posY, "images\\arena\\Ground_Tile_"+2+".png");
+			else if(rand < 0.75)
+				StdDraw.picture(posX, posY, "images\\arena\\Ground_Tile_"+3+".png");
+			else
+				StdDraw.picture(posX, posY, "images\\arena\\Ground_Tile_"+4+".png");
 	}
 	
     /**

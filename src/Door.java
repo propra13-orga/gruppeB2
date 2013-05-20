@@ -19,7 +19,7 @@ public class Door extends Block
 	{
 		//Das Tuer-Objekt ist ein Block-Objekt an der Position posX und posY
 		//mit der Groesse 32x32 Pixel (Rectangle)
-		super(posX, posY, 32, 32);
+		super(posX, posY, 40, 40);
 		
 		this.posX = posX;
 		this.posY = posY;		
@@ -33,7 +33,8 @@ public class Door extends Block
      */
 	public void drawImg()
 	{
-		StdDraw.picture(posX, posY, "images\\arena\\Exit_Tile_"+1+".png");
+		//if(!this.hidden)
+			StdDraw.picture(posX, posY, "images\\arena\\Exit_Tile_"+1+".png");
 	}
 	
     /**
