@@ -74,6 +74,31 @@ public class GameField extends JFrame
 		this.run();
 	}
 	
+	/**
+	* Konstruktor zum Neuladen im selben Level
+	* spater mit zählen der Lebenspunbkte
+	* @param currentLvl
+	*/
+	public GameField(int currentLvl)
+	{
+		//erzeugt das Array, in dem die Level-Textdateinamen gespeichert werden
+		lvlArray = new String[]
+		{
+			"lvl1.txt", "lvl2.txt", "lvl3.txt"
+		};
+
+		//Erzeugt die Hilfsklasse zum Einlesen der Textdateien
+		lvl = new ReadLevel();
+		inGameMenu = false;
+		this.currentLvl = currentLvl;
+		this.loadLevel(lvlArray[currentLvl]);
+
+		//Initialisiere das Feld (aus dem String-Array des Levels)
+		this.initField();
+		//Starte die Spielschleife
+		this.run();
+	}
+	
     /**
      * Methode, die die Textdatei einlesen laesst
      * 
@@ -201,7 +226,7 @@ public class GameField extends JFrame
 				}else if(player1.intersects(field[i][j]) && (field[i][j].toString().equals("trap")))
 				{
 					isAlive = false;
-					new GameField();
+					new GameField(currentLvl);
 				}
 				
 				//Evtl Abfrage mit den Treppen-Objekten, um notfalls wieder in
