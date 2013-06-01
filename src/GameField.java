@@ -2,6 +2,7 @@ import javax.swing.*;
 
 import java.awt.Color;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
 /**
  *  <i>GameField</i>. Stellt das eigentliche Spielfeld dar. Erzeugt das zuge-
@@ -25,6 +26,7 @@ public class GameField extends JFrame
 	//Array, in welchem die Objekte des Spielfeldes gespeichert sind
 	Block[][] field;
 	
+	ArrayList<Enemy> enemyList = new ArrayList<Enemy>();	
 	//Eine Klasse ReadLevel, welche sich um das Einlesen der Level aus
 	//Textdatein kuemmert
 	ReadLevel lvl;
@@ -42,9 +44,7 @@ public class GameField extends JFrame
 	//(zur Kollisionsabfrage und Logik)
 	
 	//Der Gegner und attribute
-		Enemy enem;
-		int enemX, enemY;
-		boolean ecollideLeft, ecollideRight, ecollideUp, ecollideDown;
+	Enemy enem;
 		
 	double pX, pY, fX, fY, eX, eY;
 	
@@ -176,10 +176,8 @@ public class GameField extends JFrame
 				{
 					field[i][j] = new Floor(posX, posY);
 					
-					//Erzeugt den Gegner
-					enem = new Enemy(posX, posY);
-					enemX = posX;
-					enemY = posY;
+					//Gegner in Liste hinzu
+					enemyList.add(new Enemy(posX, posY)); 
 				}
 			}
 			
@@ -198,10 +196,6 @@ public class GameField extends JFrame
 		//Momentante Positions des Spielers (Kollisionsabfrage)
 		pX = player1.getCenterX();
 		pY = player1.getCenterY();
-		
-		//Momentante Positions des Gegners (Kollisionsabfrage)
-		eX = enem.getCenterX();
-		eY = enem.getCenterY();
 		
 		//Schleifen, in denen das Feld gezeichnet wird und die Kollision / Logik
 		//geprueft wird
@@ -229,19 +223,6 @@ public class GameField extends JFrame
 						collideUp = true;
 				}
 				
-				if(enem.intersects(field[i][j]) && field[i][j].isSolid())
-				{
-					//Pruefe, wo die Kollision mit dem Gegner auftrat
-					if(eX > fX && eY >= fY - 20 && eY <= fY + 20)
-						ecollideLeft = true;
-					if(eX < fX && eY >= fY - 20 && eY <= fY + 20)
-						ecollideRight = true;
-					if(eY > fY && eX >= fX - 20 && eX <= fX + 20)
-						ecollideDown = true;
-					if(eY < fY && eX >= fX - 20 && eX <= fX + 20)
-						ecollideUp = true;
-				}
-				
 				//Kollisionsabfrage bezueglich der Ausgaenge
 				else if(player1.intersects(field[i][j]) && (field[i][j].toString().equals("door")))
 				{
@@ -262,12 +243,30 @@ public class GameField extends JFrame
 					new GameField(currentLvl);
 				}
 				
-				//Kollisionsabfrage Spieler und Gegner (ohne Aktion)
-				else if(player1.intersects(enem))
-				{
-//					isAlive = false;
-					System.out.println("true");
+				for(int count=0;count<enemyList.size();count++)
+				{	
+					if(enemyList.get(count).intersects(field[i][j]) && field[i][j].isSolid())
+					{
+						eX = enemyList.get(count).getCenterX();
+						eY = enemyList.get(count).getCenterY();
+						//Pruefe, wo die Kollision mit dem Gegner auftrat
+						if(eX > fX && eY >= fY - 20 && eY <= fY + 20)
+							enemyList.get(count).setColLeft(true);
+						if(eX < fX && eY >= fY - 20 && eY <= fY + 20)
+							enemyList.get(count).setColRight(true);
+						if(eY > fY && eX >= fX - 20 && eX <= fX + 20)
+							enemyList.get(count).setColDown(true);
+						if(eY < fY && eX >= fX - 20 && eX <= fX + 20)
+							enemyList.get(count).setColUp(true);
+					}
+					
+					if(player1.intersects(enemyList.get(count)))
+					{
+//						isAlive = false;
+						System.out.println("true");
+					}
 				}
+				
 				
 				//Evtl Abfrage mit den Treppen-Objekten, um notfalls wieder in
 				//das vorherige Level zu gelangen
@@ -310,17 +309,20 @@ public class GameField extends JFrame
 				noMove = true;
 				
 				//Gegner bewegt sich nur hoch und runter
-				if(!ecollideDown)
+				for(int c=0;c<enemyList.size();c++)
 				{
-					enem.move("DOWN");
-				}
-				else if(!ecollideUp)
-				{
-					enem.move("UP");
-				}
-				else
-				{
-					enem.draw();
+					if(!enemyList.get(c).isColDown())
+					{
+						enemyList.get(c).move("DOWN");
+					}
+					else if(!enemyList.get(c).isColUp())
+					{
+						enemyList.get(c).move("UP");
+					}
+					else
+					{
+						enemyList.get(c).draw();
+					}
 				}
 				
 				//Abfrage nach Tastendruecken des Benutzers. Sorgt fuer Bewegung
@@ -389,11 +391,13 @@ public class GameField extends JFrame
 				collideUp = false;
 				
 				//setze Kollisionswerte zurueck
-				if(ecollideDown && ecollideUp)
+				for(int c=0;c<enemyList.size();c++)
+					
+				if(enemyList.get(c).isColDown() && enemyList.get(c).isColUp())
 				{
-					ecollideDown=false;
+					enemyList.get(c).setColDown(false);
 				}else
-					ecollideUp=false;
+					enemyList.get(c).setColUp(false);
 			}
 			//nach interner Aktualisierung zeichne das neue Feld ins Fenster
 			StdDraw.show();

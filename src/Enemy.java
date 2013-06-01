@@ -7,6 +7,9 @@ public class Enemy extends Rectangle {
 	
 	public int posX, posY;
 	
+	private boolean colUp, colDown, colRight, colLeft;
+	
+	
 	private final int SPEED = 2;
 	
 	private int swap;
@@ -95,4 +98,37 @@ public class Enemy extends Rectangle {
 	{
 		return true;
 	}
+	
+	public boolean isColUp() {
+		return colUp;
+	}
+
+	public void setColUp(boolean colUp) {
+		this.colUp = colUp;
+	}
+
+	public boolean isColDown() {
+		return colDown;
+	}
+
+	public void setColDown(boolean colDown) {
+		this.colDown = colDown;
+	}
+
+	public boolean isColRight() {
+		return colRight;
+	}
+
+	public void setColRight(boolean colRight) {
+		this.colRight = colRight;
+	}
+
+	public boolean isColLeft() {
+		return colLeft;
+	}
+
+	public void setColLeft(boolean colLeft) {
+		this.colLeft = colLeft;
+	}
+
 }
