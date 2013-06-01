@@ -40,7 +40,13 @@ public class GameField extends JFrame
 	Player player1;
 	//x- und y-Position des Spielers und x- und y-Position eines Spielfeldblockes 
 	//(zur Kollisionsabfrage und Logik)
-	double pX, pY, fX, fY;
+	
+	//Der Gegner und attribute
+		Enemy enem;
+		int enemX, enemY;
+		boolean ecollideLeft, ecollideRight, ecollideUp, ecollideDown;
+		
+	double pX, pY, fX, fY, eX, eY;
 	
 	//x- und y-Position des Spielers zu Beginn des Levels
 	int playerX, playerY;
@@ -166,6 +172,15 @@ public class GameField extends JFrame
 					playerX = posX;
 					playerY = posY;
 				}
+				else if(feld[i][j] == 'g'||feld[i][j] == 'G')
+				{
+					field[i][j] = new Floor(posX, posY);
+					
+					//Erzeugt den Gegner
+					enem = new Enemy(posX, posY);
+					enemX = posX;
+					enemY = posY;
+				}
 			}
 			
 			System.out.println("");
@@ -183,6 +198,10 @@ public class GameField extends JFrame
 		//Momentante Positions des Spielers (Kollisionsabfrage)
 		pX = player1.getCenterX();
 		pY = player1.getCenterY();
+		
+		//Momentante Positions des Gegners (Kollisionsabfrage)
+		eX = enem.getCenterX();
+		eY = enem.getCenterY();
 		
 		//Schleifen, in denen das Feld gezeichnet wird und die Kollision / Logik
 		//geprueft wird
@@ -210,6 +229,19 @@ public class GameField extends JFrame
 						collideUp = true;
 				}
 				
+				if(enem.intersects(field[i][j]) && field[i][j].isSolid())
+				{
+					//Pruefe, wo die Kollision mit dem Gegner auftrat
+					if(eX > fX && eY >= fY - 20 && eY <= fY + 20)
+						ecollideLeft = true;
+					if(eX < fX && eY >= fY - 20 && eY <= fY + 20)
+						ecollideRight = true;
+					if(eY > fY && eX >= fX - 20 && eX <= fX + 20)
+						ecollideDown = true;
+					if(eY < fY && eX >= fX - 20 && eX <= fX + 20)
+						ecollideUp = true;
+				}
+				
 				//Kollisionsabfrage bezueglich der Ausgaenge
 				else if(player1.intersects(field[i][j]) && (field[i][j].toString().equals("door")))
 				{
@@ -221,12 +253,20 @@ public class GameField extends JFrame
 						this.loadLevel(lvlArray[currentLvl]);
 						this.initField();						
 					}
-					
+				
+				}
 				//Kollisionsabfrage mit Trap und direkter Neustart	
-				}else if(player1.intersects(field[i][j]) && (field[i][j].toString().equals("trap")))
+				else if(player1.intersects(field[i][j]) && (field[i][j].toString().equals("trap")))
 				{
 					isAlive = false;
 					new GameField(currentLvl);
+				}
+				
+				//Kollisionsabfrage Spieler und Gegner (ohne Aktion)
+				else if(player1.intersects(enem))
+				{
+//					isAlive = false;
+					System.out.println("true");
 				}
 				
 				//Evtl Abfrage mit den Treppen-Objekten, um notfalls wieder in
@@ -268,6 +308,20 @@ public class GameField extends JFrame
 				this.drawField();
 				
 				noMove = true;
+				
+				//Gegner bewegt sich nur hoch und runter
+				if(!ecollideDown)
+				{
+					enem.move("DOWN");
+				}
+				else if(!ecollideUp)
+				{
+					enem.move("UP");
+				}
+				else
+				{
+					enem.draw();
+				}
 				
 				//Abfrage nach Tastendruecken des Benutzers. Sorgt fuer Bewegung
 				//der Spielfigur		
@@ -333,6 +387,13 @@ public class GameField extends JFrame
 				collideLeft = false;
 				collideDown = false;
 				collideUp = false;
+				
+				//setze Kollisionswerte zurueck
+				if(ecollideDown && ecollideUp)
+				{
+					ecollideDown=false;
+				}else
+					ecollideUp=false;
 			}
 			//nach interner Aktualisierung zeichne das neue Feld ins Fenster
 			StdDraw.show();
