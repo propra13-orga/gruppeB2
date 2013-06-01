@@ -26,6 +26,10 @@ public class GameField extends JFrame
 	//Array, in welchem die Objekte des Spielfeldes gespeichert sind
 	Block[][] field;
 	
+	//Liste in denen vorerst nur Coins bearbeitet werden
+	ArrayList<Coins> coinList = new ArrayList<Coins>();
+	
+	//Liste in der Gegner hinzugefuegt, sowie geloescht werden
 	ArrayList<Enemy> enemyList = new ArrayList<Enemy>();	
 	//Eine Klasse ReadLevel, welche sich um das Einlesen der Level aus
 	//Textdatein kuemmert
@@ -163,6 +167,12 @@ public class GameField extends JFrame
 					field[i][j] = new Stairs(posX, posY);
 				else if(feld[i][j] == 'r'||feld[i][j] == 'R') //Trap hinzugefuegt
 					field[i][j] = new Trap(posX, posY);
+				//Coins werden hinzugefuegt
+				else if(feld[i][j] == 'c'||feld[i][j] == 'C')
+				{
+					field[i][j] = new Floor(posX, posY);
+					coinList.add(new Coins(posX, posY));	
+				}
 				else if(feld[i][j] == 's'||feld[i][j] == 'S')
 				{
 					field[i][j] = new Floor(posX, posY);
@@ -243,6 +253,15 @@ public class GameField extends JFrame
 					new GameField(currentLvl);
 				}
 				
+				//Kollisionsabfrage Spieler und Coins, vorerst ohne Inventar bearbeitung
+				for(int count=0;count<coinList.size();count++)
+				{
+					if(player1.intersects(coinList.get(count)))
+					{
+						coinList.get(count).setDisapear(true);
+					}
+				}
+				
 				for(int count=0;count<enemyList.size();count++)
 				{	
 					if(enemyList.get(count).intersects(field[i][j]) && field[i][j].isSolid())
@@ -307,6 +326,16 @@ public class GameField extends JFrame
 				this.drawField();
 				
 				noMove = true;
+				
+				//Coins erscheinen auf Bildschirm, oder auch nicht
+				for(int x=0;x<coinList.size();x++)
+				{
+					if(coinList.get(x).isDisapear()==true)
+					{
+						coinList.remove(x);
+					}else
+					coinList.get(x).drawImg();
+				}
 				
 				//Gegner bewegt sich nur hoch und runter
 				for(int c=0;c<enemyList.size();c++)
