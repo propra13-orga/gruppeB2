@@ -11,6 +11,9 @@ public class Player extends Rectangle
 	//x- und y-Position, an welcher der Spieler sich auf dem Spielfeld befindet.
 	private int posX, posY;
 	
+	private int health=1; // Vorerst niedrigste Stufe
+	
+	
 	//Variablen zur Animation der Bewegung
 	int swpL = 0;
 	int swpR = 0;
@@ -46,12 +49,12 @@ public class Player extends Rectangle
 		{
 			if(swpL < 6)
 			{
-				StdDraw.picture(posX, posY, "images\\player\\player_left_"+1+".png");
+				StdDraw.picture(posX, posY, "images/player/player_left_"+1+".png");
 				swpL++;
 			}
 			else
 			{
-				StdDraw.picture(posX, posY, "images\\player\\player_left_"+2+".png");
+				StdDraw.picture(posX, posY, "images/player/player_left_"+2+".png");
 				swpL++;
 				
 				if(swpL == 11)
@@ -62,12 +65,12 @@ public class Player extends Rectangle
 		{
 			if(swpR < 6)
 			{
-				StdDraw.picture(posX, posY, "images\\player\\player_right_"+1+".png");
+				StdDraw.picture(posX, posY, "images/player/player_right_"+1+".png");
 				swpR++;
 			}
 			else
 			{
-				StdDraw.picture(posX, posY, "images\\player\\player_right_"+2+".png");
+				StdDraw.picture(posX, posY, "images/player/player_right_"+2+".png");
 				swpR++;
 				
 				if(swpR == 11)
@@ -78,12 +81,12 @@ public class Player extends Rectangle
 		{
 			if(swpU < 6)
 			{
-				StdDraw.picture(posX, posY, "images\\player\\player_up_"+1+".png");
+				StdDraw.picture(posX, posY, "images/player/player_up_"+1+".png");
 				swpU++;
 			}
 			else
 			{
-				StdDraw.picture(posX, posY, "images\\player\\player_up_"+2+".png");
+				StdDraw.picture(posX, posY, "images/player/player_up_"+2+".png");
 				swpU++;
 				
 				if(swpU == 11)
@@ -94,12 +97,12 @@ public class Player extends Rectangle
 		{
 			if(swpD < 6)
 			{
-				StdDraw.picture(posX, posY, "images\\player\\player_down_"+1+".png");
+				StdDraw.picture(posX, posY, "images/player/player_down_"+1+".png");
 				swpD++;
 			}
 			else
 			{
-				StdDraw.picture(posX, posY, "images\\player\\player_down_"+2+".png");
+				StdDraw.picture(posX, posY, "images/player/player_down_"+2+".png");
 				swpD++;
 				
 				if(swpD == 11)
@@ -113,7 +116,7 @@ public class Player extends Rectangle
      */
 	public void draw()
 	{
-		StdDraw.picture(posX, posY, "images\\player\\player_down_"+1+".png");
+		StdDraw.picture(posX, posY, "images/player/player_down_"+1+".png");
 	}
 
 	 /**
@@ -171,4 +174,14 @@ public class Player extends Rectangle
 	{
 		return posY;
 	}
+	public int getHealth() {
+		if (health>810)
+			health=810;
+		return health;
+	}
+
+	public void setHealth(int health) {
+		this.health = health;
+	}
+
 }

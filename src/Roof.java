@@ -40,21 +40,21 @@ public class Roof extends Block
 	public void drawImg()
 	{
 		if(pos == 1)
-			StdDraw.picture(posX, posY, "images\\arena\\Roof_Tile_RM.png");
+			StdDraw.picture(posX, posY, "images/arena/Roof_Tile_RM.png");
 		else if(pos == 2)
-			StdDraw.picture(posX, posY, "images\\arena\\Roof_Tile_CL.png");
+			StdDraw.picture(posX, posY, "images/arena/Roof_Tile_CL.png");
 		else if(pos == 3)
-			StdDraw.picture(posX, posY, "images\\arena\\Roof_Tile_OM.png");
+			StdDraw.picture(posX, posY, "images/arena/Roof_Tile_OM.png");
 		else if(pos == 4)
-			StdDraw.picture(posX, posY, "images\\arena\\Roof_Tile_CR.png");
+			StdDraw.picture(posX, posY, "images/arena/Roof_Tile_CR.png");
 		else if(pos == 5)
-			StdDraw.picture(posX, posY, "images\\arena\\Roof_Tile_LM.png");
+			StdDraw.picture(posX, posY, "images/arena/Roof_Tile_LM.png");
 		else if(pos == 6)
-			StdDraw.picture(posX, posY, "images\\arena\\Roof_Tile_LRM.png");
+			StdDraw.picture(posX, posY, "images/arena/Roof_Tile_LRM.png");
 		else if(pos == 7)
-			StdDraw.picture(posX, posY, "images\\arena\\Roof_Tile_LRO.png");
+			StdDraw.picture(posX, posY, "images/arena/Roof_Tile_LRO.png");
 		else
-			StdDraw.picture(posX, posY, "images\\arena\\Roof_Tile_M.png");			
+			StdDraw.picture(posX, posY, "images/arena/Roof_Tile_M.png");			
 	}
 	
     /**

@@ -29,6 +29,8 @@ public class GameField extends JFrame
 	//Liste in denen vorerst nur Coins bearbeitet werden
 	ArrayList<Coins> coinList = new ArrayList<Coins>();
 	
+	ArrayList<Heart> heartList = new ArrayList<Heart>();
+	
 	//Liste in der Gegner hinzugefuegt, sowie geloescht werden
 	ArrayList<Enemy> enemyList = new ArrayList<Enemy>();	
 	//Eine Klasse ReadLevel, welche sich um das Einlesen der Level aus
@@ -44,6 +46,9 @@ public class GameField extends JFrame
 	
 	//Der Spieler
 	Player player1;
+	
+	//Energieanzeige
+	Energy energ;
 	//x- und y-Position des Spielers und x- und y-Position eines Spielfeldblockes 
 	//(zur Kollisionsabfrage und Logik)
 	
@@ -86,7 +91,7 @@ public class GameField extends JFrame
 	
 	/**
 	* Konstruktor zum Neuladen im selben Level
-	* spater mit zählen der Lebenspunbkte
+	* spater mit zï¿½hlen der Lebenspunbkte
 	* @param currentLvl
 	*/
 	public GameField(int currentLvl)
@@ -167,11 +172,26 @@ public class GameField extends JFrame
 					field[i][j] = new Stairs(posX, posY);
 				else if(feld[i][j] == 'r'||feld[i][j] == 'R') //Trap hinzugefuegt
 					field[i][j] = new Trap(posX, posY);
+				
+				else if(feld[i][j] == '#'||feld[i][j] == '#')
+					field[i][j] = new Status(posX, posY);
+				
 				//Coins werden hinzugefuegt
 				else if(feld[i][j] == 'c'||feld[i][j] == 'C')
 				{
 					field[i][j] = new Floor(posX, posY);
 					coinList.add(new Coins(posX, posY));	
+				}
+				else if(feld[i][j] == 'h'||feld[i][j] == 'H')
+				{
+					field[i][j] = new Floor(posX, posY);
+					heartList.add(new Heart(posX, posY));	
+				}
+				else if(feld[i][j] == '+'||feld[i][j] == '+')
+				{
+					field[i][j] = new Status(posX, posY);
+					energ = new Energy(posX, posY);
+					field[i][j] = energ;
 				}
 				else if(feld[i][j] == 's'||feld[i][j] == 'S')
 				{
@@ -197,7 +217,7 @@ public class GameField extends JFrame
 	
     /**
      * Methode, die das Spielfeld mit StdDraw zeichnet. Dabei wird das Array "field"
-     * systematisch abgearbeitet, damit StdDraw weiß, welcher Block an welcher Stelle
+     * systematisch abgearbeitet, damit StdDraw weiï¿½, welcher Block an welcher Stelle
      * gezeichnet werden soll.
      *
      */	
@@ -214,7 +234,18 @@ public class GameField extends JFrame
 			{		
 				//Rufe die Zeichen-Methode der Bloecke auf
 				field[i][j].drawImg();
-
+				if(player1.getHealth()>540)
+				{
+					energ.setNrg(1);
+				}
+				else if(player1.getHealth()>270)
+				{
+					energ.setNrg(2);
+				}
+				else if(player1.getHealth()>0)
+				{
+					energ.setNrg(3);
+				}
 				//Position des gerade betrachteten Blocks
 				fX = field[i][j].getCenterX();
 				fY = field[i][j].getCenterY();
@@ -261,6 +292,16 @@ public class GameField extends JFrame
 						coinList.get(count).setDisapear(true);
 					}
 				}
+				for(int count=0;count<heartList.size();count++)
+				{
+					int x=0;
+					if(player1.intersects(heartList.get(count)))
+					{
+						x=player1.getHealth() +1;
+						player1.setHealth(x);
+						heartList.get(count).setDisapear(true);
+					}
+				}
 				
 				for(int count=0;count<enemyList.size();count++)
 				{	
@@ -278,10 +319,12 @@ public class GameField extends JFrame
 						if(eY < fY && eX >= fX - 20 && eX <= fX + 20)
 							enemyList.get(count).setColUp(true);
 					}
-					
+					int x = 0;
 					if(player1.intersects(enemyList.get(count)))
 					{
 //						isAlive = false;
+						x = player1.getHealth() -1;
+						player1.setHealth(x);
 						System.out.println("true");
 					}
 				}
@@ -302,8 +345,8 @@ public class GameField extends JFrame
 	}
 	
     /**
-     * Spielschleife. Wird während des Spiels permanent durchlaufen. Hier werden
-     * Animationen realisiert und spielbezogene (interne) Werte geprüft und ggf.
+     * Spielschleife. Wird wï¿½hrend des Spiels permanent durchlaufen. Hier werden
+     * Animationen realisiert und spielbezogene (interne) Werte geprï¿½ft und ggf.
      * aktualisiert.
      *
      */
@@ -335,6 +378,15 @@ public class GameField extends JFrame
 						coinList.remove(x);
 					}else
 					coinList.get(x).drawImg();
+				}
+				
+				for(int x=0;x<heartList.size();x++)
+				{
+					if(heartList.get(x).isDisapear()==true)
+					{
+						heartList.remove(x);
+					}else
+					heartList.get(x).drawImg();
 				}
 				
 				//Gegner bewegt sich nur hoch und runter

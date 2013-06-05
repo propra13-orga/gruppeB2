@@ -35,9 +35,9 @@ public class Coins extends Block
 	{
 		if(disapear==false)
 		{
-			StdDraw.picture(posX, posY, "images\\items\\coins.png");
+			StdDraw.picture(posX, posY, "images/items/coins.png");
 		}else
-			StdDraw.picture(posX, posY, "images\\arena\\Ground_Tile_4.png");
+			StdDraw.picture(posX, posY, "images/arena/Ground_Tile_4.png");
 	}
 
 	public boolean isDisapear()

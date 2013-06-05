@@ -15,15 +15,15 @@ public class MainMenu
 	public void draw()
 	{
 		if(mouseX < 0.5 && mouseX > 0.28 && mouseY < 0.93 && mouseY > 0.88)
-			StdDraw.picture(0.5, 0.5, "images\\menu\\main\\Main_NewGame.png");
+			StdDraw.picture(0.5, 0.5, "images/menu/main/Main_NewGame.png");
 		else if(mouseX < 0.496 && mouseX > 0.28 && mouseY < 0.797 && mouseY > 0.752)
-			StdDraw.picture(0.5, 0.5, "images\\menu\\main\\Main_Load.png");
+			StdDraw.picture(0.5, 0.5, "images/menu/main/Main_Load.png");
 		else if(mouseX < 0.488 && mouseX > 0.281 && mouseY < 0.67 && mouseY > 0.622)
-			StdDraw.picture(0.5, 0.5, "images\\menu\\main\\Main_Settings.png");
+			StdDraw.picture(0.5, 0.5, "images/menu/main/Main_Settings.png");
 		else if(mouseX < 0.485 && mouseX > 0.289 && mouseY < 0.544 && mouseY > 0.492)
-			StdDraw.picture(0.5, 0.5, "images\\menu\\main\\Main_End.png");
+			StdDraw.picture(0.5, 0.5, "images/menu/main/Main_End.png");
 		else
-			StdDraw.picture(0.5, 0.5, "images\\menu\\main\\Main.png");
+			StdDraw.picture(0.5, 0.5, "images/menu/main/Main.png");
 	}
 	
 	public void run()
@@ -62,13 +62,13 @@ public class MainMenu
 		{
 			for(int i = 1; i < 21; i++)
 			{
-				StdDraw.picture(0.5, 0.5, "images\\intro\\Sponge"+i+".png");
+				StdDraw.picture(0.5, 0.5, "images/intro/Sponge"+i+".png");
 				Thread.sleep(100);
 			}
 			Thread.sleep(3000);
 			for(int i = 20; i > 0; i--)
 			{
-				StdDraw.picture(0.5, 0.5, "images\\intro\\Sponge"+i+".png");
+				StdDraw.picture(0.5, 0.5, "images/intro/Sponge"+i+".png");
 				Thread.sleep(100);
 			}
 		}catch(InterruptedException e)

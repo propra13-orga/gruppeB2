@@ -26,22 +26,22 @@ public class Enemy extends Rectangle {
 	{
 		if(swap < 10)
 		{
-			StdDraw.picture(posX, posY, "images\\enemy\\enemy"+1+".png");
+			StdDraw.picture(posX, posY, "images/enemy/enemy"+1+".png");
 			swap++;
 		}
 		else if(swap < 20)
 		{
-			StdDraw.picture(posX, posY, "images\\enemy\\enemy"+2+".png");
+			StdDraw.picture(posX, posY, "images/enemy/enemy"+2+".png");
 			swap++;
 		}
 		else if(swap < 30)
 		{
-			StdDraw.picture(posX, posY, "images\\enemy\\enemy"+3+".png");
+			StdDraw.picture(posX, posY, "images/enemy/enemy"+3+".png");
 			swap++;
 		}
 		else
 		{
-			StdDraw.picture(posX, posY, "images\\enemy\\enemy"+4+".png");
+			StdDraw.picture(posX, posY, "images/enemy/enemy"+4+".png");
 			swap++;
 			
 			if(swap == 40)

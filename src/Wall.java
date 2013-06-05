@@ -43,21 +43,21 @@ public class Wall extends Block
 	{
 		//if(!this.hidden)
 			if(rand < 0.05)
-				StdDraw.picture(posX, posY, "images\\arena\\Wall_Tile_"+5+".png");
+				StdDraw.picture(posX, posY, "images/arena/Wall_Tile_"+5+".png");
 			else if(rand < 0.1)
-				StdDraw.picture(posX, posY, "images\\arena\\Wall_Tile_"+6+".png");
+				StdDraw.picture(posX, posY, "images/arena/Wall_Tile_"+6+".png");
 			else if(rand < 0.15)
-				StdDraw.picture(posX, posY, "images\\arena\\Wall_Tile_"+7+".png");
+				StdDraw.picture(posX, posY, "images/arena/Wall_Tile_"+7+".png");
 			else if(rand < 0.2)
-				StdDraw.picture(posX, posY, "images\\arena\\Wall_Tile_"+8+".png");
+				StdDraw.picture(posX, posY, "images/arena/Wall_Tile_"+8+".png");
 			else if(rand < 0.40)
-				StdDraw.picture(posX, posY, "images\\arena\\Wall_Tile_"+1+".png");
+				StdDraw.picture(posX, posY, "images/arena/Wall_Tile_"+1+".png");
 			else if(rand < 0.60)
-				StdDraw.picture(posX, posY, "images\\arena\\Wall_Tile_"+2+".png");
+				StdDraw.picture(posX, posY, "images/arena/Wall_Tile_"+2+".png");
 			else if(rand < 0.80)
-				StdDraw.picture(posX, posY, "images\\arena\\Wall_Tile_"+3+".png");
+				StdDraw.picture(posX, posY, "images/arena/Wall_Tile_"+3+".png");
 			else
-				StdDraw.picture(posX, posY, "images\\arena\\Wall_Tile_"+4+".png");
+				StdDraw.picture(posX, posY, "images/arena/Wall_Tile_"+4+".png");
 	}
 	
     /**

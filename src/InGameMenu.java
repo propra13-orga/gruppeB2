@@ -12,15 +12,15 @@ public class InGameMenu
 	public void draw()
 	{
 		if(mouseX < 0.5 && mouseX > 0.28 && mouseY < 0.93 && mouseY > 0.88)
-			StdDraw.picture(0.5, 0.5, "images\\menu\\main\\Main_NewGame.png");
+			StdDraw.picture(0.5, 0.5, "images/menu/main/Main_NewGame.png");
 		else if(mouseX < 0.496 && mouseX > 0.28 && mouseY < 0.797 && mouseY > 0.752)
-			StdDraw.picture(0.5, 0.5, "images\\menu\\main\\Main_Load.png");
+			StdDraw.picture(0.5, 0.5, "images/menu/main/Main_Load.png");
 		else if(mouseX < 0.488 && mouseX > 0.281 && mouseY < 0.67 && mouseY > 0.622)
-			StdDraw.picture(0.5, 0.5, "images\\menu\\main\\Main_Settings.png");
+			StdDraw.picture(0.5, 0.5, "images/menu/main/Main_Settings.png");
 		else if(mouseX < 0.485 && mouseX > 0.289 && mouseY < 0.544 && mouseY > 0.492)
-			StdDraw.picture(0.5, 0.5, "images\\menu\\main\\Main_End.png");
+			StdDraw.picture(0.5, 0.5, "images/menu/main/Main_End.png");
 		else
-			StdDraw.picture(0.5, 0.5, "images\\menu\\main\\Main.png");
+			StdDraw.picture(0.5, 0.5, "images/menu/main/Main.png");
 	}
 	
 	public void run()

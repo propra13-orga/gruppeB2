@@ -43,13 +43,13 @@ public class Floor extends Block
 	{
 		//if(!this.hidden)
 			if(rand < 0.25)
-				StdDraw.picture(posX, posY, "images\\arena\\Ground_Tile_"+1+".png");
+				StdDraw.picture(posX, posY, "images/arena/Ground_Tile_"+1+".png");
 			else if(rand < 0.5)
-				StdDraw.picture(posX, posY, "images\\arena\\Ground_Tile_"+2+".png");
+				StdDraw.picture(posX, posY, "images/arena/Ground_Tile_"+2+".png");
 			else if(rand < 0.75)
-				StdDraw.picture(posX, posY, "images\\arena\\Ground_Tile_"+3+".png");
+				StdDraw.picture(posX, posY, "images/arena/Ground_Tile_"+3+".png");
 			else
-				StdDraw.picture(posX, posY, "images\\arena\\Ground_Tile_"+4+".png");
+				StdDraw.picture(posX, posY, "images/arena/Ground_Tile_"+4+".png");
 	}
 	
     /**

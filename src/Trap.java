@@ -34,7 +34,7 @@ public class Trap extends Block
 	void drawImg()
 	{
 		//if(!this.hidden)
-			StdDraw.picture(posX, posY, "images\\arena\\Trap.png");		
+			StdDraw.picture(posX, posY, "images/arena/Trap.png");		
 	}
 	
     /**

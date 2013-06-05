@@ -35,7 +35,7 @@ public class Stairs extends Block
 	public void drawImg()
 	{
 		//if(!this.hidden)
-			StdDraw.picture(posX, posY, "images\\arena\\Exit_Tile_"+2+".png");
+			StdDraw.picture(posX, posY, "images/arena/Exit_Tile_"+2+".png");
 	}
 	
     /**

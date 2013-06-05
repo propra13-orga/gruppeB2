@@ -34,7 +34,7 @@ public class Door extends Block
 	public void drawImg()
 	{
 		//if(!this.hidden)
-			StdDraw.picture(posX, posY, "images\\arena\\Exit_Tile_"+1+".png");
+			StdDraw.picture(posX, posY, "images/arena/Exit_Tile_"+1+".png");
 	}
 	
     /**
