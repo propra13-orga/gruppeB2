@@ -1,16 +1,16 @@
 xxxxxxxxxxxxxxxxxx
-xxx          xx  x
+xxx     g    xx  x
 x   xxxx     xx  x
 x xxxtsx xxxxxx  x
-x      x xxxxxx  x
-xxxxxxxx xxg     x
-xxxxcc       xxxxx
-x      xxxx  xx  e
-x xxxxxxxxx  xx xx
-x     xxx    xx  x
+x     x  xxxxxx  x
+xxxxxxgx xxg  q  x
+xxxx cc      xxxxx
+x  q   xxxx  xx  e
+x xxxhhhxxx  xx xx
+x     xxx    qx  x
 xxxxx xxx  xxxxx x
-x     cc    xxx  x
+x    rcc    xxx  x
 x   xxxx    xxx xx
-x   xxxx        xx
+x   xxxx  r     xx
 xxxxxxxxxxxxxxxxxx
-#+################
+#+#############=##

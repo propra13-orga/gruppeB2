@@ -11,9 +11,15 @@ public class Player extends Rectangle
 	//x- und y-Position, an welcher der Spieler sich auf dem Spielfeld befindet.
 	private int posX, posY;
 	
-	private int health=1; // Vorerst niedrigste Stufe
+	// energywert 
+	private int health; 
 	
+	// manawert
+	private int mana;
 	
+	//Anzahl Gold
+	private int money;
+
 	//Variablen zur Animation der Bewegung
 	int swpL = 0;
 	int swpR = 0;
@@ -175,13 +181,35 @@ public class Player extends Rectangle
 		return posY;
 	}
 	public int getHealth() {
-		if (health>810)
-			health=810;
+		if (health>3)
+			health=3;
+		else if(health<0)
+			health=0;
 		return health;
 	}
 
 	public void setHealth(int health) {
-		this.health = health;
+		this.health = this.health + health;
+	}
+	
+	public void setHealthDown(int health) {
+		this.health = this.health - health;
+	}
+	
+	public int getMoney() {
+		return money;
+	}
+
+	public void setMoney(int money) {
+		this.money = this.money + money;
+	}
+	
+	public int getMana() {
+		return mana;
+	}
+
+	public void setMana(int mana) {
+		this.mana = this.mana + mana;
 	}
 
 }

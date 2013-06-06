@@ -8,8 +8,7 @@ public class Enemy extends Rectangle {
 	public int posX, posY;
 	
 	private boolean colUp, colDown, colRight, colLeft;
-	
-	
+
 	private final int SPEED = 2;
 	
 	private int swap;
@@ -48,6 +47,8 @@ public class Enemy extends Rectangle {
 				swap = 0;					
 		}			
 	}
+	
+
 	
 	public void move(String direction)
 	{

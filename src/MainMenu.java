@@ -8,7 +8,7 @@ public class MainMenu
 	public MainMenu(int w, int h)
 	{
 		StdDraw.setCanvasSize(w, h);
-		this.intro();
+		//this.intro();
 		this.run();
 	}
 	

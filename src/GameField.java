@@ -26,13 +26,12 @@ public class GameField extends JFrame
 	//Array, in welchem die Objekte des Spielfeldes gespeichert sind
 	Block[][] field;
 	
-	//Liste in denen vorerst nur Coins bearbeitet werden
-	ArrayList<Coins> coinList = new ArrayList<Coins>();
+	//In der Liste sollen alle Gegenstaende hinterlegt werden
+	ArrayList<Block> itemList = new ArrayList<Block>();
 	
-	ArrayList<Heart> heartList = new ArrayList<Heart>();
+	//In der Liste sollen alle Gegner hinterlegt werden
+	ArrayList<Enemy> enemyList = new ArrayList<Enemy>();
 	
-	//Liste in der Gegner hinzugefuegt, sowie geloescht werden
-	ArrayList<Enemy> enemyList = new ArrayList<Enemy>();	
 	//Eine Klasse ReadLevel, welche sich um das Einlesen der Level aus
 	//Textdatein kuemmert
 	ReadLevel lvl;
@@ -49,11 +48,11 @@ public class GameField extends JFrame
 	
 	//Energieanzeige
 	Energy energ;
+	
+	Mana mana;
+	
 	//x- und y-Position des Spielers und x- und y-Position eines Spielfeldblockes 
 	//(zur Kollisionsabfrage und Logik)
-	
-	//Der Gegner und attribute
-	Enemy enem;
 		
 	double pX, pY, fX, fY, eX, eY;
 	
@@ -176,22 +175,32 @@ public class GameField extends JFrame
 				else if(feld[i][j] == '#'||feld[i][j] == '#')
 					field[i][j] = new Status(posX, posY);
 				
-				//Coins werden hinzugefuegt
 				else if(feld[i][j] == 'c'||feld[i][j] == 'C')
 				{
 					field[i][j] = new Floor(posX, posY);
-					coinList.add(new Coins(posX, posY));	
+					itemList.add(new Coins(posX, posY));	
 				}
 				else if(feld[i][j] == 'h'||feld[i][j] == 'H')
 				{
 					field[i][j] = new Floor(posX, posY);
-					heartList.add(new Heart(posX, posY));	
+					itemList.add(new Heart(posX, posY));	
+				}
+				else if(feld[i][j] == 'q'||feld[i][j] == 'Q')
+				{
+					field[i][j] = new Floor(posX, posY);
+					itemList.add(new ManaBottle(posX, posY));	
 				}
 				else if(feld[i][j] == '+'||feld[i][j] == '+')
 				{
 					field[i][j] = new Status(posX, posY);
 					energ = new Energy(posX, posY);
 					field[i][j] = energ;
+				}
+				else if(feld[i][j] == '='||feld[i][j] == '=')
+				{
+					field[i][j] = new Status(posX, posY);
+					mana = new Mana(posX, posY);
+					field[i][j] = mana;
 				}
 				else if(feld[i][j] == 's'||feld[i][j] == 'S')
 				{
@@ -234,17 +243,31 @@ public class GameField extends JFrame
 			{		
 				//Rufe die Zeichen-Methode der Bloecke auf
 				field[i][j].drawImg();
-				if(player1.getHealth()>540)
+				
+				if(player1.getHealth()>2)
 				{
 					energ.setNrg(1);
 				}
-				else if(player1.getHealth()>270)
+				else if(player1.getHealth()>1)
 				{
 					energ.setNrg(2);
 				}
 				else if(player1.getHealth()>0)
 				{
 					energ.setNrg(3);
+				}
+				
+				if(player1.getMana()>2)
+				{
+					mana.setNrg(1);
+				}
+				else if(player1.getMana()>1)
+				{
+					mana.setNrg(2);
+				}
+				else if(player1.getMana()>0)
+				{
+					mana.setNrg(3);
 				}
 				//Position des gerade betrachteten Blocks
 				fX = field[i][j].getCenterX();
@@ -285,24 +308,32 @@ public class GameField extends JFrame
 				}
 				
 				//Kollisionsabfrage Spieler und Coins, vorerst ohne Inventar bearbeitung
-				for(int count=0;count<coinList.size();count++)
+				for(int count=0;count<itemList.size();count++)
 				{
-					if(player1.intersects(coinList.get(count)))
+					if(player1.intersects(itemList.get(count)))
 					{
-						coinList.get(count).setDisapear(true);
+						if(itemList.get(count).toString()=="coin")
+						{
+							itemList.remove(itemList.get(count));
+							player1.setMoney(1);
+//							System.out.println(player1.getMoney());
+						}
+						else if(itemList.get(count).toString()=="heart")
+						{
+							itemList.remove(itemList.get(count));
+							player1.setHealth(1);
+//							System.out.println(player1.getHealth());
+						}
+						else if(itemList.get(count).toString()=="mana")
+						{
+							itemList.remove(itemList.get(count));
+							player1.setMana(1);
+							
+							System.out.println(player1.getMana());
+						}
 					}
 				}
-				for(int count=0;count<heartList.size();count++)
-				{
-					int x=0;
-					if(player1.intersects(heartList.get(count)))
-					{
-						x=player1.getHealth() +1;
-						player1.setHealth(x);
-						heartList.get(count).setDisapear(true);
-					}
-				}
-				
+								
 				for(int count=0;count<enemyList.size();count++)
 				{	
 					if(enemyList.get(count).intersects(field[i][j]) && field[i][j].isSolid())
@@ -319,12 +350,14 @@ public class GameField extends JFrame
 						if(eY < fY && eX >= fX - 20 && eX <= fX + 20)
 							enemyList.get(count).setColUp(true);
 					}
-					int x = 0;
+					
+					//bei kontakt des Spielers und einem Gegner, Lebenspunktabzug
+					//gegner explodiert
 					if(player1.intersects(enemyList.get(count)))
 					{
 //						isAlive = false;
-						x = player1.getHealth() -1;
-						player1.setHealth(x);
+						enemyList.remove(enemyList.get(count));
+						player1.setHealthDown(1);
 						System.out.println("true");
 					}
 				}
@@ -371,22 +404,9 @@ public class GameField extends JFrame
 				noMove = true;
 				
 				//Coins erscheinen auf Bildschirm, oder auch nicht
-				for(int x=0;x<coinList.size();x++)
+				for(int x=0;x<itemList.size();x++)
 				{
-					if(coinList.get(x).isDisapear()==true)
-					{
-						coinList.remove(x);
-					}else
-					coinList.get(x).drawImg();
-				}
-				
-				for(int x=0;x<heartList.size();x++)
-				{
-					if(heartList.get(x).isDisapear()==true)
-					{
-						heartList.remove(x);
-					}else
-					heartList.get(x).drawImg();
+					itemList.get(x).drawImg();
 				}
 				
 				//Gegner bewegt sich nur hoch und runter
