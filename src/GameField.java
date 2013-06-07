@@ -44,7 +44,7 @@ public class GameField extends JFrame
 	boolean collideLeft, collideRight, collideUp, collideDown, inGameMenu;
 	
 	//Der Spieler
-	Player player1;
+	Player player1 = new Player(0,0);
 	
 	//Energieanzeige
 	Energy energ;
@@ -141,6 +141,8 @@ public class GameField extends JFrame
 		columns = feld[0].length;
 		rows = feld.length;
 		
+		isAlive = true;
+		
 		//Ein neues Block-Array von der entsprechenden Spielfeldgroesse
 		field = new Block[rows][columns];
 		
@@ -207,7 +209,8 @@ public class GameField extends JFrame
 					field[i][j] = new Floor(posX, posY);
 					
 					//Erzeugt den Spieler und setzt seine Startposition
-					player1 = new Player(posX, posY);
+					player1.setPosX(posX);
+					player1.setPosY(posY);
 					playerX = posX;
 					playerY = posY;
 				}
@@ -303,11 +306,22 @@ public class GameField extends JFrame
 				//Kollisionsabfrage mit Trap und direkter Neustart	
 				else if(player1.intersects(field[i][j]) && (field[i][j].toString().equals("trap")))
 				{
+					
 					isAlive = false;
-					new GameField(currentLvl);
+					player1.setHealthDown(1);
+					itemList.clear();
+					enemyList.clear();
+					if(itemList.size()==0 && enemyList.size()==0)
+					{
+						StdDraw.clear();
+						this.loadLevel(lvlArray[currentLvl]);
+						this.initField();
+						
+					}
+					
 				}
 				
-				//Kollisionsabfrage Spieler und Coins, vorerst ohne Inventar bearbeitung
+				//Kollisionsabfrage Spieler und Items, vorerst ohne Inventar bearbeitung
 				for(int count=0;count<itemList.size();count++)
 				{
 					if(player1.intersects(itemList.get(count)))
