@@ -10,15 +10,6 @@ public class Player extends Rectangle
 	
 	//x- und y-Position, an welcher der Spieler sich auf dem Spielfeld befindet.
 	private int posX, posY;
-	
-	private Mana manaStatus;
-	
-	public Mana getManaStatus() {
-		return manaStatus;
-	}
-	public void setManaStatus(Mana manaStatus) {
-		this.manaStatus = manaStatus;
-	}
 
 	// energywert 
 	private int health; 
@@ -35,10 +26,6 @@ public class Player extends Rectangle
 	int swpU = 0;
 	int swpD = 0;
 	
-	public Player()
-	{
-		super();
-	}
     /**
      * Konstruktor eines Player-Objekts
      *
@@ -197,7 +184,7 @@ public class Player extends Rectangle
 		if (health>3)
 			health=3;
 		else if(health<0)
-			health=0;
+				health=0;
 		return health;
 	}
 

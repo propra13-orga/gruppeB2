@@ -227,13 +227,10 @@ public class GameField extends JFrame
 		}
 	}
 	
-    /**
-     * Methode, die das Spielfeld mit StdDraw zeichnet. Dabei wird das Array "field"
-     * systematisch abgearbeitet, damit StdDraw weiï¿½, welcher Block an welcher Stelle
-     * gezeichnet werden soll.
-     *
-     */	
-	public void drawField()
+	/**
+	 * Berechnung der Kollision und deren Folgen
+	 */
+	public void calculate()
 	{
 		//Momentante Positions des Spielers (Kollisionsabfrage)
 		pX = player1.getCenterX();
@@ -243,10 +240,7 @@ public class GameField extends JFrame
 		//geprueft wird
 		for(int i = 0; i < rows; i++)
 			for(int j = 0; j < columns; j++)
-			{		
-				//Rufe die Zeichen-Methode der Bloecke auf
-				field[i][j].drawImg();
-				
+			{						
 				if(player1.getHealth()>2)
 				{
 					energ.setNrg(1);
@@ -272,6 +266,7 @@ public class GameField extends JFrame
 				{
 					mana.setNrg(3);
 				}
+				
 				//Position des gerade betrachteten Blocks
 				fX = field[i][j].getCenterX();
 				fY = field[i][j].getCenterY();
@@ -301,53 +296,28 @@ public class GameField extends JFrame
 						this.loadLevel(lvlArray[currentLvl]);
 						this.initField();						
 					}
-				
 				}
+				
 				//Kollisionsabfrage mit Trap und direkter Neustart	
 				else if(player1.intersects(field[i][j]) && (field[i][j].toString().equals("trap")))
-				{
-					
+				{	
 					isAlive = false;
-					player1.setHealthDown(1);
-					itemList.clear();
+					player1.setHealthDown(1);//Lebensenergie wird um eins runter gesetzt
+					
+					//Listen werden für neu initialisierung geleert
+					itemList.clear(); 
 					enemyList.clear();
+					
 					if(itemList.size()==0 && enemyList.size()==0)
 					{
+						//Neuladen des Spielfeldes
 						StdDraw.clear();
 						this.loadLevel(lvlArray[currentLvl]);
-						this.initField();
-						
+						this.initField();	
 					}
-					
 				}
 				
-				//Kollisionsabfrage Spieler und Items, vorerst ohne Inventar bearbeitung
-				for(int count=0;count<itemList.size();count++)
-				{
-					if(player1.intersects(itemList.get(count)))
-					{
-						if(itemList.get(count).toString()=="coin")
-						{
-							itemList.remove(itemList.get(count));
-							player1.setMoney(1);
-//							System.out.println(player1.getMoney());
-						}
-						else if(itemList.get(count).toString()=="heart")
-						{
-							itemList.remove(itemList.get(count));
-							player1.setHealth(1);
-//							System.out.println(player1.getHealth());
-						}
-						else if(itemList.get(count).toString()=="mana")
-						{
-							itemList.remove(itemList.get(count));
-							player1.setMana(1);
-							
-							System.out.println(player1.getMana());
-						}
-					}
-				}
-								
+				//Kollisionsabfrage Spieler und Items, vorerst ohne Inventar bearbeitung				
 				for(int count=0;count<enemyList.size();count++)
 				{	
 					if(enemyList.get(count).intersects(field[i][j]) && field[i][j].isSolid())
@@ -372,7 +342,33 @@ public class GameField extends JFrame
 //						isAlive = false;
 						enemyList.remove(enemyList.get(count));
 						player1.setHealthDown(1);
-						System.out.println("true");
+					}
+				}
+				
+				for(int count=0;count<itemList.size();count++)
+				{
+							
+					if(player1.intersects(itemList.get(count)))
+					{
+						if(itemList.get(count).toString()=="coin")
+						{
+							//Gold
+							itemList.remove(itemList.get(count));
+							player1.setMoney(1);
+						}
+						else if(itemList.get(count).toString()=="heart")
+						{
+							//energie
+							itemList.remove(itemList.get(count));
+							player1.setHealth(1);
+						}
+						else if(itemList.get(count).toString()=="mana")
+						{
+							//Mana
+							itemList.remove(itemList.get(count));
+							player1.setMana(1);
+						}
+						
 					}
 				}
 				
@@ -391,6 +387,26 @@ public class GameField extends JFrame
 			}				
 	}
 	
+	/**
+	 * zeichnet aktuelles Spielfeld mit allen aktiven Elementen
+	 */
+	public void drawField()
+	{
+		//Spielfeld
+		for(int i = 0; i < rows; i++)
+			for(int j = 0; j < columns; j++)
+				field[i][j].drawImg();
+				
+		//Aktive Gegner
+		for(int c=0;c<enemyList.size();c++)
+			enemyList.get(c).draw();
+		
+		//Aktive Gegenstaende
+		for(int count=0;count<itemList.size();count++)
+			itemList.get(count).drawImg();
+				
+	}
+
     /**
      * Spielschleife. Wird wï¿½hrend des Spiels permanent durchlaufen. Hier werden
      * Animationen realisiert und spielbezogene (interne) Werte geprï¿½ft und ggf.
@@ -412,16 +428,15 @@ public class GameField extends JFrame
 			{
 				//Loesche die Zeichenflaeche
 				StdDraw.clear(StdDraw.BLACK);
+				
 				//Zeichne neues Feld und pruefe Kollisionen
-				this.drawField();
+				drawField();
+				
+				//Berechnet die Kollision
+				calculate();
+				
 				
 				noMove = true;
-				
-				//Coins erscheinen auf Bildschirm, oder auch nicht
-				for(int x=0;x<itemList.size();x++)
-				{
-					itemList.get(x).drawImg();
-				}
 				
 				//Gegner bewegt sich nur hoch und runter
 				for(int c=0;c<enemyList.size();c++)

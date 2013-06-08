@@ -55,23 +55,21 @@ public class Enemy extends Rectangle {
 		if(direction.equalsIgnoreCase(Direction.DOWN))
 			{
 				posY -= SPEED;
-				this.draw();
 			}			
-		if(direction.equalsIgnoreCase(Direction.LEFT))
+		else if(direction.equalsIgnoreCase(Direction.LEFT))
 			{
 				posX -= SPEED;
-				this.draw();
 			}
-		if(direction.equalsIgnoreCase(Direction.RIGHT))
+		else if(direction.equalsIgnoreCase(Direction.RIGHT))
 			{
 				posX += SPEED;
-				this.draw();
 			}
-		if(direction.equalsIgnoreCase(Direction.UP))
+		else if(direction.equalsIgnoreCase(Direction.UP))
 			{
 				posY += SPEED;
-				this.draw();
 			}
+		
+			
 		this.setLocation(posX, posY);
 	}
 	
