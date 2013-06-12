@@ -32,7 +32,7 @@ public class GameField extends JFrame
 	//In der Liste sollen alle Gegner hinterlegt werden
 	ArrayList<Enemy> enemyList = new ArrayList<Enemy>();
 	
-	Boss boss;
+	ArrayList<Boss> bossList = new ArrayList<Boss>();
 
 	Npc npc;
 	//Eine Klasse ReadLevel, welche sich um das Einlesen der Level aus
@@ -221,12 +221,11 @@ public class GameField extends JFrame
 					mana = new Mana(posX, posY);
 					field[i][j] = mana;
 				}
+				//Boss
 				else if(feld[i][j] == '§'||feld[i][j] == '§')
 				{
 					field[i][j] = new Floor(posX, posY);
-					boss = new Boss(posY, posY);
-					boss.setPosX(posX);
-					boss.setPosY(posY);
+					bossList.add(new Boss(posX, posY));
 				}	
 				else if(feld[i][j] == 's'||feld[i][j] == 'S')
 				{
@@ -355,7 +354,7 @@ public class GameField extends JFrame
 				else if(player1.intersects(field[i][j]) && (field[i][j].toString().equals("trap")))
 				{	
 					isAlive = false;
-					player1.setHealthDown(1);//Lebensenergie wird um eins runter gesetzt
+					player1.setHealthDown(35.0);//Lebensenergie wird um eins runter gesetzt
 					
 					//Listen werden fï¿½r neu initialisierung geleert
 					itemList.clear(); 
@@ -399,12 +398,48 @@ public class GameField extends JFrame
 						else
 						{
 							player1.setHealthDown(15.0);
-							enemyList.remove(enemyList.get(count));
+							if(player1.getHealth()<=0.0)
+							{
+
+								isAlive = false;
+								
+								//Listen werden fï¿½r neu initialisierung geleert
+								itemList.clear(); 
+								enemyList.clear();
+								
+								if(itemList.size()==0 && enemyList.size()==0)
+								{
+									//Neuladen des Spielfeldes
+									StdDraw.clear();
+									this.loadLevel(lvlArray[currentLvl]);
+									this.initField();	
+								}
+							}
+							else
+							{								
+								enemyList.remove(enemyList.get(count));
+							}
+							
 						}
-					}
-					
-					
+					}	
 				}
+				
+//				for(int x=0;x<bossList.size();x++)
+//				{
+//					if(player1.intersects(bossList.get(x)));
+//					{
+//						if(player1.getFire().isActive()==true)
+//						{
+//							bossList.get(x).setHealth(-14.0);
+//							if(bossList.get(x).getHealth()<=0.0)
+//								bossList.remove(bossList.get(x));
+//						}
+//						else
+//						{
+//							player1.setHealth(-2.0);
+//						}
+//					}
+//				}
 				
 				//Kollision aller Gegenstaende aus Itemlist mit player
 				for(int count=0;count<itemList.size();count++)
@@ -452,6 +487,7 @@ public class GameField extends JFrame
 					}
 				}*/
 			}				
+		
 	}
 	
 	/**
@@ -472,7 +508,35 @@ public class GameField extends JFrame
 		for(int count=0;count<itemList.size();count++)
 			itemList.get(count).drawImg();
 		
-		boss.draw();
+		if(!bossList.isEmpty())
+		{
+			for(int x=0;x<bossList.size();x++)
+			{
+				bossList.get(x).draw();
+				for(int i=1;i<=2;i++)
+				{	
+					for(int j=1;j<=2;j++)
+					{		
+						bossList.get(x).getFire().setPosX((int)bossList.get(x).getPosX()+(i*40));
+						bossList.get(x).getFire().setPosY((int)bossList.get(x).getPosY()+(j*40));
+						bossList.get(x).getFire().draw();
+						bossList.get(x).getFire().setPosX((int)bossList.get(x).getPosX()+(i*40));
+						bossList.get(x).getFire().setPosY((int)bossList.get(x).getPosY()-(j*40));
+						bossList.get(x).getFire().draw();
+						bossList.get(x).getFire().setPosX((int)bossList.get(x).getPosX()-(i*40));
+						bossList.get(x).getFire().setPosY((int)bossList.get(x).getPosY()+(j*40));
+						bossList.get(x).getFire().draw();
+						bossList.get(x).getFire().setPosX((int)bossList.get(x).getPosX()-(i*40));
+						bossList.get(x).getFire().setPosY((int)bossList.get(x).getPosY()-(j*40));
+						bossList.get(x).getFire().draw();
+					}
+					
+				}
+			}
+			
+		
+			
+		}
 		
 		if(player1.getFire().isActive()==true && player1.getMana()>0)
 		{

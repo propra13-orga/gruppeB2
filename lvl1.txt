@@ -3,7 +3,7 @@ x w     g    xx     x
 x   xxxx g   xx h g x
 x xxxxxx xxxxccgg   x
 x ccg x  xxxxxx     x
-x       §           x
+x                   x
 xxxxxxx   xxxxxxxxxxx
 x  q      x  xx     x
 x xxx   xxx      x  x
