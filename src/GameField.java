@@ -51,6 +51,8 @@ public class GameField extends JFrame
 	
 	Mana mana;
 	
+	Inventar inventar;
+	
 	//x- und y-Position des Spielers und x- und y-Position eines Spielfeldblockes 
 	//(zur Kollisionsabfrage und Logik)
 		
@@ -182,6 +184,12 @@ public class GameField extends JFrame
 					field[i][j] = new Floor(posX, posY);
 					itemList.add(new Coins(posX, posY));	
 				}
+
+				else if(feld[i][j] == 'w'||feld[i][j] == 'W')
+				{
+					field[i][j] = new Floor(posX, posY);
+					itemList.add(new Sword(posX, posY));	
+				}
 				else if(feld[i][j] == 'h'||feld[i][j] == 'H')
 				{
 					field[i][j] = new Floor(posX, posY);
@@ -197,6 +205,12 @@ public class GameField extends JFrame
 					field[i][j] = new Status(posX, posY);
 					energ = new Energy(posX, posY);
 					field[i][j] = energ;
+				}
+				else if(feld[i][j] == '%'||feld[i][j] == '%')
+				{
+					field[i][j] = new Status(posX, posY);
+					inventar = new Inventar(posX, posY);
+					field[i][j] = inventar;
 				}
 				else if(feld[i][j] == '='||feld[i][j] == '=')
 				{
@@ -267,6 +281,15 @@ public class GameField extends JFrame
 					mana.setNrg(3);
 				}
 				
+				if(player1.getSword()==1)
+				{
+					inventar.setInventar(1);
+				}
+				else if(player1.getSword()==0)
+				{
+					inventar.setInventar(0);
+				}
+	
 				//Position des gerade betrachteten Blocks
 				fX = field[i][j].getCenterX();
 				fY = field[i][j].getCenterY();
@@ -304,7 +327,7 @@ public class GameField extends JFrame
 					isAlive = false;
 					player1.setHealthDown(1);//Lebensenergie wird um eins runter gesetzt
 					
-					//Listen werden für neu initialisierung geleert
+					//Listen werden fï¿½r neu initialisierung geleert
 					itemList.clear(); 
 					enemyList.clear();
 					
@@ -367,6 +390,12 @@ public class GameField extends JFrame
 							//Mana
 							itemList.remove(itemList.get(count));
 							player1.setMana(1);
+						}
+						else if(itemList.get(count).toString()=="sword")
+						{
+							//Sword
+							itemList.remove(itemList.get(count));
+							player1.setSword(1);
 						}
 						
 					}

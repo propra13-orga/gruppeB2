@@ -12,13 +12,18 @@ public class Player extends Rectangle
 	private int posX, posY;
 
 	// energywert 
-	private int health; 
+	private int health=3; 
 	
 	// manawert
-	private int mana;
+	private int mana=3;
 	
 	//Anzahl Gold
 	private int money;
+	
+	//Schwert
+	private int sword;
+
+
 
 	//Variablen zur Animation der Bewegung
 	int swpL = 0;
@@ -55,12 +60,18 @@ public class Player extends Rectangle
 		{
 			if(swpL < 6)
 			{
-				StdDraw.picture(posX, posY, "images/player/player_left_"+1+".png");
+				if (sword==0)
+					StdDraw.picture(posX, posY, "images/player/player_left_"+1+".png");
+				else
+					StdDraw.picture(posX, posY, "images/player/player_left_"+1+".1.png");
 				swpL++;
 			}
 			else
 			{
-				StdDraw.picture(posX, posY, "images/player/player_left_"+2+".png");
+				if (sword==0)
+					StdDraw.picture(posX, posY, "images/player/player_left_"+2+".png");
+				else
+					StdDraw.picture(posX, posY, "images/player/player_left_"+2+".1.png");
 				swpL++;
 				
 				if(swpL == 11)
@@ -71,12 +82,18 @@ public class Player extends Rectangle
 		{
 			if(swpR < 6)
 			{
-				StdDraw.picture(posX, posY, "images/player/player_right_"+1+".png");
+				if (sword==0)
+					StdDraw.picture(posX, posY, "images/player/player_right_"+1+".png");
+				else
+					StdDraw.picture(posX, posY, "images/player/player_right_"+1+".1.png");
 				swpR++;
 			}
 			else
 			{
-				StdDraw.picture(posX, posY, "images/player/player_right_"+2+".png");
+				if (sword==0)
+					StdDraw.picture(posX, posY, "images/player/player_right_"+2+".png");
+				else
+					StdDraw.picture(posX, posY, "images/player/player_right_"+2+".1.png");
 				swpR++;
 				
 				if(swpR == 11)
@@ -87,12 +104,18 @@ public class Player extends Rectangle
 		{
 			if(swpU < 6)
 			{
-				StdDraw.picture(posX, posY, "images/player/player_up_"+1+".png");
+				if (sword==0)
+					StdDraw.picture(posX, posY, "images/player/player_up_"+1+".png");
+				else
+					StdDraw.picture(posX, posY, "images/player/player_up_"+1+".1.png");
 				swpU++;
 			}
 			else
 			{
-				StdDraw.picture(posX, posY, "images/player/player_up_"+2+".png");
+				if (sword==0)
+					StdDraw.picture(posX, posY, "images/player/player_up_"+2+".png");
+				else
+					StdDraw.picture(posX, posY, "images/player/player_up_"+2+".1.png");
 				swpU++;
 				
 				if(swpU == 11)
@@ -103,12 +126,18 @@ public class Player extends Rectangle
 		{
 			if(swpD < 6)
 			{
-				StdDraw.picture(posX, posY, "images/player/player_down_"+1+".png");
+				if (sword==0)
+					StdDraw.picture(posX, posY, "images/player/player_down_"+1+".png");
+				else
+					StdDraw.picture(posX, posY, "images/player/player_down_"+1+".1.png");
 				swpD++;
 			}
 			else
 			{
-				StdDraw.picture(posX, posY, "images/player/player_down_"+2+".png");
+				if (sword==0)
+					StdDraw.picture(posX, posY, "images/player/player_down_"+2+".png");
+				else
+					StdDraw.picture(posX, posY, "images/player/player_down_"+2+".1.png");
 				swpD++;
 				
 				if(swpD == 11)
@@ -122,7 +151,11 @@ public class Player extends Rectangle
      */
 	public void draw()
 	{
-		StdDraw.picture(posX, posY, "images/player/player_down_"+1+".png");
+		
+		if (sword==0)
+			StdDraw.picture(posX, posY, "images/player/player_down_"+1+".png");
+		else
+			StdDraw.picture(posX, posY, "images/player/player_down_"+1+".1.png");
 	}
 
 	 /**
@@ -186,6 +219,7 @@ public class Player extends Rectangle
 		else if(health<0)
 				health=0;
 		return health;
+		
 	}
 
 	public void setHealth(int health) {
@@ -205,6 +239,10 @@ public class Player extends Rectangle
 	}
 	
 	public int getMana() {
+		if (mana>3)
+			mana=3;
+		else if(mana<0)
+				mana=0;
 		return mana;
 	}
 
@@ -212,4 +250,18 @@ public class Player extends Rectangle
 		this.mana = this.mana + mana;
 	}
 
+	public int getSword() {
+		if(sword>0)
+			sword=1;
+			else if(sword<0)
+				sword=0;
+		return sword;
+	}
+
+	public void setSword(int sword) {
+		this.sword = this.sword + sword;
+	}
+	
+	
+	
 }

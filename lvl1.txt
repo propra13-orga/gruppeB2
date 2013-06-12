@@ -1,5 +1,5 @@
 xxxxxxxxxxexxxxxxxxxx
-x       g    xx     x
+x w     g    xx     x
 x   xxxx g   xx h g x
 x xxxxxx xxxxccgg   x
 x ccg x  xxxxxx     x
@@ -11,6 +11,6 @@ x   xxx      qx     x
 xxxxxxxxxxxxxxxxxx  x
 x      x    g    x  x
 x      x      xh x  x
-xs        r   x    cx
+xs         r   x   cx
 xxxxxxxxxxxxxxxxxxxxx
-#+################=##
+#+#######%########=##
