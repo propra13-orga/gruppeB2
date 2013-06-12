@@ -32,6 +32,7 @@ public class GameField extends JFrame
 	//In der Liste sollen alle Gegner hinterlegt werden
 	ArrayList<Enemy> enemyList = new ArrayList<Enemy>();
 	
+	Boss boss;
 
 	Npc npc;
 	//Eine Klasse ReadLevel, welche sich um das Einlesen der Level aus
@@ -220,6 +221,13 @@ public class GameField extends JFrame
 					mana = new Mana(posX, posY);
 					field[i][j] = mana;
 				}
+				else if(feld[i][j] == '§'||feld[i][j] == '§')
+				{
+					field[i][j] = new Floor(posX, posY);
+					boss = new Boss(posY, posY);
+					boss.setPosX(posX);
+					boss.setPosY(posY);
+				}	
 				else if(feld[i][j] == 's'||feld[i][j] == 'S')
 				{
 					field[i][j] = new Floor(posX, posY);
@@ -463,6 +471,8 @@ public class GameField extends JFrame
 		//Aktive Gegenstaende
 		for(int count=0;count<itemList.size();count++)
 			itemList.get(count).drawImg();
+		
+		boss.draw();
 		
 		if(player1.getFire().isActive()==true && player1.getMana()>0)
 		{
