@@ -35,8 +35,8 @@ public class Mana extends Block
 			StdDraw.picture(posX, posY, "images/status/manaStatus2.png");
 		else if(nrg==3)
 			StdDraw.picture(posX, posY, "images/status/manaStatus3.png");
-		// TODO Auto-generated method stub
-		
+		else if(nrg==4)
+			StdDraw.picture(posX, posY, "images/arena/unseen.png");		
 	}
 
 	public int getNrg() {

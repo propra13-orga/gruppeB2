@@ -36,7 +36,8 @@ public class Energy extends Block
 			StdDraw.picture(posX, posY, "images/status/energyStatus2.png");
 		else if(nrg==3)
 			StdDraw.picture(posX, posY, "images/status/energyStatus3.png");
-		// TODO Auto-generated method stub
+		else if(nrg==4)
+			StdDraw.picture(posX, posY, "images/arena/unseen.png");
 		
 	}
 

@@ -13,10 +13,10 @@ public class Player extends Rectangle
 	private int posX, posY;
 
 	// energywert 
-	private int health=3; 
+	private double health=50.0; 
 	
 	// manawert
-	private int mana=3;
+	private double mana=0.0;
 	
 	//Anzahl Gold
 	private int money;
@@ -24,7 +24,7 @@ public class Player extends Rectangle
 	//Schwert
 	private int sword;
 	
-
+	private Fireball fire;
 
 	//Variablen zur Animation der Bewegung
 	int swpL = 0;
@@ -47,9 +47,11 @@ public class Player extends Rectangle
 		
 		this.posX = posX;
 		this.posY = posY;
+		
+		fire = new Fireball(posX, posY);
 	}
-	
-	 /**
+
+	/**
      * Methode zum Zeichnen der Bewegungsanimation. Die Bilder wechseln periodisch
      * je nach Beweungsrichtung
      * 
@@ -225,20 +227,20 @@ public class Player extends Rectangle
 	{
 		return posY;
 	}
-	public int getHealth() {
-		if (health>3)
-			health=3;
-		else if(health<1)
-				health=1;
+	public double getHealth() {
+		if (health>100.0)
+			health=100.0;
+		else if(health<0)
+				health=0;
 		return health;
 		
 	}
 
-	public void setHealth(int health) {
+	public void setHealth(double health) {
 		this.health = this.health + health;
 	}
 	
-	public void setHealthDown(int health) {
+	public void setHealthDown(double health) {
 		this.health = this.health - health;
 	}
 	
@@ -250,15 +252,15 @@ public class Player extends Rectangle
 		this.money = this.money + money;
 	}
 	
-	public int getMana() {
-		if (mana>3)
-			mana=3;
+	public double getMana() {
+		if (mana>100.0)
+			mana=100.0;
 		else if(mana<0)
 				mana=0;
 		return mana;
 	}
 
-	public void setMana(int mana) {
+	public void setMana(double mana) {
 		this.mana = this.mana + mana;
 	}
 
@@ -273,10 +275,13 @@ public class Player extends Rectangle
 	public void setSword(int sword) {
 		this.sword = this.sword + sword;
 	}
-
-
-
 	
-	
+	public Fireball getFire() {
+		return fire;
+	}
+
+	public void setFire(Fireball fire) {
+		this.fire = fire;
+	}
 	
 }

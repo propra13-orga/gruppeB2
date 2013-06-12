@@ -262,33 +262,40 @@ public class GameField extends JFrame
 		//geprueft wird
 		for(int i = 0; i < rows; i++)
 			for(int j = 0; j < columns; j++)
-			{						
-				if(player1.getHealth()>2)
+			{					
+				//Energy anzeige
+				if(player1.getHealth()>66.6)
 				{
 					energ.setNrg(1);
 				}
-				else if(player1.getHealth()>1)
+				else if(player1.getHealth()>33.3)
 				{
 					energ.setNrg(2);
 				}
-				else if(player1.getHealth()>0)
+				else if(player1.getHealth()>0.1)
 				{
 					energ.setNrg(3);
 				}
+				else
+					energ.setNrg(4);
 				
-				if(player1.getMana()>2)
+				// Mana anzeige
+				if(player1.getMana()>66.6)
 				{
 					mana.setNrg(1);
 				}
-				else if(player1.getMana()>1)
+				else if(player1.getMana()>33.3)
 				{
 					mana.setNrg(2);
 				}
-				else if(player1.getMana()>0)
+				else if(player1.getMana()>0.1)
 				{
 					mana.setNrg(3);
 				}
+				else
+					mana.setNrg(4);
 				
+				//Inventar anzeige
 				if(player1.getSword()==1)
 				{
 					inventar.setInventar(1);
@@ -375,11 +382,15 @@ public class GameField extends JFrame
 					//gegner explodiert
 					if(player1.intersects(enemyList.get(count)))
 					{
-						if(StdDraw.isKeyPressed(KeyEvent.VK_S))
+						if(StdDraw.isKeyPressed(KeyEvent.VK_S) || player1.getFire().isActive()==true)
+						{
 							enemyList.remove(enemyList.get(count));
+						}
 						else
-							player1.setHealthDown(1);
-							System.out.println(player1.getHealth());
+						{
+							player1.setHealthDown(15.0);
+							enemyList.remove(enemyList.get(count));
+						}
 					}
 					
 					
@@ -400,13 +411,13 @@ public class GameField extends JFrame
 						{
 							//energie
 							itemList.remove(itemList.get(count));
-							player1.setHealth(1);
+							player1.setHealth(22.0);
 						}
 						else if(itemList.get(count).toString()=="mana")
 						{
 							//Mana
 							itemList.remove(itemList.get(count));
-							player1.setMana(1);
+							player1.setMana(17.0);
 						}
 						else if(itemList.get(count).toString()=="sword")
 						{
@@ -449,6 +460,14 @@ public class GameField extends JFrame
 		//Aktive Gegenstaende
 		for(int count=0;count<itemList.size();count++)
 			itemList.get(count).drawImg();
+		
+		if(player1.getFire().isActive()==true)
+		{
+			player1.getFire().setPosX((int)player1.getPosX());
+			player1.getFire().setPosY((int)player1.getPosY());
+			player1.getFire().draw();
+			player1.setMana(-0.5);
+		}
 			
 	}
 
@@ -568,7 +587,14 @@ public class GameField extends JFrame
 					
 					noMove = false;
 				}
-
+				
+				if(StdDraw.isKeyPressed(KeyEvent.VK_A))
+				{
+					if(player1.getMana()>0)
+						player1.getFire().setActive(true);
+				}else if(!StdDraw.isKeyPressed(KeyEvent.VK_A))
+					player1.getFire().setActive(false);
+				
 
 				//Wenn der Benutzer den Spieler nicht bewegt hat zeichne ein
 				//festes Bild fuer die Spielfigur
@@ -598,7 +624,7 @@ public class GameField extends JFrame
 	
 	
 	
-	/*
+	/**
 	public boolean checkRoof(char[][] feld, int i, int j)
 	{
 		if(i < rows - 1)
