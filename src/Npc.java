@@ -40,7 +40,6 @@ public class Npc extends Block
 		if(help==true)
 		{
 			StdDraw.picture(posX, posY, "images/npc/npc2.png");
-		
 		}
 		else
 			StdDraw.picture(posX, posY, "images/npc/npc.png");

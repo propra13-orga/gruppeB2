@@ -32,6 +32,7 @@ public class GameField extends JFrame
 	//In der Liste sollen alle Gegner hinterlegt werden
 	ArrayList<Enemy> enemyList = new ArrayList<Enemy>();
 	
+
 	Npc npc;
 	//Eine Klasse ReadLevel, welche sich um das Einlesen der Level aus
 	//Textdatein kuemmert
@@ -324,6 +325,7 @@ public class GameField extends JFrame
 					if(player1.intersects(field[i][j]) && field[i][j].toString()=="npc")
 					{
 						npc.setHelp(true);
+
 					}
 				}
 				
@@ -396,6 +398,7 @@ public class GameField extends JFrame
 					
 				}
 				
+				//Kollision aller Gegenstaende aus Itemlist mit player
 				for(int count=0;count<itemList.size();count++)
 				{
 							
@@ -461,7 +464,7 @@ public class GameField extends JFrame
 		for(int count=0;count<itemList.size();count++)
 			itemList.get(count).drawImg();
 		
-		if(player1.getFire().isActive()==true)
+		if(player1.getFire().isActive()==true && player1.getMana()>0)
 		{
 			player1.getFire().setPosX((int)player1.getPosX());
 			player1.getFire().setPosY((int)player1.getPosY());
