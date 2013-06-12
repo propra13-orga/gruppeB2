@@ -32,6 +32,7 @@ public class GameField extends JFrame
 	//In der Liste sollen alle Gegner hinterlegt werden
 	ArrayList<Enemy> enemyList = new ArrayList<Enemy>();
 	
+	Npc npc;
 	//Eine Klasse ReadLevel, welche sich um das Einlesen der Level aus
 	//Textdatein kuemmert
 	ReadLevel lvl;
@@ -235,6 +236,12 @@ public class GameField extends JFrame
 					//Gegner in Liste hinzu
 					enemyList.add(new Enemy(posX, posY)); 
 				}
+				else if(feld[i][j] == 'n'||feld[i][j] == 'N')
+				{	
+					npc = new Npc(posX, posY);
+					field[i][j] = npc;
+					
+				}
 			}
 			
 			System.out.println("");
@@ -250,6 +257,7 @@ public class GameField extends JFrame
 		pX = player1.getCenterX();
 		pY = player1.getCenterY();
 		
+		npc.setHelp(false);
 		//Schleifen, in denen das Feld gezeichnet wird und die Kollision / Logik
 		//geprueft wird
 		for(int i = 0; i < rows; i++)
@@ -306,7 +314,12 @@ public class GameField extends JFrame
 						collideDown = true;
 					if(pY < fY && pX >= fX - 20 && pX <= fX + 20)
 						collideUp = true;
+					if(player1.intersects(field[i][j]) && field[i][j].toString()=="npc")
+					{
+						npc.setHelp(true);
+					}
 				}
+				
 				
 				//Kollisionsabfrage bezueglich der Ausgaenge
 				else if(player1.intersects(field[i][j]) && (field[i][j].toString().equals("door")))
@@ -396,8 +409,7 @@ public class GameField extends JFrame
 							//Sword
 							itemList.remove(itemList.get(count));
 							player1.setSword(1);
-						}
-						
+						}						
 					}
 				}
 				
@@ -433,7 +445,7 @@ public class GameField extends JFrame
 		//Aktive Gegenstaende
 		for(int count=0;count<itemList.size();count++)
 			itemList.get(count).drawImg();
-				
+			
 	}
 
     /**
