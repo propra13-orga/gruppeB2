@@ -375,10 +375,14 @@ public class GameField extends JFrame
 					//gegner explodiert
 					if(player1.intersects(enemyList.get(count)))
 					{
-//						isAlive = false;
-						enemyList.remove(enemyList.get(count));
-						player1.setHealthDown(1);
+						if(StdDraw.isKeyPressed(KeyEvent.VK_S))
+							enemyList.remove(enemyList.get(count));
+						else
+							player1.setHealthDown(1);
+							System.out.println(player1.getHealth());
 					}
+					
+					
 				}
 				
 				for(int count=0;count<itemList.size();count++)
@@ -500,12 +504,16 @@ public class GameField extends JFrame
 				//der Spielfigur		
 				if(StdDraw.isKeyPressed(KeyEvent.VK_RIGHT))
 				{
+					if(StdDraw.isKeyPressed(KeyEvent.VK_S))
+					{
+								player1.attack(Direction.RIGHT);
+					}		
 					if(!collideRight)
 					{
 						playerX = playerX + 6;
 						player1.setPosX(playerX);
 					}
-					
+				
 					if(!StdDraw.isKeyPressed(KeyEvent.VK_UP) && !StdDraw.isKeyPressed(KeyEvent.VK_DOWN))
 						player1.swapImg(Direction.RIGHT);
 					
@@ -513,6 +521,10 @@ public class GameField extends JFrame
 				}
 				else if(StdDraw.isKeyPressed(KeyEvent.VK_LEFT))
 				{
+					if(StdDraw.isKeyPressed(KeyEvent.VK_S))
+					{
+						player1.attack(Direction.LEFT);
+					}
 					if(!collideLeft)
 					{
 						playerX = playerX - 6;
@@ -526,6 +538,10 @@ public class GameField extends JFrame
 				}
 				if(StdDraw.isKeyPressed(KeyEvent.VK_UP))
 				{
+					if(StdDraw.isKeyPressed(KeyEvent.VK_S))
+					{
+						player1.attack(Direction.UP);
+					}
 					if(!collideUp)
 					{
 						playerY = playerY + 6;
@@ -538,6 +554,10 @@ public class GameField extends JFrame
 				}
 				else if(StdDraw.isKeyPressed(KeyEvent.VK_DOWN))
 				{
+					if(StdDraw.isKeyPressed(KeyEvent.VK_S))
+					{
+						player1.attack(Direction.DOWN);
+					}
 					if(!collideDown)
 					{
 						playerY = playerY - 6;
@@ -548,6 +568,7 @@ public class GameField extends JFrame
 					
 					noMove = false;
 				}
+
 
 				//Wenn der Benutzer den Spieler nicht bewegt hat zeichne ein
 				//festes Bild fuer die Spielfigur

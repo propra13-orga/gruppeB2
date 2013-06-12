@@ -1,4 +1,5 @@
 import java.awt.Rectangle;
+import java.awt.datatransfer.StringSelection;
 
 /**
  *  <i>Player</i>. Respaesentiert das Spieler-Objekt, welches die von Benutzer
@@ -22,7 +23,7 @@ public class Player extends Rectangle
 	
 	//Schwert
 	private int sword;
-
+	
 
 
 	//Variablen zur Animation der Bewegung
@@ -145,6 +146,17 @@ public class Player extends Rectangle
 			}
 		}
 	}
+	public void attack(String direction)
+	{
+		if (direction.equalsIgnoreCase(Direction.LEFT))
+				StdDraw.picture(posX, posY, "images/player/player_left_"+1+".attack.png");
+		if (direction.equalsIgnoreCase(Direction.RIGHT))
+				StdDraw.picture(posX, posY, "images/player/player_right_"+1+".attack.png");
+		if (direction.equalsIgnoreCase(Direction.UP))
+				StdDraw.picture(posX, posY, "images/player/player_up_"+1+".attack.png");
+		if (direction.equalsIgnoreCase(Direction.DOWN))
+				StdDraw.picture(posX, posY, "images/player/player_down_"+1+".attack.png");
+	}
 	
 	 /**
      * Methode zum Zeichnen des Players, wenn er sich nicht bewegt
@@ -216,8 +228,8 @@ public class Player extends Rectangle
 	public int getHealth() {
 		if (health>3)
 			health=3;
-		else if(health<0)
-				health=0;
+		else if(health<1)
+				health=1;
 		return health;
 		
 	}
@@ -261,6 +273,9 @@ public class Player extends Rectangle
 	public void setSword(int sword) {
 		this.sword = this.sword + sword;
 	}
+
+
+
 	
 	
 	
