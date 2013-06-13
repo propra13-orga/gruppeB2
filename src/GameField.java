@@ -222,7 +222,7 @@ public class GameField extends JFrame
 					field[i][j] = mana;
 				}
 				//Boss
-				else if(feld[i][j] == '§'||feld[i][j] == '§')
+				else if(feld[i][j] == 'z'||feld[i][j] == 'Z')
 				{
 					field[i][j] = new Floor(posX, posY);
 					bossList.add(new Boss(posX, posY));
@@ -513,10 +513,12 @@ public class GameField extends JFrame
 			for(int x=0;x<bossList.size();x++)
 			{
 				bossList.get(x).draw();
+				bossList.get(x).draw();
 				for(int i=1;i<=2;i++)
 				{	
 					for(int j=1;j<=2;j++)
-					{		
+					{	
+						
 						bossList.get(x).getFire().setPosX((int)bossList.get(x).getPosX()+(i*40));
 						bossList.get(x).getFire().setPosY((int)bossList.get(x).getPosY()+(j*40));
 						bossList.get(x).getFire().draw();

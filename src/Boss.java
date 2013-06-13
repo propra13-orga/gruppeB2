@@ -32,39 +32,39 @@ public class Boss extends Rectangle
 	
 	public void draw()
 	{
-		if(swap < 8)
+		if(swap < 8) 
 		{
-			StdDraw.picture(posX, posY, "images/enemy/Satan_"+1+".png");
+			StdDraw.picture(posX, posY, "images/enemy/satan_"+1+".png");
 			swap++;
 		}
 		else if(swap < 16)
 		{
-			StdDraw.picture(posX, posY, "images/enemy/Satan_"+2+".png");
+			StdDraw.picture(posX, posY, "images/enemy/satan_"+2+".png");
 			swap++;
 		}
 		else if(swap < 24)
 		{
-			StdDraw.picture(posX, posY, "images/enemy/Satan_"+3+".png");
+			StdDraw.picture(posX, posY, "images/enemy/satan_"+3+".png");
 			swap++;
 		}
 		else if(swap < 32)
 		{
-			StdDraw.picture(posX, posY, "images/enemy/Satan_"+4+".png");
+			StdDraw.picture(posX, posY, "images/enemy/satan_"+4+".png");
 			swap++;
 		}
 		else if(swap < 40)
 		{
-			StdDraw.picture(posX, posY, "images/enemy/Satan_"+5+".png");
+			StdDraw.picture(posX, posY, "images/enemy/satan_"+5+".png");
 			swap++;
 		}
 		else if(swap < 48)
 		{
-			StdDraw.picture(posX, posY, "images/enemy/Satan_"+4+".png");
+			StdDraw.picture(posX, posY, "images/enemy/satan_"+4+".png");
 			swap++;
 		}
 		else
 		{
-			StdDraw.picture(posX, posY, "images/enemy/Satan_"+2+".png");
+			StdDraw.picture(posX, posY, "images/enemy/satan_"+2+".png");
 			swap++;
 			
 			if(swap == 56)
