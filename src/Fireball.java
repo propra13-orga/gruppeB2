@@ -3,7 +3,6 @@ import java.awt.Rectangle;
 
 public class Fireball extends Rectangle
 {
-
 	private int posX, posY;
 	
 	private int animate;

@@ -14,10 +14,13 @@ public class Boss extends Rectangle
 	
 	private int swap;
 	
+	//noch ohne Auswirkung
 	private boolean exists;
-	
-	private double health = 100.0;
 
+	//noch ohne Auswirkung
+	private double health = 100.0;
+	
+	//noch ohne Auswirkung
 	private boolean colUp, colDown, colRight, colLeft;
 	
 	public Boss(int posX, int posY)

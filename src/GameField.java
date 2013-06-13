@@ -33,7 +33,8 @@ public class GameField extends JFrame
 	ArrayList<Enemy> enemyList = new ArrayList<Enemy>();
 	
 	ArrayList<Boss> bossList = new ArrayList<Boss>();
-
+	
+	//Wegweiser
 	Npc npc;
 	//Eine Klasse ReadLevel, welche sich um das Einlesen der Level aus
 	//Textdatein kuemmert
@@ -52,8 +53,10 @@ public class GameField extends JFrame
 	//Energieanzeige
 	Energy energ;
 	
+	//Manaanzeige
 	Mana mana;
 	
+	//Inventaranzeige
 	Inventar inventar;
 	
 	//x- und y-Position des Spielers und x- und y-Position eines Spielfeldblockes 
@@ -179,43 +182,43 @@ public class GameField extends JFrame
 				else if(feld[i][j] == 'r'||feld[i][j] == 'R') //Trap hinzugefuegt
 					field[i][j] = new Trap(posX, posY);
 				
-				else if(feld[i][j] == '#'||feld[i][j] == '#')
+				else if(feld[i][j] == '#'||feld[i][j] == '#') //Leben/Mana/Inventar
 					field[i][j] = new Status(posX, posY);
 				
-				else if(feld[i][j] == 'c'||feld[i][j] == 'C')
+				else if(feld[i][j] == 'c'||feld[i][j] == 'C') //Munzen
 				{
 					field[i][j] = new Floor(posX, posY);
 					itemList.add(new Coins(posX, posY));	
 				}
 
-				else if(feld[i][j] == 'w'||feld[i][j] == 'W')
+				else if(feld[i][j] == 'w'||feld[i][j] == 'W') //Schwert hinzugefugt
 				{
 					field[i][j] = new Floor(posX, posY);
 					itemList.add(new Sword(posX, posY));	
 				}
-				else if(feld[i][j] == 'h'||feld[i][j] == 'H')
+				else if(feld[i][j] == 'h'||feld[i][j] == 'H') //Herzen
 				{
 					field[i][j] = new Floor(posX, posY);
 					itemList.add(new Heart(posX, posY));	
 				}
-				else if(feld[i][j] == 'q'||feld[i][j] == 'Q')
+				else if(feld[i][j] == 'q'||feld[i][j] == 'Q') //Manatraenke
 				{
 					field[i][j] = new Floor(posX, posY);
 					itemList.add(new ManaBottle(posX, posY));	
 				}
-				else if(feld[i][j] == '+'||feld[i][j] == '+')
+				else if(feld[i][j] == '+'||feld[i][j] == '+') //Leben
 				{
 					field[i][j] = new Status(posX, posY);
 					energ = new Energy(posX, posY);
 					field[i][j] = energ;
 				}
-				else if(feld[i][j] == '%'||feld[i][j] == '%')
+				else if(feld[i][j] == '%'||feld[i][j] == '%') //Inventar
 				{
 					field[i][j] = new Status(posX, posY);
 					inventar = new Inventar(posX, posY);
 					field[i][j] = inventar;
 				}
-				else if(feld[i][j] == '='||feld[i][j] == '=')
+				else if(feld[i][j] == '='||feld[i][j] == '=') //Mana
 				{
 					field[i][j] = new Status(posX, posY);
 					mana = new Mana(posX, posY);
@@ -227,7 +230,7 @@ public class GameField extends JFrame
 					field[i][j] = new Floor(posX, posY);
 					bossList.add(new Boss(posX, posY));
 				}	
-				else if(feld[i][j] == 's'||feld[i][j] == 'S')
+				else if(feld[i][j] == 's'||feld[i][j] == 'S') //Spielerstartposition
 				{
 					field[i][j] = new Floor(posX, posY);
 					
@@ -237,14 +240,14 @@ public class GameField extends JFrame
 					playerX = posX;
 					playerY = posY;
 				}
-				else if(feld[i][j] == 'g'||feld[i][j] == 'G')
+				else if(feld[i][j] == 'g'||feld[i][j] == 'G') //Gegner
 				{
 					field[i][j] = new Floor(posX, posY);
 					
 					//Gegner in Liste hinzu
 					enemyList.add(new Enemy(posX, posY)); 
 				}
-				else if(feld[i][j] == 'n'||feld[i][j] == 'N')
+				else if(feld[i][j] == 'n'||feld[i][j] == 'N') //Npc
 				{	
 					npc = new Npc(posX, posY);
 					field[i][j] = npc;
@@ -265,13 +268,15 @@ public class GameField extends JFrame
 		pX = player1.getCenterX();
 		pY = player1.getCenterY();
 		
+		//Hilfanzeige wird auf false gesetzt
 		npc.setHelp(false);
+		
 		//Schleifen, in denen das Feld gezeichnet wird und die Kollision / Logik
 		//geprueft wird
 		for(int i = 0; i < rows; i++)
 			for(int j = 0; j < columns; j++)
 			{					
-				//Energy anzeige
+				//Energy anzeige wird uebernommen
 				if(player1.getHealth()>66.6)
 				{
 					energ.setNrg(1);
@@ -287,7 +292,7 @@ public class GameField extends JFrame
 				else
 					energ.setNrg(4);
 				
-				// Mana anzeige
+				// Mana anzeige wird uebernommen
 				if(player1.getMana()>66.6)
 				{
 					mana.setNrg(1);
@@ -303,7 +308,7 @@ public class GameField extends JFrame
 				else
 					mana.setNrg(4);
 				
-				//Inventar anzeige
+				//Inventar anzeige wird uebernommen
 				if(player1.getSword()==1)
 				{
 					inventar.setInventar(1);
@@ -356,9 +361,10 @@ public class GameField extends JFrame
 					isAlive = false;
 					player1.setHealthDown(35.0);//Lebensenergie wird um eins runter gesetzt
 					
-					//Listen werden f�r neu initialisierung geleert
+					//Listen werden fuer neu initialisierung geleert
 					itemList.clear(); 
 					enemyList.clear();
+					
 					
 					if(itemList.size()==0 && enemyList.size()==0)
 					{
@@ -508,12 +514,14 @@ public class GameField extends JFrame
 		for(int count=0;count<itemList.size();count++)
 			itemList.get(count).drawImg();
 		
+		//Boss
 		if(!bossList.isEmpty())
 		{
 			for(int x=0;x<bossList.size();x++)
 			{
 				bossList.get(x).draw();
-				bossList.get(x).draw();
+				
+				//Spezialeffekt, keine Auswirkungen, nur deko
 				for(int i=1;i<=2;i++)
 				{	
 					for(int j=1;j<=2;j++)
@@ -540,6 +548,7 @@ public class GameField extends JFrame
 			
 		}
 		
+		//Zauber aktiv
 		if(player1.getFire().isActive()==true && player1.getMana()>0)
 		{
 			player1.getFire().setPosX((int)player1.getPosX());

@@ -5,7 +5,6 @@ public class Npc extends Block
 	
 	private boolean help;
 	
-	
 
 	public Npc(int posX, int posY) 
 	{
@@ -16,11 +15,6 @@ public class Npc extends Block
 		this.posY = posY;
 
 	}
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -8130296753230054074L;
 
 	@Override
 	boolean isSolid() 

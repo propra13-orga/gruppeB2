@@ -12,12 +12,7 @@ public class Sword extends Block
 		this.posX = posX;
 		this.posY = posY;
 	}
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -8130296753230054074L;
-
+	
 	@Override
 	boolean isSolid() 
 	{
