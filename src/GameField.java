@@ -40,6 +40,9 @@ public class GameField extends JFrame
 	//Textdatein kuemmert
 	ReadLevel lvl;
 	
+	//zum speichern von Zwischenstaenden
+	SaveGame svg;
+	
 	//Zeilen und Spalten des Spielfeldes
 	int rows, columns;
 	
@@ -89,37 +92,63 @@ public class GameField extends JFrame
 		//Lade bei neuem Spielbeginn das erste Level (Array-Position 0)
 		currentLvl = 0;
 		this.loadLevel(lvlArray[currentLvl]);
-		
+//		svg = new SaveGame(lvl.getLevelLocation());
 		//Initialisiere das Feld (aus dem String-Array des Levels)
 		this.initField();
 		//Starte die Spielschleife
 		this.run();
 	}
 	
-	/**
-	* Konstruktor zum Neuladen im selben Level
-	* spater mit z�hlen der Lebenspunbkte
-	* @param currentLvl
-	*/
-	public GameField(int currentLvl)
+	//Zweiter Konstruktor, zum Laden eines Spielstandes
+	public GameField(String filename)
 	{
 		//erzeugt das Array, in dem die Level-Textdateinamen gespeichert werden
-		lvlArray = new String[]
+		lvlArray = new String[] 
 		{
-			"lvl1.txt", "lvl2.txt", "lvl3.txt"
+			"lvl1.txt", "lvl2.txt", "lvl3.txt", "lvl4.txt"
 		};
-
+		
 		//Erzeugt die Hilfsklasse zum Einlesen der Textdateien
 		lvl = new ReadLevel();
 		inGameMenu = false;
-		this.currentLvl = currentLvl;
-		this.loadLevel(lvlArray[currentLvl]);
+		
+		
+		LoadFromFile lff = new LoadFromFile(filename);
 
+		currentLvl = lff.getCurLvl()-1;
+		this.loadLevel(lvlArray[currentLvl]);
+//		svg = new SaveGame(lvl.getLevelLocation());
 		//Initialisiere das Feld (aus dem String-Array des Levels)
 		this.initField();
 		//Starte die Spielschleife
 		this.run();
 	}
+	
+	
+	/**
+	* Konstruktor zum Neuladen im selben Level
+	* spater mit z�hlen der Lebenspunbkte
+	* @param currentLvl
+	*/
+// 	public GameField(int currentLvl)
+//	{
+//		//erzeugt das Array, in dem die Level-Textdateinamen gespeichert werden
+//		lvlArray = new String[]
+//		{
+//			"lvl1.txt", "lvl2.txt", "lvl3.txt"
+//		};
+//
+//		//Erzeugt die Hilfsklasse zum Einlesen der Textdateien
+//		lvl = new ReadLevel();
+//		inGameMenu = false;
+//		this.currentLvl = currentLvl;
+//		this.loadLevel(lvlArray[currentLvl]);
+//
+//		//Initialisiere das Feld (aus dem String-Array des Levels)
+//		this.initField();
+//		//Starte die Spielschleife
+//		this.run();
+//	}
 	
     /**
      * Methode, die die Textdatei einlesen laesst
@@ -129,7 +158,7 @@ public class GameField extends JFrame
 	public void loadLevel(String level)
 	{
 		feld = lvl.readLevel(level);
-		
+		svg = new SaveGame(lvl.getLevelLocation());
 		//Wenn die Datei nicht gefunden wird, gebe eine Fehlermeldung zurueck und
 		//beende das Spiel
 		if(feld == null)
@@ -138,6 +167,7 @@ public class GameField extends JFrame
 			System.exit(0);
 		}
 	}
+	
 	
     /**
      * Initialisiert das Spielfeld aus dem char-Array <i>feld</i> und erzeugt
@@ -351,6 +381,7 @@ public class GameField extends JFrame
 					{
 						currentLvl++;
 						this.loadLevel(lvlArray[currentLvl]);
+						svg.save();
 						this.initField();						
 					}
 				}

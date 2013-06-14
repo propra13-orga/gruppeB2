@@ -1,17 +1,11 @@
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-xxxxxxxxxx                       x
-x    x   x                       x
-xx xgxxx x                       x
-xxxx xxx x                       x
-x     h                          x
-x qcxx x                         x
-x                               xx
-x                                x
-x                  gxx xx     xxxx
-xq   h xx   r                    x
-x                       ex   xxx x
-x                   xxx     xx   x
-xs                               x
-x                                x
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-####+############%###########=####
+4
+xxxxxxxxxxxxxxxx
+x     h        x
+x              x
+x    c         x
+x       z   n  e
+x    q         x
+x              x
+xs             x
+xxxxxxxxxxxxxxxx
+#+#%#########=##

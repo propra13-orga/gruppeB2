@@ -10,22 +10,27 @@ public class ReadLevel
 	private FileReader readFile;
 	private BufferedReader lineRead;
 	
-	//Boolean, welches prueft, ob das eingelesene Feld auch rechteckig ist
-	boolean quad;
 	//das eigentliche Feld, gespeichert als char-Array
 	char [][] field;
+
+	//zum speichern von Levelinformationen
+	private String levelLocation;
 	
-    /**
+	/**
      * Konstruktor des ReadLevel-Objekts
      *
      */
 	public ReadLevel()
 	{
+		
 	}
 	
     /**
-     * Liest eine Textdatei ein, in der ein quadratisches Spielfeld gespeichert ist.
-     *
+     * Liest eine Textdatei ein
+     * erste Zeile mit den Levelinfos wird seperat gespeichert
+     * die weiteren stellen das spielfeld dar, diese 
+     * werden in ein Array gespeichert 
+     *      
      * @param file - Einzulesende Datei als String (Dateiname)
      * 
      * @return Ein Array mit den chars, welche das Spielfeld beschreiben </br>
@@ -40,12 +45,13 @@ public class ReadLevel
 		
 		int l = 0;
 		
-		quad = true;
-		
 		try
 		{
 			readFile = new FileReader(file);
 			lineRead = new BufferedReader(readFile);
+			
+			//Erste Zeile wird als String hier gespecihert
+			levelLocation = lineRead.readLine();
 			
 			lines.add(l, lineRead.readLine());
 			
@@ -62,28 +68,27 @@ public class ReadLevel
 			{
 				linesString[i] = (String) lines.get(i);
 				
-				if(i > 0)
-					if(linesString[i].length() != linesString[i-1].length())
-						quad = false;
 			}
-			
-			if(quad)
-			{
 				field = new char[linesString.length][linesString[0].length()];
 				
 				for(int i = 0; i < linesString.length; i++)
 					for(int j = 0; j < linesString[0].length(); j++)
-						field[i][j] = linesString[i].charAt(j);
-			}			
+						field[i][j] = linesString[i].charAt(j);			
+			
 		}
 		catch(IOException e)
 		{
 			return null;
 		}
-		
-		if(!quad)
-			return null;
-		else
 			return field;
 	}
+
+	public String getLevelLocation() {
+		return levelLocation;
+	}
+
+	public void setLevelLocation(String levelLocation) {
+		this.levelLocation = levelLocation;
+	}
+
 }
