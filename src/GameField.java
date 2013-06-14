@@ -82,7 +82,7 @@ public class GameField extends JFrame
 		//erzeugt das Array, in dem die Level-Textdateinamen gespeichert werden
 		lvlArray = new String[] 
 		{
-			"lvl1.txt", "lvl2.txt", "lvl3.txt"
+			"lvl1.txt", "lvl2.txt", "lvl3.txt", "lvl4.txt"
 		};
 		
 		//Erzeugt die Hilfsklasse zum Einlesen der Textdateien
@@ -157,7 +157,7 @@ public class GameField extends JFrame
      */
 	public void loadLevel(String level)
 	{
-		feld = lvl.readLevel(level);
+		feld = lvl.readLevel(level.substring(0));
 		svg = new SaveGame(lvl.getLevelLocation());
 		//Wenn die Datei nicht gefunden wird, gebe eine Fehlermeldung zurueck und
 		//beende das Spiel
