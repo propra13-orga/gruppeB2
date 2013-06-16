@@ -372,7 +372,8 @@ public class GameField extends JFrame
 				fY = field[i][j].getCenterY();
 				
 				//Kollisionsabfrage bezueglich der soliden Bloecke (Bewegung)
-				if(player1.intersects(field[i][j]) && field[i][j].isSolid())
+				//Spieler kollidiert mit Ausgang solange nicht die Gegnerlsite leer ist
+				if(player1.intersects(field[i][j]) && field[i][j].isSolid() || player1.intersects(field[i][j]) && field[i][j].toString().equalsIgnoreCase("door") && enemyList.isEmpty()==false)
 				{
 					//Pruefe, wo die Kollision mit dem Spieler auftrat
 					if(pX > fX && pY >= fY - 20 && pY <= fY + 20)
@@ -386,14 +387,12 @@ public class GameField extends JFrame
 					if(player1.intersects(field[i][j]) && field[i][j].toString()=="npc")
 					{
 						npc.setHelp(true);
-						
-
 					}
 				}
 				
 				
-				//Kollisionsabfrage bezueglich der Ausgaenge
-				else if(player1.intersects(field[i][j]) && (field[i][j].toString().equals("door")))
+				//Kollisionsabfrage bezueglich der Ausgaenge, Ausgang erst moeglich wenn Gegnerliste leer
+				else if(player1.intersects(field[i][j]) && (field[i][j].toString().equals("door")) && enemyList.isEmpty()==true)
 				{
 					
 					//Wenn das momentane Level noch nicht das letzte ist, so

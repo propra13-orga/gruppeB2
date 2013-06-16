@@ -5,8 +5,10 @@ public class Npc extends Block
 {
 	private int posX, posY, pX, pY;
 	
+	//aktiviert Npc
 	private boolean help;
 	
+	//Moegliche Anzeige an der unteren Leiste
 	private boolean helpDisplay;
 
 	public Npc(int posX, int posY) 
@@ -40,7 +42,9 @@ public class Npc extends Block
 			StdDraw.picture(posX, posY, "images/npc/npc2.png");
 			if(helpDisplay==true)
 				{
+					//Anzeige auf der unteren Leiste
 					StdDraw.picture(pX-64, pY, "images/npc/npcActive.png");
+					//bei gedruekter Leertaste, mehr Infos zu sehen
 					if(StdDraw.isKeyPressed(KeyEvent.VK_SPACE))
 						StdDraw.picture(pX-64, pY, "images/npc/npcActive2.png");
 				}
@@ -65,6 +69,13 @@ public class Npc extends Block
 		return helpDisplay;
 	}
 
+	/**
+	 *  Anzeige von Npc Infos an der unteren Leiste
+	 * 
+	 * @param helpDisplay setzt fest, dass an der unteren Leiste Npc Infos angezeigt werde
+	 * @param posX uebergibt an pX die Position weiter
+	 * @param posY uebergibt an pY die Position weiter
+	 */
 	public void setHelpDisplay(boolean helpDisplay, int posX, int posY)
 	{
 		this.helpDisplay = helpDisplay;
