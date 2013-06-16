@@ -1,11 +1,11 @@
 3
-xxxxxxxxxxxxxxxx
-xsx   c g      x
-x x    g g     x
-x x  g    h    x
-x x g  hg  gn  e
-x x  g      q  x
-x x   g  g     x
-x      g       x
-xxxxxxxxxxxxxxxx
-#+#%#########=##
+XXXXXXXXXXXXXXXX
+XSX   c G      X
+X X    G G     X
+X X  G   h     X
+X X G  hG  Gn  E
+X X  G      q  X
+X X   G  G     X
+X      G       X
+XXXXXXXXXXXXXXXX
+#H#I#######C#Q##

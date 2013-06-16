@@ -59,6 +59,8 @@ public class GameField extends JFrame
 	//Manaanzeige
 	Mana mana;
 	
+	CoinDisplay coins;
+	
 	//Inventaranzeige
 	Inventar inventar;
 	
@@ -201,66 +203,70 @@ public class GameField extends JFrame
 				//Je nach Character erzeuge das entsprechende Objekt
 				if(feld[i][j] == ' ')
 					field[i][j] = new Floor(posX, posY);
-				else if(feld[i][j] == 'x'||feld[i][j] == 'X')
+				else if(feld[i][j] == 'X')
 				{
 					field[i][j] = new Wall(posX, posY);
 				}
-				else if(feld[i][j] == 'e'||feld[i][j] == 'E')
+				else if(feld[i][j] == 'E')
 					field[i][j] = new Door(posX, posY);
-				else if(feld[i][j] == 't'||feld[i][j] == 'T')
+				else if(feld[i][j] == 'T')
 					field[i][j] = new Stairs(posX, posY);
-				else if(feld[i][j] == 'r'||feld[i][j] == 'R') //Trap hinzugefuegt
-					field[i][j] = new Trap(posX, posY);
 				
-				else if(feld[i][j] == '#'||feld[i][j] == '#') //Leben/Mana/Inventar
+				else if(feld[i][j] == '#') //Leben/Mana/Inventar
 					field[i][j] = new Status(posX, posY);
 				
-				else if(feld[i][j] == 'c'||feld[i][j] == 'C') //Munzen
+				else if(feld[i][j] == 'c') //Munzen
 				{
 					field[i][j] = new Floor(posX, posY);
 					itemList.add(new Coins(posX, posY));	
 				}
 
-				else if(feld[i][j] == 'w'||feld[i][j] == 'W') //Schwert hinzugefugt
+				else if(feld[i][j] == 's') //Schwert hinzugefugt
 				{
 					field[i][j] = new Floor(posX, posY);
 					itemList.add(new Sword(posX, posY));	
 				}
-				else if(feld[i][j] == 'h'||feld[i][j] == 'H') //Herzen
+				else if(feld[i][j] == 'h') //Herzen
 				{
 					field[i][j] = new Floor(posX, posY);
 					itemList.add(new Heart(posX, posY));	
 				}
-				else if(feld[i][j] == 'q'||feld[i][j] == 'Q') //Manatraenke
+				else if(feld[i][j] == 'q') //Manatraenke
 				{
 					field[i][j] = new Floor(posX, posY);
 					itemList.add(new ManaBottle(posX, posY));	
 				}
-				else if(feld[i][j] == '+'||feld[i][j] == '+') //Leben
+				else if(feld[i][j] == 'H') //Leben
 				{
 					field[i][j] = new Status(posX, posY);
 					energ = new Energy(posX, posY);
 					field[i][j] = energ;
 				}
-				else if(feld[i][j] == '%'||feld[i][j] == '%') //Inventar
+				else if(feld[i][j] == 'I') //Inventar
 				{
 					field[i][j] = new Status(posX, posY);
 					inventar = new Inventar(posX, posY);
 					field[i][j] = inventar;
 				}
-				else if(feld[i][j] == '='||feld[i][j] == '=') //Mana
+				else if(feld[i][j] == 'C')//Mana
+				{
+					field[i][j] = new Status(posX, posY);
+					coins = new CoinDisplay(posX, posY);
+					field[i][j] = coins;
+				}
+				else if(feld[i][j] == 'Q')//Mana
 				{
 					field[i][j] = new Status(posX, posY);
 					mana = new Mana(posX, posY);
 					field[i][j] = mana;
 				}
 				//Boss
-				else if(feld[i][j] == 'z'||feld[i][j] == 'Z')
+				else if(feld[i][j] == 'Z')
 				{
 					field[i][j] = new Floor(posX, posY);
 					bossList.add(new Boss(posX, posY));
 				}	
-				else if(feld[i][j] == 's'||feld[i][j] == 'S') //Spielerstartposition
+				else if(feld[i][j] == 'S') //Spielerstartposition
 				{
 					field[i][j] = new Floor(posX, posY);
 					
@@ -270,14 +276,17 @@ public class GameField extends JFrame
 					playerX = posX;
 					playerY = posY;
 				}
-				else if(feld[i][j] == 'g'||feld[i][j] == 'G') //Gegner
+				else if(feld[i][j] == 'R') //Trap hinzugefuegt
+					field[i][j] = new Trap(posX, posY);
+				
+				else if(feld[i][j] == 'G') //Gegner
 				{
 					field[i][j] = new Floor(posX, posY);
 					
 					//Gegner in Liste hinzu
 					enemyList.add(new Enemy(posX, posY)); 
 				}
-				else if(feld[i][j] == 'n'||feld[i][j] == 'N') //Npc
+				else if(feld[i][j] == 'n') //Npc
 				{	
 					npc = new Npc(posX, posY);
 					field[i][j] = npc;
@@ -347,6 +356,9 @@ public class GameField extends JFrame
 				{
 					inventar.setInventar(0);
 				}
+				
+				//Coins anzeige wird uebernommen
+				coins.setCoins(player1.getMoney());
 	
 				//Position des gerade betrachteten Blocks
 				fX = field[i][j].getCenterX();

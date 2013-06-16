@@ -1,11 +1,11 @@
 1
-xxxxxxxxxxxxxxxx
-x     h        x
-x              x
-x    c         x
-x       g   n  e
-x    q         x
-x              x
-xs             x
-xxxxxxxxxxxxxxxx
-#+#%#########=##
+XXXXXXXXXXXXXXXX
+X      h       X
+X     c        X
+X              X
+X  n      G    E
+X              X
+X              X
+XS    q        X
+XXXXXXXXXXXXXXXX
+#H#I#######C#Q##

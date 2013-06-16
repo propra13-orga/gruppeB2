@@ -1,11 +1,11 @@
-23
-xxxxxxxxxxxxxxxx
-xxn q   h      e
-xxxcgxgxgxgxxxxx
-xxxcccc     xxxx
-xsxxxxxxxxx xxxx
-x xxxxxxxxx xxxx
-x xxxgxgxgx xxxx
-x             hx
-xxxxxxxxxxxxxxxx
-#+#%#########=##
+2
+XXXXXXXXXXXXXXXX
+XXn q   h      E
+XXXcGXGXGXGXXXXX
+XXXcccc     XXXX
+XSXXXXXXXXX XXXX
+X XXXXXXXXX XXXX
+X XXXGXGXGX XXXX
+X             hX
+XXXXXXXXXXXXXXXX
+#H#I#######C#Q##
