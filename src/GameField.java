@@ -292,6 +292,13 @@ public class GameField extends JFrame
 					field[i][j] = npc;
 					
 				}
+				else if(feld[i][j] == 'N') //Npc
+				{
+					npc.setHelpDisplay(true, posX, posY);
+					field[i][j] = npc;
+					
+					
+				}
 			}
 			
 			System.out.println("");
@@ -379,6 +386,7 @@ public class GameField extends JFrame
 					if(player1.intersects(field[i][j]) && field[i][j].toString()=="npc")
 					{
 						npc.setHelp(true);
+						
 
 					}
 				}
@@ -387,6 +395,7 @@ public class GameField extends JFrame
 				//Kollisionsabfrage bezueglich der Ausgaenge
 				else if(player1.intersects(field[i][j]) && (field[i][j].toString().equals("door")))
 				{
+					
 					//Wenn das momentane Level noch nicht das letzte ist, so
 					//wechsel zum naechsten Level
 					if(currentLvl < lvlArray.length)
