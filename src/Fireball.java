@@ -3,6 +3,8 @@ import java.awt.Rectangle;
 
 public class Fireball extends Rectangle
 {
+	private static final long serialVersionUID = 1L;
+
 	private int posX, posY;
 	
 	private int animate;

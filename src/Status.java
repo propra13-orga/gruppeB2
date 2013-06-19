@@ -1,6 +1,7 @@
 
 public class Status extends Block{
 
+	private static final long serialVersionUID = 1L;
 	private int posX, posY;
 	
 	public Status(int posX, int posY){

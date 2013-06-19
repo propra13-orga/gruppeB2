@@ -21,7 +21,7 @@ public class Boss extends Rectangle
 	private double health = 100.0;
 	
 	//noch ohne Auswirkung
-	private boolean colUp, colDown, colRight, colLeft;
+//	private boolean colUp, colDown, colRight, colLeft;
 	
 	public Boss(int posX, int posY)
 	{
@@ -122,5 +122,9 @@ public class Boss extends Rectangle
 
 		public void setHealth(double health) {
 			this.health = health;
+		}
+
+		public int getSPEED() {
+			return SPEED;
 		}
 }

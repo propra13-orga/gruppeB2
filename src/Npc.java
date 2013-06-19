@@ -3,6 +3,8 @@ import java.awt.event.KeyEvent;
 
 public class Npc extends Block
 {
+	private static final long serialVersionUID = 1L;
+
 	private int posX, posY, pX, pY;
 	
 	//aktiviert Npc

@@ -1,5 +1,4 @@
 import java.awt.Rectangle;
-import java.awt.datatransfer.StringSelection;
 
 /**
  *  <i>Player</i>. Respaesentiert das Spieler-Objekt, welches die von Benutzer
@@ -23,6 +22,9 @@ public class Player extends Rectangle
 	
 	//Schwert
 	private int sword;
+	
+	//Ruestung
+	private int armor;
 	
 	private Fireball fire;
 
@@ -63,18 +65,26 @@ public class Player extends Rectangle
 		{
 			if(swpL < 6)
 			{
-				if (sword==0)
+				if (sword==0 && armor==0)
 					StdDraw.picture(posX, posY, "images/player/player_left_"+1+".png");
-				else
+				else if (sword==0 && armor==1)
+					StdDraw.picture(posX, posY, "images/player/player_left_"+1+".r.png");
+				else if(sword==1 && armor==0)
 					StdDraw.picture(posX, posY, "images/player/player_left_"+1+".1.png");
+				else if (sword==1 && armor==1)
+					StdDraw.picture(posX, posY, "images/player/player_left_"+1+".1.r.png");
 				swpL++;
 			}
 			else
 			{
-				if (sword==0)
+				if (sword==0 && armor==0)
 					StdDraw.picture(posX, posY, "images/player/player_left_"+2+".png");
-				else
+				else if (sword==0 && armor==1)
+					StdDraw.picture(posX, posY, "images/player/player_left_"+2+".r.png");
+				else if(sword==1 && armor==0)
 					StdDraw.picture(posX, posY, "images/player/player_left_"+2+".1.png");
+				else if (sword==1 && armor==1)
+					StdDraw.picture(posX, posY, "images/player/player_left_"+2+".1.r.png");
 				swpL++;
 				
 				if(swpL == 11)
@@ -85,18 +95,26 @@ public class Player extends Rectangle
 		{
 			if(swpR < 6)
 			{
-				if (sword==0)
+				if (sword==0 && armor==0)
 					StdDraw.picture(posX, posY, "images/player/player_right_"+1+".png");
-				else
+				else if (sword==0 && armor==1)
+					StdDraw.picture(posX, posY, "images/player/player_right_"+1+".r.png");
+				else if(sword==1 && armor==0)
 					StdDraw.picture(posX, posY, "images/player/player_right_"+1+".1.png");
+				else if (sword==1 && armor==1)
+					StdDraw.picture(posX, posY, "images/player/player_right_"+1+".1.r.png");
 				swpR++;
 			}
 			else
 			{
-				if (sword==0)
+				if (sword==0 && armor==0)
 					StdDraw.picture(posX, posY, "images/player/player_right_"+2+".png");
-				else
+				else if (sword==0 && armor==1)
+					StdDraw.picture(posX, posY, "images/player/player_right_"+2+".r.png");
+				else if(sword==1 && armor==0)
 					StdDraw.picture(posX, posY, "images/player/player_right_"+2+".1.png");
+				else if (sword==1 && armor==1)
+					StdDraw.picture(posX, posY, "images/player/player_right_"+2+".1.r.png");
 				swpR++;
 				
 				if(swpR == 11)
@@ -107,18 +125,26 @@ public class Player extends Rectangle
 		{
 			if(swpU < 6)
 			{
-				if (sword==0)
+				if (sword==0 && armor==0)
 					StdDraw.picture(posX, posY, "images/player/player_up_"+1+".png");
-				else
+				else if (sword==0 && armor==1)
+					StdDraw.picture(posX, posY, "images/player/player_up_"+1+".r.png");
+				else if(sword==1 && armor==0)
 					StdDraw.picture(posX, posY, "images/player/player_up_"+1+".1.png");
+				else if (sword==1 && armor==1)
+					StdDraw.picture(posX, posY, "images/player/player_up_"+1+".1.r.png");
 				swpU++;
 			}
 			else
 			{
-				if (sword==0)
+				if (sword==0 && armor==0)
 					StdDraw.picture(posX, posY, "images/player/player_up_"+2+".png");
-				else
+				else if (sword==0 && armor==1)
+					StdDraw.picture(posX, posY, "images/player/player_up_"+2+".r.png");
+				else if(sword==1 && armor==0)
 					StdDraw.picture(posX, posY, "images/player/player_up_"+2+".1.png");
+				else if (sword==1 && armor==1)
+					StdDraw.picture(posX, posY, "images/player/player_up_"+2+".1.r.png");
 				swpU++;
 				
 				if(swpU == 11)
@@ -129,18 +155,26 @@ public class Player extends Rectangle
 		{
 			if(swpD < 6)
 			{
-				if (sword==0)
+				if (sword==0 && armor==0)
 					StdDraw.picture(posX, posY, "images/player/player_down_"+1+".png");
-				else
+				else if (sword==0 && armor==1)
+					StdDraw.picture(posX, posY, "images/player/player_down_"+1+".r.png");
+				else if(sword==1 && armor==0)
 					StdDraw.picture(posX, posY, "images/player/player_down_"+1+".1.png");
+				else if (sword==1 && armor==1)
+					StdDraw.picture(posX, posY, "images/player/player_down_"+1+".1.r.png");
 				swpD++;
 			}
 			else
 			{
-				if (sword==0)
+				if (sword==0 && armor==0)
 					StdDraw.picture(posX, posY, "images/player/player_down_"+2+".png");
-				else
+				else if (sword==0 && armor==1)
+					StdDraw.picture(posX, posY, "images/player/player_down_"+2+".r.png");
+				else if(sword==1 && armor==0)
 					StdDraw.picture(posX, posY, "images/player/player_down_"+2+".1.png");
+				else if (sword==1 && armor==1)
+					StdDraw.picture(posX, posY, "images/player/player_down_"+2+".1.r.png");
 				swpD++;
 				
 				if(swpD == 11)
@@ -151,13 +185,34 @@ public class Player extends Rectangle
 	public void attack(String direction)
 	{
 		if (direction.equalsIgnoreCase(Direction.LEFT))
+		{
+			if(armor==1)
+				StdDraw.picture(posX, posY, "images/player/player_left_"+1+".attack.r.png");
+			else
 				StdDraw.picture(posX, posY, "images/player/player_left_"+1+".attack.png");
-		if (direction.equalsIgnoreCase(Direction.RIGHT))
+		}
+				
+		if (direction.equalsIgnoreCase(Direction.RIGHT))	
+		{
+			if(armor==1)
+				StdDraw.picture(posX, posY, "images/player/player_right_"+1+".attack.r.png");
+			else
 				StdDraw.picture(posX, posY, "images/player/player_right_"+1+".attack.png");
+		}
 		if (direction.equalsIgnoreCase(Direction.UP))
+		{
+			if(armor==1)
+				StdDraw.picture(posX, posY, "images/player/player_up_"+1+".attack.r.png");
+			else
 				StdDraw.picture(posX, posY, "images/player/player_up_"+1+".attack.png");
+		}
 		if (direction.equalsIgnoreCase(Direction.DOWN))
+		{
+			if(armor==1)
+				StdDraw.picture(posX, posY, "images/player/player_down_"+1+".attack.r.png");
+			else
 				StdDraw.picture(posX, posY, "images/player/player_down_"+1+".attack.png");
+		}
 	}
 	
 	 /**
@@ -166,10 +221,14 @@ public class Player extends Rectangle
 	public void draw()
 	{
 		
-		if (sword==0)
+		if (sword==0 && armor==0)
 			StdDraw.picture(posX, posY, "images/player/player_down_"+1+".png");
-		else
+		else if (sword==0 && armor==1)
+			StdDraw.picture(posX, posY, "images/player/player_down_"+1+".r.png");
+		else if(sword==1 && armor==0)
 			StdDraw.picture(posX, posY, "images/player/player_down_"+1+".1.png");
+		else if (sword==1 && armor==1)
+			StdDraw.picture(posX, posY, "images/player/player_down_"+1+".1.r.png");
 	}
 
 	 /**
@@ -248,9 +307,11 @@ public class Player extends Rectangle
 		return money;
 	}
 
-	public void setMoney(int money) {
+	public void setMoney(int money)
+	{
 		this.money = this.money + money;
 	}
+	
 	
 	public double getMana() {
 		if (mana>100.0)
@@ -276,6 +337,20 @@ public class Player extends Rectangle
 		this.sword = this.sword + sword;
 	}
 	
+	public int getArmor()
+	{
+		if(armor>0)
+			armor=1;
+		else if (armor<0)
+			armor = 0;
+		return armor;
+	}
+
+	public void setArmor(int armor)
+	{
+		this.armor = this.armor + armor;
+	}	
+	
 	public Fireball getFire() {
 		return fire;
 	}
@@ -283,5 +358,6 @@ public class Player extends Rectangle
 	public void setFire(Fireball fire) {
 		this.fire = fire;
 	}
+
 	
 }

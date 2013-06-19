@@ -1,6 +1,5 @@
 import javax.swing.*;
 
-import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
@@ -89,8 +88,8 @@ public class GameField extends JFrame
 		lvlArray = new String[] 
 		{
 			"lvl1.txt", "lvl2.txt", "lvl3.txt", "lvl4.txt",
-			"lvl5.txt", "lvl6.txt", "lvl7.txt", "lvl8.txt", 
-			"lvl9.txt", "lvl10.txt", "lvl11.txt", "lvl12.txt"
+			"lvl5.txt", "lvl6.txt", "lvl7.txt", "lvl8.txt",
+			"lvl9.txt", "lvl10.txt", "lvl11.txt", "lvl12.txt",
 		};
 		
 		//Erzeugt die Hilfsklasse zum Einlesen der Textdateien
@@ -114,8 +113,8 @@ public class GameField extends JFrame
 		lvlArray = new String[] 
 		{
 			"lvl1.txt", "lvl2.txt", "lvl3.txt", "lvl4.txt",
-			"lvl5.txt", "lvl6.txt", "lvl7.txt", "lvl8.txt", 
-			"lvl9.txt", "lvl10.txt", "lvl11.txt", "lvl12.txt"
+			"lvl5.txt", "lvl6.txt", "lvl7.txt", "lvl8.txt",
+			"lvl9.txt", "lvl10.txt", "lvl11.txt", "lvl12.txt",
 		};
 		
 		//Erzeugt die Hilfsklasse zum Einlesen der Textdateien
@@ -137,7 +136,7 @@ public class GameField extends JFrame
 	
 	/**
 	* Konstruktor zum Neuladen im selben Level
-	* spater mit zaehlen der Lebenspunbkte
+	* spater mit z�hlen der Lebenspunbkte
 	* @param currentLvl
 	*/
 // 	public GameField(int currentLvl)
@@ -228,6 +227,11 @@ public class GameField extends JFrame
 					field[i][j] = new Floor(posX, posY);
 					itemList.add(new Coins(posX, posY));	
 				}
+				else if(feld[i][j] == 'a') //Munzen
+				{
+					field[i][j] = new Floor(posX, posY);
+					itemList.add(new Shop(posX, posY));	
+				}
 
 				else if(feld[i][j] == 's') //Schwert hinzugefugt
 				{
@@ -307,11 +311,7 @@ public class GameField extends JFrame
 					
 					
 				}
-				else if(feld[i][j] == 'a') //Shop
-				{
-					shop = new Shop(posX, posY);
-					field[i][j] = shop;
-				}
+				
 				
 			}
 			
@@ -413,6 +413,13 @@ public class GameField extends JFrame
 					//wechsel zum naechsten Level
 					if(currentLvl < lvlArray.length)
 					{
+						for(int x=0;x<itemList.size();x++)
+							itemList.remove(itemList.get(x));
+						for(int x=0;x<enemyList.size();x++)
+							enemyList.remove(enemyList.size());
+						for(int x=0;x<bossList.size();x++)
+							bossList.remove(bossList.get(x));
+						
 						currentLvl++;
 						this.loadLevel(lvlArray[currentLvl]);
 						svg.save();
@@ -544,7 +551,17 @@ public class GameField extends JFrame
 						}
 						else if(itemList.get(count).toString()=="shop")
 						{
-
+							
+							if(player1.getMoney()>=shop.ARMOR_PRICE)
+								{
+								player1.setArmor(1);
+								player1.setMoney(-shop.ARMOR_PRICE);
+								System.out.println(player1.getArmor());
+								System.out.println(player1.getMoney());
+							
+								}
+								
+							
 						}						
 					}
 				}

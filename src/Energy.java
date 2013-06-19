@@ -1,6 +1,8 @@
 
 public class Energy extends Block 
 {
+	private static final long serialVersionUID = 1L;
+
 	private int posX, posY;
 	
 	private int nrg;

@@ -18,7 +18,7 @@ public class LoadFromFile
 	
 	public LoadFromFile(String file)
 	{
-		this.file = file;
+		this.setFile(file);
 		
 		try
 		{
@@ -49,6 +49,14 @@ public class LoadFromFile
 
 	public void setCurLvl(int curLvl) {
 		this.curLvl = curLvl;
+	}
+
+	public String getFile() {
+		return file;
+	}
+
+	public void setFile(String file) {
+		this.file = file;
 	}
 	
 	
