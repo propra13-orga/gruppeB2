@@ -71,6 +71,8 @@ public class GameField extends JFrame
 	//(zur Kollisionsabfrage und Logik)
 		
 	double pX, pY, fX, fY, eX, eY;
+	int setBack;
+	double diffX, diffY;
 	
 	//x- und y-Position des Spielers zu Beginn des Levels
 	int playerX, playerY;
@@ -97,7 +99,7 @@ public class GameField extends JFrame
 		inGameMenu = false;
 
 		//Lade bei neuem Spielbeginn das erste Level (Array-Position 0)
-		currentLvl = 0;
+		currentLvl = 3;
 		this.loadLevel(lvlArray[currentLvl]);
 //		svg = new SaveGame(lvl.getLevelLocation());
 		//Initialisiere das Feld (aus dem String-Array des Levels)
@@ -385,9 +387,10 @@ public class GameField extends JFrame
 				fX = field[i][j].getCenterX();
 				fY = field[i][j].getCenterY();
 				
+				System.out.println(bossList.isEmpty());
 				//Kollisionsabfrage bezueglich der soliden Bloecke (Bewegung)
 				//Spieler kollidiert mit Ausgang solange nicht die Gegnerlsite leer ist
-				if(player1.intersects(field[i][j]) && field[i][j].isSolid() || player1.intersects(field[i][j]) && field[i][j].toString().equalsIgnoreCase("door") && enemyList.isEmpty()==false)
+				if(player1.intersects(field[i][j]) && field[i][j].isSolid() || player1.intersects(field[i][j]) && field[i][j].toString().equalsIgnoreCase("door") && (enemyList.isEmpty()==false || bossList.isEmpty()==false))
 				{
 					//Pruefe, wo die Kollision mit dem Spieler auftrat
 					if(pX > fX && pY >= fY - 20 && pY <= fY + 20)
@@ -406,7 +409,7 @@ public class GameField extends JFrame
 				
 				
 				//Kollisionsabfrage bezueglich der Ausgaenge, Ausgang erst moeglich wenn Gegnerliste leer
-				else if(player1.intersects(field[i][j]) && (field[i][j].toString().equals("door")) && enemyList.isEmpty()==true)
+				else if(player1.intersects(field[i][j]) && (field[i][j].toString().equals("door")) && enemyList.isEmpty()==true && bossList.isEmpty()==true)
 				{
 					
 					//Wenn das momentane Level noch nicht das letzte ist, so
@@ -499,7 +502,55 @@ public class GameField extends JFrame
 							}
 							
 						}
-					}	
+					}
+				}
+				
+				if(!bossList.isEmpty() && setBack == 0)
+				if(player1.intersects(bossList.get(0)))
+				{
+					Boss curBoss = bossList.get(0);
+
+					diffX = player1.getCenterX() - curBoss.getCenterX() + 1;
+					diffY = player1.getCenterY() - curBoss.getCenterY() + 1;	
+					
+					if(player1.getFire().isActive()==true)
+					{
+						curBoss.decreaseHealthBy(20);
+						
+						setBack = 20;
+					}
+					else
+					{
+						player1.setHealthDown(15.0);
+						if(player1.getHealth()<=0.0)
+						{
+
+							isAlive = false;
+							
+							//Listen werden f�r neu initialisierung geleert
+							itemList.clear(); 
+							enemyList.clear();
+							bossList.clear();
+							
+							if(itemList.size()==0 && enemyList.size()==0)
+							{
+								//Neuladen des Spielfeldes
+								StdDraw.clear();
+								this.loadLevel(lvlArray[currentLvl]);
+								this.initField();	
+							}
+						}
+						else
+						{								
+							curBoss.decreaseHealthBy(20);
+							
+							setBack = 20;
+						}
+						
+					}
+					
+					if(!curBoss.isAlive())
+						bossList.remove(bossList.get(0));
 				}
 				
 //				for(int x=0;x<bossList.size();x++)
@@ -608,7 +659,7 @@ public class GameField extends JFrame
 				bossList.get(x).draw();
 				
 				//Spezialeffekt, keine Auswirkungen, nur deko
-				for(int i=1;i<=2;i++)
+				/*for(int i=1;i<=2;i++)
 				{	
 					for(int j=1;j<=2;j++)
 					{	
@@ -627,7 +678,7 @@ public class GameField extends JFrame
 						bossList.get(x).getFire().draw();
 					}
 					
-				}
+				}*/
 			}
 			
 		
@@ -693,9 +744,38 @@ public class GameField extends JFrame
 					}
 				}
 				
+				if(!bossList.isEmpty() && setBack == 0)
+					if(bossList.get(0).rectInRange(player1))
+						bossList.get(0).moveTo(player1);
+				
 				//Abfrage nach Tastendruecken des Benutzers. Sorgt fuer Bewegung
-				//der Spielfigur		
-				if(StdDraw.isKeyPressed(KeyEvent.VK_RIGHT))
+				//der Spielfigur
+				if(setBack > 0)
+				{
+					if(!collideLeft && !collideRight)
+					{						
+						//if(Math.abs(diffX) < 16)
+							//playerX = playerX + (int)(diffX * 2);
+						//else
+							playerX = playerX + (int)(diffX * 0.10);						
+					}
+					
+					if(!collideUp && !collideDown)
+					{
+						//if(Math.abs(diffY) < 16)
+							//playerY = playerY + (int)(diffY * 2);
+						//else
+							playerY = playerY + (int)(diffY * 0.10);
+					}
+
+					//System.out.println(diffX + " Y: "+diffY);
+					
+					player1.setPos(playerX, playerY);
+					
+					setBack--;
+					
+				}
+				else if(StdDraw.isKeyPressed(KeyEvent.VK_RIGHT))
 				{
 					if(StdDraw.isKeyPressed(KeyEvent.VK_S))
 					{
@@ -703,7 +783,7 @@ public class GameField extends JFrame
 					}		
 					if(!collideRight)
 					{
-						playerX = playerX + 6;
+						playerX = playerX + 3;
 						player1.setPosX(playerX);
 					}
 				
@@ -720,7 +800,7 @@ public class GameField extends JFrame
 					}
 					if(!collideLeft)
 					{
-						playerX = playerX - 6;
+						playerX = playerX - 3;
 						player1.setPosX(playerX);
 					}
 					
@@ -737,7 +817,7 @@ public class GameField extends JFrame
 					}
 					if(!collideUp)
 					{
-						playerY = playerY + 6;
+						playerY = playerY + 3;
 						player1.setPosY(playerY);
 					}
 					
@@ -753,7 +833,7 @@ public class GameField extends JFrame
 					}
 					if(!collideDown)
 					{
-						playerY = playerY - 6;
+						playerY = playerY - 3;
 						player1.setPosY(playerY);
 					}
 					

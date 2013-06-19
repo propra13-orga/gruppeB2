@@ -20,27 +20,27 @@ public class Fireball extends Rectangle
 	
 	public void draw()
 	{
-		if(animate<5)
+		if(animate<100)
 		{
 			StdDraw.picture(posX, posY, "images/player/fire"+1+".png");
 			animate++;
 		}
-		else if(animate<10)
+		else if(animate<200)
 		{
 			StdDraw.picture(posX, posY, "images/player/fire"+2+".png");
 			animate++;
 		}
-		else if(animate<15)
+		else if(animate<300)
 		{
 			StdDraw.picture(posX, posY, "images/player/fire"+3+".png");
 			animate++;
 		}
-		else if(animate<20)
+		else
 		{
 			StdDraw.picture(posX, posY, "images/player/fire"+4+".png");
 			animate++;
 			
-			if(animate==20)
+			if(animate==400)
 				animate=0;
 		}
 	}

@@ -7,10 +7,10 @@ public class Boss extends Rectangle
 	
 	
 	private double posX, posY;
+	private final double SPEED = 1.5;
+	private final int RANGE = 150;
 	
 	private Fireball fire;
-	
-	private final int SPEED = 2;
 	
 	private int swap;
 	
@@ -30,7 +30,7 @@ public class Boss extends Rectangle
 		this.posX = posX;
 		this.posY = posY;
 		
-		fire = new Fireball(posX, posY);
+		//fire = new Fireball(posX, posY);
 	}
 	
 	public void draw()
@@ -64,13 +64,18 @@ public class Boss extends Rectangle
 		{
 			StdDraw.picture(posX, posY, "images/enemy/satan_"+4+".png");
 			swap++;
+		}		
+		else if(swap < 56)
+		{
+			StdDraw.picture(posX, posY, "images/enemy/satan_"+3+".png");
+			swap++;
 		}
 		else
 		{
 			StdDraw.picture(posX, posY, "images/enemy/satan_"+2+".png");
 			swap++;
 			
-			if(swap == 56)
+			if(swap == 64)
 				swap = 0;					
 		}
 	}
@@ -124,7 +129,47 @@ public class Boss extends Rectangle
 			this.health = health;
 		}
 
-		public int getSPEED() {
+		public double getSPEED() {
 			return SPEED;
+		}
+		
+		
+		public boolean rectInRange(Rectangle obj)
+		{
+			double posXObj = obj.getCenterX();
+			double posYObj = obj.getCenterY();
+			
+			double d = Math.sqrt(Math.pow((posXObj - this.getCenterX()), 2) + Math.pow((posYObj - this.getCenterY()), 2));
+			
+			if(d < RANGE)
+				return true;
+			else
+				return false;
+		}
+		
+		public void moveTo(Rectangle obj)
+		{
+			double posXObj = obj.getCenterX();
+			double posYObj = obj.getCenterY();
+
+			double diffX = posXObj - this.getCenterX() + 1;
+			double diffY = posYObj - this.getCenterY() + 1;			
+			
+			double d = Math.sqrt(Math.pow((posXObj - this.getCenterX()), 2) + Math.pow((posYObj - this.getCenterY()), 2));		
+
+			posX = posX + diffX/d * SPEED;
+			posY = posY + diffY/d * SPEED;
+			
+			this.setLocation((int)posX,(int)posY);
+		}
+		
+		public void decreaseHealthBy(double dmg)
+		{
+			this.health = this.health - dmg;
+		}
+		
+		public boolean isAlive()
+		{
+			return health > 0;
 		}
 }
