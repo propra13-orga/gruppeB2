@@ -17,6 +17,7 @@ s - Sword
 h - Heart
 q - Manabottle
 n - npc
+a - shop
 
 
 R - Trap

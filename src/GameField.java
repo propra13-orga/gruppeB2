@@ -59,7 +59,11 @@ public class GameField extends JFrame
 	//Manaanzeige
 	Mana mana;
 	
+	//Muenzen
 	CoinDisplay coins;
+	
+	//haendler
+	Shop shop;
 	
 	//Inventaranzeige
 	Inventar inventar;
@@ -299,6 +303,12 @@ public class GameField extends JFrame
 					
 					
 				}
+				else if(feld[i][j] == 'a') //Shop
+				{
+					shop = new Shop(posX, posY);
+					field[i][j] = shop;
+				}
+				
 			}
 			
 			System.out.println("");
@@ -527,6 +537,10 @@ public class GameField extends JFrame
 							//Sword
 							itemList.remove(itemList.get(count));
 							player1.setSword(1);
+						}
+						else if(itemList.get(count).toString()=="shop")
+						{
+
 						}						
 					}
 				}
