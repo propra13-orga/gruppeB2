@@ -88,7 +88,9 @@ public class GameField extends JFrame
 		//erzeugt das Array, in dem die Level-Textdateinamen gespeichert werden
 		lvlArray = new String[] 
 		{
-			"lvl1.txt", "lvl2.txt", "lvl3.txt", "lvl4.txt"
+			"lvl1.txt", "lvl2.txt", "lvl3.txt", "lvl4.txt",
+			"lvl5.txt", "lvl6.txt", "lvl7.txt", "lvl8.txt", 
+			"lvl9.txt", "lvl10.txt", "lvl11.txt", "lvl12.txt"
 		};
 		
 		//Erzeugt die Hilfsklasse zum Einlesen der Textdateien
@@ -111,7 +113,9 @@ public class GameField extends JFrame
 		//erzeugt das Array, in dem die Level-Textdateinamen gespeichert werden
 		lvlArray = new String[] 
 		{
-			"lvl1.txt", "lvl2.txt", "lvl3.txt", "lvl4.txt"
+			"lvl1.txt", "lvl2.txt", "lvl3.txt", "lvl4.txt",
+			"lvl5.txt", "lvl6.txt", "lvl7.txt", "lvl8.txt", 
+			"lvl9.txt", "lvl10.txt", "lvl11.txt", "lvl12.txt"
 		};
 		
 		//Erzeugt die Hilfsklasse zum Einlesen der Textdateien
@@ -133,7 +137,7 @@ public class GameField extends JFrame
 	
 	/**
 	* Konstruktor zum Neuladen im selben Level
-	* spater mit z�hlen der Lebenspunbkte
+	* spater mit zaehlen der Lebenspunbkte
 	* @param currentLvl
 	*/
 // 	public GameField(int currentLvl)

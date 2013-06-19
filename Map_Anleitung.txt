@@ -22,7 +22,8 @@ a - shop
 
 R - Trap
 G - Enemy
-S - Player 
+S - Player
+Z - Boss 
 
 Die letzte Zeile stellt die Anzeigen dar:
 
