@@ -172,6 +172,7 @@ public class GameField extends JFrame
 	public void loadLevel(String level)
 	{
 		feld = lvl.readLevel(level.substring(0));
+		//String mit Infos: Level, Geldbestand, Schwertbestand, Ruestungbestand werden uebergeben
 		svg = new SaveGame(lvl.getLevelLocation()+player1.getMoney()+player1.getSword()+player1.getArmor());
 		//Wenn die Datei nicht gefunden wird, gebe eine Fehlermeldung zurueck und
 		//beende das Spiel
@@ -369,11 +370,20 @@ public class GameField extends JFrame
 				//Inventar anzeige wird uebernommen
 				if(player1.getSword()==1)
 				{
-					inventar.setInventar(1);
+					inventar.setInventarSwrd(1);
 				}
 				else if(player1.getSword()==0)
 				{
-					inventar.setInventar(0);
+					inventar.setInventarSwrd(0);
+				}
+				//Inventar anzeige wird uebernommen
+				if(player1.getArmor()==1)
+				{
+					inventar.setInventarArm(1);
+				}
+				else if(player1.getArmor()==0)
+				{
+					inventar.setInventarArm(0);
 				}
 				
 				//Coins anzeige wird uebernommen

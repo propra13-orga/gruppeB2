@@ -5,7 +5,8 @@ public class Inventar extends Block
 
 	private int posX, posY;
 	
-	private int inventar;
+	private int inventarSwrd;
+	private int inventarArm;
 	
 	public Inventar(int posX, int posY)
 	{
@@ -32,18 +33,30 @@ public class Inventar extends Block
 	@Override
 	void drawImg() 
 	{
-		if(inventar<1)
-			StdDraw.picture(posX, posY, "images/status/inventar1.png");
-		else if(inventar>0)
+		if(inventarSwrd+inventarArm==2)
+			StdDraw.picture(posX, posY, "images/status/inventar1.3.png");
+		else if(inventarArm == 1)
+			StdDraw.picture(posX, posY, "images/status/inventar1.2.png");
+		else if(inventarSwrd==1)
 			StdDraw.picture(posX, posY, "images/status/inventar1.1.png");
+		else 
+			StdDraw.picture(posX, posY, "images/status/inventar1.png");		
 	}
 
-	public int getInventar() {
-		return inventar;
+	public int getInventarSwrd() {
+		return inventarSwrd;
 	}
 
-	public void setInventar(int inventar) {
-		this.inventar = inventar;
+	public void setInventarSwrd(int inventarSwrd) {
+		this.inventarSwrd = inventarSwrd;
+	}
+	
+	public int getInventarArm() {
+		return inventarArm;
+	}
+
+	public void setInventarArm(int inventarArm) {
+		this.inventarArm = inventarArm;
 	}
 
 
