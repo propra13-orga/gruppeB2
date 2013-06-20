@@ -69,7 +69,6 @@ public class GameField extends JFrame
 	
 	//x- und y-Position des Spielers und x- und y-Position eines Spielfeldblockes 
 	//(zur Kollisionsabfrage und Logik)
-		
 	double pX, pY, fX, fY, eX, eY;
 	int setBack;
 	double diffX, diffY;
@@ -99,9 +98,9 @@ public class GameField extends JFrame
 		inGameMenu = false;
 
 		//Lade bei neuem Spielbeginn das erste Level (Array-Position 0)
-		currentLvl = 3;
+		currentLvl = 0;
 		this.loadLevel(lvlArray[currentLvl]);
-//		svg = new SaveGame(lvl.getLevelLocation());
+
 		//Initialisiere das Feld (aus dem String-Array des Levels)
 		this.initField();
 		//Starte die Spielschleife
@@ -127,8 +126,12 @@ public class GameField extends JFrame
 		LoadFromFile lff = new LoadFromFile(filename);
 
 		currentLvl = lff.getCurLvl()-1;
+		player1.setMoney(lff.getCoins());
+		player1.setArmor(lff.getArmor());
+		player1.setSword(lff.getSword());
+		
 		this.loadLevel(lvlArray[currentLvl]);
-//		svg = new SaveGame(lvl.getLevelLocation());
+
 		//Initialisiere das Feld (aus dem String-Array des Levels)
 		this.initField();
 		//Starte die Spielschleife
@@ -169,7 +172,7 @@ public class GameField extends JFrame
 	public void loadLevel(String level)
 	{
 		feld = lvl.readLevel(level.substring(0));
-		svg = new SaveGame(lvl.getLevelLocation());
+		svg = new SaveGame(lvl.getLevelLocation()+player1.getMoney()+player1.getSword()+player1.getArmor());
 		//Wenn die Datei nicht gefunden wird, gebe eine Fehlermeldung zurueck und
 		//beende das Spiel
 		if(feld == null)
@@ -280,44 +283,37 @@ public class GameField extends JFrame
 					field[i][j] = new Floor(posX, posY);
 					bossList.add(new Boss(posX, posY));
 				}	
-				else if(feld[i][j] == 'S') //Spielerstartposition
+				//Spielerstartposition
+				else if(feld[i][j] == 'S') 
 				{
 					field[i][j] = new Floor(posX, posY);
-					
 					//Erzeugt den Spieler und setzt seine Startposition
 					player1.setPosX(posX);
 					player1.setPosY(posY);
 					playerX = posX;
 					playerY = posY;
 				}
-				else if(feld[i][j] == 'R') //Trap hinzugefuegt
+				//Trap hinzugefuegt
+				else if(feld[i][j] == 'R') 
 					field[i][j] = new Trap(posX, posY);
-				
-				else if(feld[i][j] == 'G') //Gegner
+				//Gegner in Liste hinzu
+				else if(feld[i][j] == 'G') 
 				{
 					field[i][j] = new Floor(posX, posY);
-					
-					//Gegner in Liste hinzu
 					enemyList.add(new Enemy(posX, posY)); 
 				}
-				else if(feld[i][j] == 'n') //Npc
-				{	
-					npc = new Npc(posX, posY);
+				//Npc
+				else if(feld[i][j] == 'n') 
+				{	npc = new Npc(posX, posY);
 					field[i][j] = npc;
-					
 				}
-				else if(feld[i][j] == 'N') //Npc
+				//Npc Display
+				else if(feld[i][j] == 'N') 
 				{
 					npc.setHelpDisplay(true, posX, posY);
-					field[i][j] = npc;
-					
-					
+					field[i][j] = npc;					
 				}
-				
-				
 			}
-			
-			System.out.println("");
 		}
 	}
 	
@@ -657,32 +653,7 @@ public class GameField extends JFrame
 			for(int x=0;x<bossList.size();x++)
 			{
 				bossList.get(x).draw();
-				
-				//Spezialeffekt, keine Auswirkungen, nur deko
-				/*for(int i=1;i<=2;i++)
-				{	
-					for(int j=1;j<=2;j++)
-					{	
-						
-						bossList.get(x).getFire().setPosX((int)bossList.get(x).getPosX()+(i*40));
-						bossList.get(x).getFire().setPosY((int)bossList.get(x).getPosY()+(j*40));
-						bossList.get(x).getFire().draw();
-						bossList.get(x).getFire().setPosX((int)bossList.get(x).getPosX()+(i*40));
-						bossList.get(x).getFire().setPosY((int)bossList.get(x).getPosY()-(j*40));
-						bossList.get(x).getFire().draw();
-						bossList.get(x).getFire().setPosX((int)bossList.get(x).getPosX()-(i*40));
-						bossList.get(x).getFire().setPosY((int)bossList.get(x).getPosY()+(j*40));
-						bossList.get(x).getFire().draw();
-						bossList.get(x).getFire().setPosX((int)bossList.get(x).getPosX()-(i*40));
-						bossList.get(x).getFire().setPosY((int)bossList.get(x).getPosY()-(j*40));
-						bossList.get(x).getFire().draw();
-					}
-					
-				}*/
-			}
-			
-		
-			
+			}			
 		}
 		
 		//Zauber aktiv
@@ -693,7 +664,6 @@ public class GameField extends JFrame
 			player1.getFire().draw();
 			player1.setMana(-0.5);
 		}
-			
 	}
 
     /**

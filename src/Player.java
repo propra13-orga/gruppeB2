@@ -25,7 +25,7 @@ public class Player extends Rectangle
 	
 	//Ruestung
 	private int armor;
-	
+
 	private Fireball fire;
 
 	//Variablen zur Animation der Bewegung
@@ -357,7 +357,5 @@ public class Player extends Rectangle
 
 	public void setFire(Fireball fire) {
 		this.fire = fire;
-	}
-
-	
+	}	
 }
