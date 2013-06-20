@@ -11,11 +11,16 @@ public class Player extends Rectangle
 	//x- und y-Position, an welcher der Spieler sich auf dem Spielfeld befindet.
 	private int posX, posY;
 
-	// energywert 
+	// energywerte wurde so gewahlt, dass bei abspecihern und laden keine Fehler auftauchen
+	private final double MAX_HEALTH = 99.9;
+	private final double MIN_HEALTH = 10.0;
 	private double health=50.0; 
 	
-	// manawert
+	// manawerte wurde so gewahlt, dass bei abspecihern und laden keine Fehler auftauchen
+	private final double MAX_MANA = 99.9;
+	private final double MIN_MANA = 10.0;
 	private double mana=0.0;
+	
 	
 	//Anzahl Gold
 	private int money;
@@ -287,19 +292,23 @@ public class Player extends Rectangle
 		return posY;
 	}
 	public double getHealth() {
-		if (health>100.0)
-			health=100.0;
-		else if(health<0)
-				health=0;
+		if (health>MAX_HEALTH)
+			health=MAX_HEALTH;
+		else if(health<MIN_HEALTH)
+				health=MIN_HEALTH;
 		return health;
 		
 	}
 
 	public void setHealth(double health) {
+		this.health = health;
+	}
+	
+	public void incHealth(double health) {
 		this.health = this.health + health;
 	}
 	
-	public void setHealthDown(double health) {
+	public void decreaseHealthDown(double health) {
 		this.health = this.health - health;
 	}
 	
@@ -314,10 +323,10 @@ public class Player extends Rectangle
 	
 	
 	public double getMana() {
-		if (mana>100.0)
-			mana=100.0;
-		else if(mana<0)
-				mana=0;
+		if (mana>MAX_MANA)
+			mana=MAX_MANA;
+		else if(mana<MIN_MANA)
+				mana=MIN_MANA;
 		return mana;
 	}
 

@@ -121,14 +121,15 @@ public class GameField extends JFrame
 		//Erzeugt die Hilfsklasse zum Einlesen der Textdateien
 		lvl = new ReadLevel();
 		inGameMenu = false;
-		
-		
+				
 		LoadFromFile lff = new LoadFromFile(filename);
-
+		
 		currentLvl = lff.getCurLvl()-1;
 		player1.setMoney(lff.getCoins());
 		player1.setArmor(lff.getArmor());
 		player1.setSword(lff.getSword());
+		player1.setMana(lff.getMana());
+		player1.setHealth(lff.getEnergy());
 		
 		this.loadLevel(lvlArray[currentLvl]);
 
@@ -173,7 +174,7 @@ public class GameField extends JFrame
 	{
 		feld = lvl.readLevel(level.substring(0));
 		//String mit Infos: Level, Geldbestand, Schwertbestand, Ruestungbestand werden uebergeben
-		svg = new SaveGame(lvl.getLevelLocation()+player1.getMoney()+player1.getSword()+player1.getArmor());
+		svg = new SaveGame(lvl.getLevelLocation()+player1.getMoney()+player1.getSword()+player1.getArmor()+Double.toString(player1.getMana())+Double.toString(player1.getHealth()));
 		//Wenn die Datei nicht gefunden wird, gebe eine Fehlermeldung zurueck und
 		//beende das Spiel
 		if(feld == null)
@@ -440,7 +441,7 @@ public class GameField extends JFrame
 				else if(player1.intersects(field[i][j]) && (field[i][j].toString().equals("trap")))
 				{	
 					isAlive = false;
-					player1.setHealthDown(35.0);//Lebensenergie wird um eins runter gesetzt
+					player1.decreaseHealthDown(35.0);//Lebensenergie wird um eins runter gesetzt
 					
 					//Listen werden fuer neu initialisierung geleert
 					itemList.clear(); 
@@ -484,7 +485,7 @@ public class GameField extends JFrame
 						}
 						else
 						{
-							player1.setHealthDown(15.0);
+							player1.decreaseHealthDown(15.0);
 							if(player1.getHealth()<=0.0)
 							{
 
@@ -527,7 +528,7 @@ public class GameField extends JFrame
 					}
 					else
 					{
-						player1.setHealthDown(15.0);
+						player1.decreaseHealthDown(15.0);
 						if(player1.getHealth()<=0.0)
 						{
 
@@ -592,7 +593,7 @@ public class GameField extends JFrame
 						{
 							//energie
 							itemList.remove(itemList.get(count));
-							player1.setHealth(22.0);
+							player1.incHealth(22.0);
 						}
 						else if(itemList.get(count).toString()=="mana")
 						{

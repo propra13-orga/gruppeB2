@@ -43,7 +43,7 @@ public class LoadFromFile
 			infoFromFile = lineRead.readLine();
 			
 			//Bearbeitung der Datein Informationen
-			if(infoFromFile.length()==4)
+			if(infoFromFile.length()>0)
 			{
 				//Erste Zahl gibt Level wieder
 				curLvl = Integer.parseInt(infoFromFile.substring(0,1));
@@ -53,6 +53,10 @@ public class LoadFromFile
 				sword = Integer.parseInt(infoFromFile.substring(2,3));
 				//Vierte Zahl gibt an, ob Schwert im Invntar oder nicht
 				armor = Integer.parseInt(infoFromFile.substring(3,4));
+				//
+				mana = Double.parseDouble(infoFromFile.substring(4,8));
+				
+				energy = Double.parseDouble(infoFromFile.substring(8,12));
 			}
 			
 			readFile.close();
@@ -61,6 +65,14 @@ public class LoadFromFile
 		{
 			System.out.println("Datei konnte nicht gelesen werden!");
 		}
+	}
+
+	public double getMana() {
+		return mana;
+	}
+
+	public void setMana(double mana) {
+		this.mana = mana;
 	}
 
 	public int getCoins() {
