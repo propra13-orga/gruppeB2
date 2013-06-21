@@ -18,7 +18,7 @@ public class Player extends Rectangle
 	
 	// manawerte wurde so gewahlt, dass bei abspecihern und laden keine Fehler auftauchen
 	private final double MAX_MANA = 99.9;
-	private final double MIN_MANA = 10.0;
+	private final double MIN_MANA = 0.0;
 	private double mana=0.0;
 	
 	
