@@ -19,11 +19,11 @@ public class Wall extends Block
      * @param posX - die x-Position der Wand (Rectangle)
      * @param posY - die y-Position der Wand (Rectangle)
      */
-	public Wall(int posX, int posY)
+	public Wall(int posX, int posY, int sizeX, int sizeY)
 	{
 		//Das Wall-Objekt ist ein Block-Objekt an der Position posX und posY
 		//mit der Groesse 32x32 Pixel (Rectangle)
-		super(posX, posY, 40, 40);
+		super(posX, posY, sizeX, sizeY);
 		
 		this.posX = posX;
 		this.posY = posY;

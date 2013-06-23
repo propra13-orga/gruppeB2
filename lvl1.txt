@@ -1,11 +1,9 @@
-1
 XXXXXXXXXXXXXXXX
 X      h       X
-X     c        X
+X  *  ccccc    X
 X              X
-X  n      G    E
+X  m mmmmmm   BE
 X              X
 X              X
 XS    q        X
 XXXXXXXXXXXXXXXX
-H#I####N#####C#Q

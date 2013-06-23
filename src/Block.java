@@ -33,31 +33,33 @@ abstract class Block extends Rectangle
 		super(posX, posY, sizeX, sizeY);
 	}
 	
-	
-    /**
-     * Gibt zurueck, ob der Block sichtbar ist oder nicht
-     * 
-     * @return true - Block ist nicht sichtbar</br>
-     * false - Block ist sichtbar
-     *
-     */
-	public boolean isHidden()
-	{
-		return hidden;
+	public int checkCollision(Rectangle rect)
+	{	
+		if(this.intersects(rect) && this.isSolid())
+		{
+			double pX = rect.getCenterX();
+			double pY = rect.getCenterY();
+			double fX = this.getCenterX();
+			double fY = this.getCenterY();
+			
+			if(pX > fX && pY >= fY - 20 && pY <= fY + 20)
+				return Direction.COLLIDE_LEFT;
+			if(pX < fX && pY >= fY - 20 && pY <= fY + 20)
+				return Direction.COLLIDE_RIGHT;
+			if(pY > fY && pX >= fX - 20 && pX <= fX + 20)
+				return Direction.COLLIDE_DOWN;
+			if(pY < fY && pX >= fX - 20 && pX <= fX + 20)
+				return Direction.COLLIDE_UP;
+			else
+				return Direction.NO_COLLISION;
+		}
+		else
+			return Direction.NO_COLLISION;
 	}
 	
+	//-------------------------------------------------------------------------
 	
-    /**
-     * Setzt die Sichtbarkeit des Blockes
-     *
-     * @param status - boolean, ob der Block versteckt ist
-     */
-	public void setHidden(boolean status)
-	{
-		hidden = status;
-	}
-	
-	abstract boolean isSolid();
+	public abstract boolean isSolid();
 	public abstract String toString();
-	abstract void drawImg();
+	public abstract void drawImg();
 }

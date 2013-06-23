@@ -1,4 +1,3 @@
-12
 XXXXXXXXXXXXXXXXXXXXXXXXX
 XS           n          X
 X  a  hh qq         RR  X
@@ -11,4 +10,3 @@ X                       X
 X                       X
 E                       X
 XXXXXXXXXXXXXXXXXXXXXXXXX
-H#I######N############C#Q

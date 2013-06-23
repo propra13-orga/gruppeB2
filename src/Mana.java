@@ -1,52 +1,63 @@
 
-public class Mana extends Block 
+
+public class Mana extends Item
 {
 	private static final long serialVersionUID = 1L;
+	
+	private int posX, posY;	
+	
+	private int anim;
 
-	private int posX, posY;
-	
-	private int nrg;
-	
-	public Mana(int posX, int posY)
+	public Mana(int posX, int posY) 
 	{
-		super(posX, posY, 40, 40);
+		super(posX, posY, 32, 32);
 		
 		this.posX = posX;
 		this.posY = posY;
 		
+		anim = 0;
 	}
 	
-	@Override
-	boolean isSolid() {
-		// TODO Auto-generated method stub
-		return true;
-	}
-
-	@Override
-	public String toString() {
-		// TODO Auto-generated method stub
-		return "energy";
-	}
-	
-	@Override
-	void drawImg() 
+	public boolean checkCollision(Player player)
 	{
-		if(nrg==1)
-			StdDraw.picture(posX, posY, "images/status/manaStatus1.png");
-		else if(nrg==2)
-			StdDraw.picture(posX, posY, "images/status/manaStatus2.png");
-		else if(nrg==3)
-			StdDraw.picture(posX, posY, "images/status/manaStatus3.png");
-		else if(nrg==4)
-			StdDraw.picture(posX, posY, "images/arena/unseen.png");		
+		if(this.intersects(player))
+		{
+			player.increaseMana(15);
+			return true;
+		}
+		else
+			return false;
 	}
 
-	public int getNrg() {
-		return nrg;
+	public String toString() 
+	{
+		return "Mana";
 	}
 
-	public void setNrg(int nrg) {
-		this.nrg = nrg;
+	public void drawImg() 
+	{
+		if(anim < 15)
+		{
+			StdDraw.picture(posX, posY, "images/items/manastar/manastar_"+1+".png");
+			anim++;
+		}
+		else if(anim < 30)
+		{
+			StdDraw.picture(posX, posY, "images/items/manastar/manastar_"+2+".png");
+			anim++;
+		}
+		else if(anim < 45)
+		{
+			StdDraw.picture(posX, posY, "images/items/manastar/manastar_"+1+".png");
+			anim++;
+		}
+		else 
+		{
+			StdDraw.picture(posX, posY, "images/items/manastar/manastar_"+3+".png");
+			anim++;
+			
+			if(anim == 59)
+				anim = 0;
+		}
 	}
-
 }

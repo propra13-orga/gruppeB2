@@ -1,48 +1,52 @@
+import java.awt.Color;
+import java.awt.Font;
 
-public class Status extends Block{
 
-	private static final long serialVersionUID = 1L;
-	private int posX, posY;
+public class Status 
+{
+	Player player;
 	
-	public Status(int posX, int posY){
+	public Status(Player player)
+	{
+		this.player = player;
+	}
+	
+	public void draw()
+	{
+		Font font = new Font("Arial", Font.BOLD, 18);
 		
-		super(posX, posY, 40, 40);
+		StdDraw.setPenColor(Color.WHITE);
+		StdDraw.setFont(font);
 		
-		this.posX = posX;
-		this.posY = posY;
-	}
+		StdDraw.picture(90, 28, "images/status/status_low_midSize.png");
+		StdDraw.text(167, 9, "" + player.getCoins());
 
-	@Override
-	boolean isSolid() {
-		// TODO Auto-generated method stub
-		return true;
+		StdDraw.picture(63, 45, "images/status/health_bar/health_bar.png");
+		StdDraw.setPenColor(Color.RED);
+		StdDraw.filledRectangle(27 + 0.5  *player.getHealth(), 45, 3 + 0.5 * player.getHealth(), 11);
+		
+		StdDraw.picture(63, 9, "images/status/mana_bar/mana_bar.png");
+		StdDraw.setPenColor(Color.YELLOW);
+		StdDraw.filledRectangle(27 + 0.5  *player.getMana(), 9, 3 + 0.5 * player.getMana(), 11);
+		
+		StdDraw.picture(503, 28, "images/status/dialog_field.png");
 	}
-
-	public int getPosX() {
-		return posX;
+	
+	public void drawDialog(String [] dialog)
+	{
+		int lines = dialog.length;
+		
+		Font font = new Font("Arial", Font.PLAIN, 13);
+		
+		StdDraw.setPenColor(Color.WHITE);
+		StdDraw.setFont(font);
+		
+		for(int l = 0; l < lines; l++)
+			StdDraw.textLeft(353, 48 - l * 15, dialog[l]);
 	}
-
-	public void setPosX(int posX) {
-		this.posX = posX;
-	}
-
-	public int getPosY() {
-		return posY;
-	}
-
-	public void setPosY(int posY) {
-		this.posY = posY;
-	}
-
-	@Override
-	public String toString() {
-		// TODO Auto-generated method stub
-		return "status";
-	}
-
-	@Override
-	void drawImg() {
-		// TODO Auto-generated method stub
-		StdDraw.picture(posX, posY, "images/arena/unseen.png");
+	
+	public void setAvatar(String avatar)
+	{
+		StdDraw.picture(637, 35, avatar);
 	}
 }

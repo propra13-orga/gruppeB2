@@ -1,4 +1,3 @@
-4
 XXXXXXXXXXXXXXXX
 X     h        X
 X              X
@@ -8,4 +7,3 @@ X    q         X
 X              X
 XS             X
 XXXXXXXXXXXXXXXX
-H#I######N###C#Q

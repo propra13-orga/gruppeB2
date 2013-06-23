@@ -1,3 +1,5 @@
+import java.awt.Rectangle;
+
 /**
  *  <i>Door</i>. Respaesentiert das Tuer-Objekt zum Wechsel zwischen den
  *  einzelnen Leveln.
@@ -15,17 +17,24 @@ public class Door extends Block
      * @param posX - die x-Position der Tuer (Rectangle)
      * @param posY - die y-Position der Tuer (Rectangle)
      */
-	public Door(int posX, int posY)
+	public Door(int posX, int posY, int sizeX, int sizeY)
 	{
 		//Das Tuer-Objekt ist ein Block-Objekt an der Position posX und posY
 		//mit der Groesse 32x32 Pixel (Rectangle)
-		super(posX, posY, 40, 40);
+		super(posX, posY, sizeX, sizeY);
 		
 		this.posX = posX;
 		this.posY = posY;		
-		
-		//Wird als versteckt initialisiert
-		hidden = true;
+	}
+	
+	public int checkCollision(Rectangle rect)
+	{
+		if(this.intersects(rect) && rect instanceof Player)
+		{
+			return Direction.COLLIDE_DOOR;
+		}
+		else
+			return Direction.NO_COLLISION;
 	}
 	
     /**
@@ -33,8 +42,7 @@ public class Door extends Block
      */
 	public void drawImg()
 	{
-		//if(!this.hidden)
-			StdDraw.picture(posX, posY, "images/arena/Exit_Tile_"+1+".png");
+		StdDraw.picture(posX, posY, "images/arena/Exit_Tile_"+1+".png");
 	}
 	
     /**

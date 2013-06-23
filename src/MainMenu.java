@@ -1,6 +1,5 @@
 import javax.swing.JOptionPane;
 
-
 public class MainMenu
 {
 	private double mouseX, mouseY;

@@ -15,11 +15,11 @@ public class Trap extends Block
      * @param posX - die x-Position der Falle (Rectangle)
      * @param posY - die y-Position der Falle (Rectangle)
      */
-	public Trap(int posX, int posY)
+	public Trap(int posX, int posY, int sizeX, int sizeY)
 	{
 		//Das Trap-Objekt ist ein Block-Objekt an der Position posX und posY
 		//mit der Groesse 32x32 Pixel (Rectangle)
-		super(posX + 3, posY - 6, 32, 32);
+		super(posX + 3, posY - 6, sizeX - (sizeX / 5), sizeY - (sizeY / 5));
 		
 		this.posX = posX;
 		this.posY = posY;
@@ -31,7 +31,7 @@ public class Trap extends Block
     /**
      * Methode zum Zeichnen des Objekts
      */	
-	void drawImg()
+	public void drawImg()
 	{
 		//if(!this.hidden)
 			StdDraw.picture(posX, posY, "images/arena/Trap.png");		
@@ -41,7 +41,7 @@ public class Trap extends Block
      * Methode, die zurueckgibt, ob das Objekt ein solides Objekt ist
      * (Zur Kollisionsabfrage)
      */
-	boolean isSolid()
+	public boolean isSolid()
 	{
 		return false;
 	}
