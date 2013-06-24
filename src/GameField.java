@@ -21,6 +21,7 @@ public class GameField implements Runnable
 	//Textdatein kuemmert
 	LevelManager lvl;
 	KeyManager key;
+	SoundManager snd;
 	
 	Status status;
 	
@@ -30,6 +31,7 @@ public class GameField implements Runnable
 	//Gibt zurueck, ob an einer Stelle (links, rechts, oben, unten) eine
 	//Kollision auftrat
 	boolean collideLeft, collideRight, collideUp, collideDown, inGameMenu;
+	boolean battleStarted;
 	
 	//Der Spieler
 	Player player1;
@@ -74,6 +76,7 @@ public class GameField implements Runnable
 		//Erzeugt die Hilfsklasse zum Einlesen der Textdateien
 		lvl = new LevelManager(40, 40);
 		key = new KeyManager(this);
+		snd = new SoundManager();
 		
 		inGameMenu = false;
 		
@@ -89,6 +92,7 @@ public class GameField implements Runnable
 	public void initLvl(boolean back, boolean load)
 	{		
 		isAlive = true;
+		battleStarted = false;
 
 		field = lvl.initLevel(lvlArray[currentLvl]);
 		
@@ -237,7 +241,17 @@ public class GameField implements Runnable
 							if(nextEnemy.checkCollision(player1) == Direction.NO_COLLISION)
 								nextEnemy.moveToPlayer(player1);
 							else
+							{
 								nextEnemy.drawImg();
+								
+								if(!battleStarted)
+								{
+									snd.playSound(0);
+									new BattleScreen(this);
+								}
+								
+								battleStarted = true;
+							}
 						}
 					}
 					
@@ -291,7 +305,7 @@ public class GameField implements Runnable
 	public void run()
 	{				
 		//Spielschleife wird so lange durchlaufen, wie der Spieler am leben ist
-		while(isAlive)
+		while(isAlive && !battleStarted)
 		{	
 			//Wartet mit dem Zeichnen 5ms. Zeichne erst intern das neue Spielfeld
 			//um Ladefehler und Ruckeln zu vermeiden
@@ -306,7 +320,6 @@ public class GameField implements Runnable
 				//Zeichne neues Feld
 				draw();
 				//Berechnet die Spiellogik
-				doLogic();
 				
 				//Pruefe (moegliche) Tasteneingaben
 				if(StdDraw.hasPressedAnyKey())
@@ -318,9 +331,8 @@ public class GameField implements Runnable
 				}
 				else
 					player1.draw();
+				doLogic();
 			}
-			//nach interner Aktualisierung zeichne das neue Feld ins Fenster
-			StdDraw.show();
 		}
 	}
 	
