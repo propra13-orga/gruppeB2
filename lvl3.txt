@@ -19,3 +19,5 @@ XXXXXXXXXXXXXXXX
 12,5 = ITEM_MANA
 
 [npc]
+
+[enemy]

@@ -18,3 +18,5 @@ XXXXXXEXXXXXXXXX
 8,1 = ITEM_MANA
 
 [npc]
+
+[enemy]

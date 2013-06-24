@@ -36,6 +36,7 @@ public class GameField implements Runnable
 	
 	ArrayList<Item> items;
 	ArrayList<NPC> npc;
+	ArrayList<Enemy> enemy;
 	
 	//x- und y-Position des Spielers und x- und y-Position eines Spielfeldblockes 
 	//(zur Kollisionsabfrage und Logik)		
@@ -68,7 +69,7 @@ public class GameField implements Runnable
 			"lvl9.txt", "lvl10.txt", "lvl11.txt", "lvl12.txt",
 		};
 		
-		currentLvl = 10;
+		currentLvl = 0;
 		
 		//Erzeugt die Hilfsklasse zum Einlesen der Textdateien
 		lvl = new LevelManager(40, 40);
@@ -115,6 +116,7 @@ public class GameField implements Runnable
 		
 		items = lvl.getItems();
 		npc = lvl.getNPC();
+		enemy = lvl.getEnemys();
 		
 		status = new Status(player1);
 	}
@@ -220,6 +222,25 @@ public class GameField implements Runnable
 					else
 						countE = 0;
 					
+					
+					Iterator<Enemy> en = enemy.iterator();	
+					
+					while(en.hasNext())
+					{
+						Enemy nextEnemy = en.next();
+						
+						if(nextEnemy.playerInLine(player1))
+						{
+							status.setAvatar(nextEnemy.getAvatar());
+							player1.stop();
+							
+							if(nextEnemy.checkCollision(player1) == Direction.NO_COLLISION)
+								nextEnemy.moveToPlayer(player1);
+							else
+								nextEnemy.drawImg();
+						}
+					}
+					
 					//------------Kollision Spieler <-> NPC-----------------------------------
 					
 					if(coll == Direction.NO_COLLISION)
@@ -251,6 +272,11 @@ public class GameField implements Runnable
 		//NPC
 		for(NPC curNPC : npc)
 			curNPC.drawImg();
+		
+		//Enemy
+		for(Enemy curEnemy : enemy)
+			if(!curEnemy.playerInLine(player1))
+				curEnemy.drawImg();
 		
 		//Statusleiste
 		status.draw();
@@ -284,7 +310,12 @@ public class GameField implements Runnable
 				
 				//Pruefe (moegliche) Tasteneingaben
 				if(StdDraw.hasPressedAnyKey())
-					key.handleKeyInput();	
+				{
+					if(player1.canMove())
+						key.handleKeyInput();
+					else
+						player1.draw();
+				}
 				else
 					player1.draw();
 			}

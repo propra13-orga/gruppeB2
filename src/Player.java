@@ -26,6 +26,8 @@ public class Player extends Rectangle
 	
 	private CheckPoint checkPoint;
 	
+	private boolean canMove;
+	
     /**
      * Konstruktor eines Player-Objekts
      *
@@ -46,6 +48,8 @@ public class Player extends Rectangle
 		this.setMana(0);
 		this.lives = 3;
 		speed = 3.25;
+		
+		this.canMove = true;
 	}
 
 	/**
@@ -400,5 +404,22 @@ public class Player extends Rectangle
 		}
 		else
 			return null;
+	}
+	
+	//-------------------------------------------------------------------
+	
+	public void stop()
+	{
+		this.canMove = false;
+	}
+	
+	public void go()
+	{
+		this.canMove = true;
+	}
+	
+	public boolean canMove()
+	{
+		return canMove;
 	}
 }

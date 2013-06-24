@@ -25,6 +25,7 @@ public class LevelManager
 	
 	private ArrayList<Item> items;
 	private ArrayList<NPC> npcs;
+	private ArrayList<Enemy> enemys;
 	
 	private double checkPointX, checkPointY;
 	/**
@@ -41,6 +42,7 @@ public class LevelManager
 		
 		items = new ArrayList<Item>();
 		npcs = new ArrayList<NPC>();
+		enemys = new ArrayList<Enemy>();
 		
 		checkPointX = -1;
 		checkPointY = -1;
@@ -96,6 +98,7 @@ public class LevelManager
 		this.readItems(lvl);
 		this.readTriggers(lvl);
 		this.readNPC(lvl);
+		this.readEnemy(lvl);
 		
 		return fieldInit;
 	}
@@ -286,6 +289,55 @@ public class LevelManager
 		}
 	}
 	
+	private void readEnemy(String file)
+	{
+		ArrayList<String> lines = new ArrayList<String>();
+		
+		int enemyX, enemyY, posX, posY;
+		String enemy;
+		
+		int l = 0;
+		
+		try
+		{
+			readFile = new FileReader(file);
+			lineRead = new BufferedReader(readFile);
+			
+			while(!lineRead.readLine().equals("[enemy]"));
+			
+			lines.add(l, lineRead.readLine());
+			
+			while(lines.get(l) != null && !lines.get(l).equals(""))
+			{
+				l++;
+				lines.add(l, lineRead.readLine());
+			}
+			
+			for(int i = 0; i < l; i++)
+			{
+				enemyX = Integer.parseInt(lines.get(i).substring(0, lines.get(i).indexOf(",")));
+				enemyY = Integer.parseInt(lines.get(i).substring(lines.get(i).indexOf(",") + 1, lines.get(i).indexOf(" ")));
+				
+				posX = enemyX * sizeX + sizeX/2;
+				posY = (sizeY * (rows + 2))-(enemyY * sizeY + sizeY/2);
+				
+				enemy = lines.get(i).substring(lines.get(i).indexOf("=") + 1, lines.get(i).length()).trim();
+
+				switch(enemy)
+				{
+				case "ENEMY_KIDHIPSTER_RIGHT": enemys.add(new KidHipster(posX, posY, Direction.RIGHT)); break;
+				case "ENEMY_KIDHIPSTER_LEFT": enemys.add(new KidHipster(posX, posY, Direction.LEFT)); break;
+				case "ENEMY_KIDHIPSTER_UP": enemys.add(new KidHipster(posX, posY, Direction.UP)); break;
+				case "ENEMY_KIDHIPSTER_DOWN": enemys.add(new KidHipster(posX, posY, Direction.DOWN)); break;
+				}
+			}	
+		}
+		catch(IOException e)
+		{			
+			JOptionPane.showMessageDialog(null, "Es trat ein unerwarteter Fehler beim Lesen der Datei auf (IOException).");
+			System.exit(0);
+		}
+	}
 	
 	//-----------------------------------------------------------------------------
 		
@@ -322,6 +374,11 @@ public class LevelManager
 	public ArrayList<NPC> getNPC()
 	{
 		return npcs;
+	}
+	
+	public ArrayList<Enemy> getEnemys()
+	{
+		return enemys;
 	}
 	
 	public double getCheckPointX()

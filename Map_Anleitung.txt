@@ -1,34 +1,21 @@
 Map-Anleitung zum erstellen eines Raumes
 
-1.Zeile: Levelangaben
+Zuerst wird das Spielfeld eingegeben. Dieses Feld muss quadratisch sein, damit es eingelesen werden kann.
 
-ab 2.Zeile bis zur Vorletzten: folgt das Spielfeld was eingelesen werden soll. Es muss ein Rechteck oder Quadrat ergeben.
-Auf Gross- und Kleinschreibung achten. 
-
-Folgende Legende gilt():
+Folgende Legende gilt für die Map:
 
 X - Wall
 E - Exit
 T - Stairs
-(Leerzeichen) - Floor 	
+(Leerzeichen) - Floor
 
-c - Coins
-s - Sword
-h - Heart
-q - Manabottle
-n - npc
-a - shop
+Nach der Eingabe der Map werden Trigger, Items, NPC, etc. eingegeben. Dabei werden die einzelnen
+Trigger, Items, etc. nach dem "Sprungpunkt" ([trigger], [items], ...) eingegeben.
 
+Musterbeispiel:
 
-R - Trap
-G - Enemy
-S - Player
-Z - Boss 
+[items]
+4,6 = ITEM_HEALTH
 
-Die letzte Zeile stellt die Anzeigen dar:
-
-# - empty Status display
-H - Energy display
-I - Inventar display
-Q - Mana display
-C - Coin display
+Erzeugt ein Herz-Item auf dem Feld (4,6) wobei 4 = x-Coord. und 6 = y-Coord. gemessen von
+der oberen linken Ecke (0,0).

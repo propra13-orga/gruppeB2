@@ -23,3 +23,5 @@ XXXXXXXXXXXXXXXX
 4,1 = ITEM_MANA
 
 [npc]
+
+[enemy]

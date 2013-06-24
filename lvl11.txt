@@ -29,3 +29,5 @@ XXXXXXXXXXXXXXXXXX
 
 [npc]
 1,10 = NPC_CHECKPOINT
+
+[enemy]
