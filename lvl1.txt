@@ -1,9 +1,22 @@
 XXXXXXXXXXXXXXXX
-X      h       X
-X  *  ccccc    X
-X              X
-X  m mmmmmm   BE
 X              X
 X              X
-XS    q        X
+X              X
+X              E
+X              X
+X              X
+X              X
 XXXXXXXXXXXXXXXX
+
+[triggers]
+1,7 = TRIGGER_PLAYER_START
+14,4 = TRIGGER_PLAYER_BACK
+3,2 = TRIGGER_SAVEPOINT
+
+[items]
+7,1 = ITEM_HEART
+6,2 = ITEM_COINS
+3,4 = ITEM_MANA
+
+[npc]
+2,2 = NPC_CHECKPOINT

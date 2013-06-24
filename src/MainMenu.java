@@ -45,8 +45,7 @@ public class MainMenu
 		}
 		if(mouseX < 0.496 && mouseX > 0.28 && mouseY < 0.797 && mouseY > 0.752 && StdDraw.mouseClicked())
 		{ 
-			//Speilstand wird geladen
-			new GameField("savegame"); 
+			
 		}
 		if(mouseX < 0.488 && mouseX > 0.281 && mouseY < 0.67 && mouseY > 0.622 && StdDraw.mouseClicked())
 		{ 

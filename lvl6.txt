@@ -1,10 +1,26 @@
+XXXXXXXXTXXXXXXXXXXX
+X                  X
+X    X             X
+X    XXXXXX   XXXXXX
+X  XXX        X    X
+X    X       X     X
+X    X    XXX      X
+X    X             X
+X    X             E
 XXXXXXXXXXXXXXXXXXXX
-X n      G         X
-X  G X             X
-X   GXXXXXXR  XXXXXX
-X  XXX  G     X h qX
-X    X       XG    X
-X   cX    XXX      X
-X   hX             X
-XS   X    G    G   E
-XXXXXXXXXXXXXXXXXXXX
+
+[triggers]
+8,1 = TRIGGER_PLAYER_START
+18,8 = TRIGGER_PLAYER_BACK
+2,8 = TRIGGER_SAVEPOINT
+
+[items]
+4,5 = ITEM_HEART
+15,4 = ITEM_HEART
+4,7 = ITEM_COINS
+4,8 = ITEM_COINS
+3,8 = ITEM_COINS
+18,4 = ITEM_MANA
+
+[npc]
+1,8 = NPC_CHECKPOINT

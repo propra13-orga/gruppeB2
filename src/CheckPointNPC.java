@@ -135,7 +135,7 @@ public class CheckPointNPC extends NPC
 			return false;
 	}
 	
-	public void setSavePoint()
+	public void setSavePoint(Player player)
 	{
 		this.isSavePoint = true;
 	}

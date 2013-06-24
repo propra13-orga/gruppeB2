@@ -68,7 +68,7 @@ public class GameField implements Runnable
 			"lvl9.txt", "lvl10.txt", "lvl11.txt", "lvl12.txt",
 		};
 		
-		currentLvl = 0;
+		currentLvl = 10;
 		
 		//Erzeugt die Hilfsklasse zum Einlesen der Textdateien
 		lvl = new LevelManager(40, 40);
@@ -76,68 +76,16 @@ public class GameField implements Runnable
 		
 		inGameMenu = false;
 		
-		this.initLvl(false);
+		this.initLvl(false, false);
 		
 		this.run();
 	}
-	
-	//Zweiter Konstruktor, zum Laden eines Spielstandes
-	public GameField(String filename)
-	{
-		//erzeugt das Array, in dem die Level-Textdateinamen gespeichert werden
-		lvlArray = new String[] 
-		{
-			"lvl1.txt", "lvl2.txt", "lvl3.txt", "lvl4.txt",
-			"lvl5.txt", "lvl6.txt", "lvl7.txt", "lvl8.txt",
-			"lvl9.txt", "lvl10.txt", "lvl11.txt", "lvl12.txt",
-		};
-
-		currentLvl = 0;
-		
-		//Erzeugt die Hilfsklasse zum Einlesen der Textdateien
-		lvl = new LevelManager(40, 40);
-		key = new KeyManager(this);
-		
-		inGameMenu = false;
-		
-//		svg = new SaveGame(lvl.getLevelLocation());
-		//Initialisiere das Feld (aus dem String-Array des Levels)
-		this.initLvl(false);
-		//Starte die Spielschleife
-		this.run();
-	}
-	
-	
-	/**
-	* Konstruktor zum Neuladen im selben Level
-	* spater mit z�hlen der Lebenspunbkte
-	* @param currentLvl
-	*/
-// 	public GameField(int currentLvl)
-//	{
-//		//erzeugt das Array, in dem die Level-Textdateinamen gespeichert werden
-//		lvlArray = new String[]
-//		{
-//			"lvl1.txt", "lvl2.txt", "lvl3.txt"
-//		};
-//
-//		//Erzeugt die Hilfsklasse zum Einlesen der Textdateien
-//		lvl = new ReadLevel();
-//		inGameMenu = false;
-//		this.currentLvl = currentLvl;
-//		this.loadLevel(lvlArray[currentLvl]);
-//
-//		//Initialisiere das Feld (aus dem String-Array des Levels)
-//		this.initField();
-//		//Starte die Spielschleife
-//		this.run();
-//	}
 		
     /**
      * Initialisiert das Spielfeld aus dem char-Array <i>feld</i> und erzeugt
      * die zugehoerigen Objekte.
      */
-	public void initLvl(boolean back)
+	public void initLvl(boolean back, boolean load)
 	{		
 		isAlive = true;
 
@@ -150,10 +98,12 @@ public class GameField implements Runnable
 		StdDraw.setXscale(0, 40 * columns);
 		StdDraw.setYscale(0, 40 * (rows + 2));
 		
-		if(!back)
+		if(!back && !load)
 			playerPos = lvl.getStartPosition();
-		else
+		else if(back)
 			playerPos = lvl.getBackPosition();
+		else
+			playerPos = player1.getCheckPointPos();
 			
 		if(player1 == null)
 			player1 = new Player(playerPos[0], playerPos[1]);
@@ -183,6 +133,27 @@ public class GameField implements Runnable
 		for(int i = 0; i < rows; i++)
 			for(int j = 0; j < columns; j++)
 			{	
+				if(player1.getHealth() < 1)
+				{
+					if(player1.getLives() > 1)
+					{
+						player1.setHealth(100);
+						player1.setMana(0);
+						player1.decreaseLives(1);
+						
+						if(player1.getCheckPointLevel() == -1)
+							currentLvl = 0;
+						else
+							currentLvl = player1.getCheckPointLevel();
+						
+						items.clear();
+						npc.clear();
+						
+						initLvl(false, player1.getCheckPoint() != null);
+						break logicLoop;
+					}
+				}
+				
 				//Pruefe Kollision des Spielers mit dem Spielfeldbloecken
 				coll = field[i][j].checkCollision(player1);
 			
@@ -234,8 +205,8 @@ public class GameField implements Runnable
 									{
 										if(nextNPC instanceof CheckPointNPC)
 										{
-											((CheckPointNPC) nextNPC).setSavePoint();
-											
+											player1.setCheckPoint(currentLvl, lvl.getCheckPointX(), lvl.getCheckPointY());
+											countE++;
 										}
 									}
 								}
@@ -253,10 +224,10 @@ public class GameField implements Runnable
 					
 					if(coll == Direction.NO_COLLISION)
 						coll = nextNPC.checkCollision(player1);
-				}		
+				}	
 				
 				//Verarbeite moegliche Kollision
-				this.handleCollision(coll);
+				handleCollision(coll);
 				
 				if(coll == Direction.COLLIDE_DOOR || coll == Direction.COLLIDE_BACK)
 					break logicLoop;		
@@ -273,12 +244,15 @@ public class GameField implements Runnable
 			for(int j = 0; j < columns; j++)
 				field[i][j].drawImg();
 		
+		//Items
 		for(Item item : items)
 			item.drawImg();
 		
+		//NPC
 		for(NPC curNPC : npc)
 			curNPC.drawImg();
 		
+		//Statusleiste
 		status.draw();
 	}
 
@@ -295,15 +269,19 @@ public class GameField implements Runnable
 		{	
 			//Wartet mit dem Zeichnen 5ms. Zeichne erst intern das neue Spielfeld
 			//um Ladefehler und Ruckeln zu vermeiden
-			StdDraw.show(1);
+			StdDraw.show(3);
 			{
 				//Loesche die Zeichenflaeche
 				StdDraw.clear(StdDraw.BLACK);
+				
+				//Mana wird fuellt sich langsam auf
+				player1.increaseMana(0.04);
 
-				//Zeichne neues Feld und pruefe Kollisionen
+				//Zeichne neues Feld
 				draw();
 				//Berechnet die Spiellogik
 				doLogic();
+				
 				//Pruefe (moegliche) Tasteneingaben
 				if(StdDraw.hasPressedAnyKey())
 					key.handleKeyInput();	
@@ -332,7 +310,7 @@ public class GameField implements Runnable
 					items.clear();
 					npc.clear();
 					
-					this.initLvl(false);					
+					this.initLvl(false, false);					
 				}
 			break;
 			
@@ -342,7 +320,7 @@ public class GameField implements Runnable
 					items.clear();
 					npc.clear();
 					
-					this.initLvl(true);	
+					this.initLvl(true, false);	
 			break;
 		}
 	}

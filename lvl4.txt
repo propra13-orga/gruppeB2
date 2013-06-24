@@ -1,9 +1,20 @@
 XXXXXXXXXXXXXXXX
-X     h        X
 X              X
-X    c         X
-X        Z  n  E
-X    q         X
 X              X
-XS             X
+X              X
+X              E
+X              X
+X              X
+X              X
 XXXXXXXXXXXXXXXX
+
+[triggers]
+1,4 = TRIGGER_PLAYER_START
+14,4 = TRIGGER_PLAYER_BACK
+
+[items]
+6,1 = ITEM_HEART
+5,3 = ITEM_COINS
+5,5 = ITEM_MANA
+
+[npc]

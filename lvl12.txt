@@ -1,12 +1,25 @@
 XXXXXXXXXXXXXXXXXXXXXXXXX
-XS           n          X
-X  a  hh qq         RR  X
-XXXXXXXXXXXXXXXXXXXXXR  X
+X                       X
+X                       X
+XXXXXXXXXXXXXXXXXXXXX   X
 X                       X
 X                       X
 X                       X
-X     Z     Z     Z     X
+X                       X
 X                       X
 X                       X
 E                       X
 XXXXXXXXXXXXXXXXXXXXXXXXX
+
+[triggers]
+1,1 = TRIGGER_PLAYER_START
+1,10 = TRIGGER_PLAYER_BACK
+
+[items]
+6,1 = ITEM_HEART
+6,2 = ITEM_HEART
+10,1 = ITEM_MANA
+10,2 = ITEM_MANA
+
+[npc]
+1,10 = NPC_CHECKPOINT

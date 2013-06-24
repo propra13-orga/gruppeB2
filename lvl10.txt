@@ -1,12 +1,26 @@
 XXXXXXXXXXXXXXXXXX
-X  GG         G hX
+X                X
 X                X
 X      XXXXXXX   X
-X      X     G   X
 X      X         X
-X      XS  q     X
-X    c XXXXXXXXXXX
-Xn        G      X
-X               cX
-X     G          E
+X      XXX       X
+X      XT        X
+X      XXXXXXXXXXX
+X                X
+X                X
+X                E
 XXXXXXXXXXXXXXXXXX
+
+[triggers]
+9,6 = TRIGGER_PLAYER_START
+16,10 = TRIGGER_PLAYER_BACK
+
+[items]
+1,16 = ITEM_HEART
+16,8 = ITEM_HEART
+6,7 = ITEM_COINS
+6,6 = ITEM_COINS
+11,6 = ITEM_MANA
+1,10 = ITEM_MANA
+
+[npc]

@@ -19,10 +19,12 @@ public class Player extends Rectangle
 	
 	private int coins;
 	private int health;
-	private int mana;
+	private double mana;
 	private int lives;
 	
 	private double speed;
+	
+	private CheckPoint checkPoint;
 	
     /**
      * Konstruktor eines Player-Objekts
@@ -41,8 +43,9 @@ public class Player extends Rectangle
 		this.posY = posY;
 		
 		this.setHealth(100);
+		this.setMana(0);
 		this.lives = 3;
-		speed = 2.5;
+		speed = 3.25;
 	}
 
 	/**
@@ -276,7 +279,7 @@ public class Player extends Rectangle
 		health = amount;
 	}
 	
-	public void increaseMana(int amount)
+	public void increaseMana(double amount)
 	{
 		mana = mana + amount;
 		
@@ -284,7 +287,7 @@ public class Player extends Rectangle
 			mana = 100;
 	}
 	
-	public void decreaseMana(int amount)
+	public void decreaseMana(double amount)
 	{
 		mana = mana - amount;
 		
@@ -292,12 +295,12 @@ public class Player extends Rectangle
 			mana = 0;
 	}
 	
-	public int getMana()
+	public double getMana()
 	{
 		return mana;
 	}
 	
-	public void setMana(int amount)
+	public void setMana(double amount)
 	{
 		mana = amount;
 	}
@@ -346,5 +349,56 @@ public class Player extends Rectangle
 	public void setSpeed(int amount)
 	{
 		speed = amount;
+	}
+	
+	//-------------------------------------------------------------------
+	
+	public void setCheckPoint(int level, double posX, double posY)
+	{
+		checkPoint = new CheckPoint(level, posX, posY);
+	}
+	
+	public CheckPoint getCheckPoint()
+	{
+		return checkPoint;
+	}
+	
+	public int getCheckPointLevel()
+	{
+		if(checkPoint != null)
+			return checkPoint.getLevel();
+		else
+			return -1;
+	}
+	
+	public double getCheckPointPosX()
+	{
+		if(checkPoint != null)
+			return checkPoint.getPosX();
+		else
+			return -1;
+	}
+	
+	public double getCheckPointPosY()
+	{
+		if(checkPoint != null)
+			return checkPoint.getPosY();
+		else
+			return -1;
+	}
+	
+	public int[] getCheckPointPos()
+	{
+		int[] pos = new int[2];
+		
+		if(checkPoint != null)
+		{
+			pos[0] = (int)checkPoint.getPosX();
+			pos[1] = (int)checkPoint.getPosY();
+			
+			return pos;
+		}
+		else
+			return null;
 	}
 }
