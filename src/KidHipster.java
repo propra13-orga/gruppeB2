@@ -291,4 +291,9 @@ public class KidHipster extends Enemy
 
 		StdDraw.picture(posX, posY + 26, "images/enemy/inRange.png");
 	}
+	
+	public String toString()
+	{
+		return "kid_hipster";
+	}
 }

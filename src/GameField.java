@@ -31,7 +31,7 @@ public class GameField implements Runnable
 	//Gibt zurueck, ob an einer Stelle (links, rechts, oben, unten) eine
 	//Kollision auftrat
 	boolean collideLeft, collideRight, collideUp, collideDown, inGameMenu;
-	boolean battleStarted;
+	boolean mapScreen, battleScreen;
 	
 	//Der Spieler
 	Player player1;
@@ -82,6 +82,9 @@ public class GameField implements Runnable
 		
 		this.initLvl(false, false);
 		
+		mapScreen = true;
+		battleScreen = false;
+		
 		this.run();
 	}
 		
@@ -92,7 +95,6 @@ public class GameField implements Runnable
 	public void initLvl(boolean back, boolean load)
 	{		
 		isAlive = true;
-		battleStarted = false;
 
 		field = lvl.initLevel(lvlArray[currentLvl]);
 		
@@ -244,13 +246,14 @@ public class GameField implements Runnable
 							{
 								nextEnemy.drawImg();
 								
-								if(!battleStarted)
+								if(mapScreen && !battleScreen)
 								{
+									mapScreen = false;
+									battleScreen = true;
+									
 									snd.playSound(0);
-									new BattleScreen(this);
+									new BattleScreen(this, nextEnemy);
 								}
-								
-								battleStarted = true;
 							}
 						}
 					}
@@ -305,7 +308,7 @@ public class GameField implements Runnable
 	public void run()
 	{				
 		//Spielschleife wird so lange durchlaufen, wie der Spieler am leben ist
-		while(isAlive && !battleStarted)
+		while(isAlive && mapScreen)
 		{	
 			//Wartet mit dem Zeichnen 5ms. Zeichne erst intern das neue Spielfeld
 			//um Ladefehler und Ruckeln zu vermeiden

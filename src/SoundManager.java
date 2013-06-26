@@ -20,7 +20,7 @@ public class SoundManager
 	{
 		try 
 		{
-			File file = new File("music/sounds/battle/start_battle_01.wav");
+			File file = new File("music/sounds/battle/battle_01.wav");
 			sounds.add(0, Applet.newAudioClip(file.toURL()));
 
 			System.out.println(file.exists());

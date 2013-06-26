@@ -34,4 +34,5 @@ abstract class Enemy extends Rectangle
 	
 	public abstract String getAvatar();
 	public abstract String [] getDialog(int page);
+	public abstract String toString();
 }
