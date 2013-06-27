@@ -7,7 +7,15 @@ public class KidHipster extends Enemy
 
 	long delay, anim;
 	
-	private final String AVATAR = "images/enemy/kid_hipster/avatar.png";
+	private final String AVATAR = "images/enemy/kid_hipster/avatar.png";	
+	
+	private final String [][] DIALOG = new String[][]
+			{
+			{"Du Fashiongurke sieht ja", "lächerlich aus! Geh", "lieber in nen Keller!", "                                      weiter mit [e]"},
+			{"Was?! Du bist ja immernoch", "hier!", "COME AT ME BRO!", "                                      weiter mit [e]"}
+			};
+	
+	private int currentPage = 0;
 	
 	private double posX, posY;
 
@@ -149,12 +157,47 @@ public class KidHipster extends Enemy
 	{
 		return LEVEL;
 	}
-
-	public String[] getDialog(int page) 
+	
+	public String[] startDialog()
 	{
-		return null;
+		currentPage = 0;
+		return DIALOG[0];
 	}
 	
+	public String[] getDialog(int page) 
+	{
+		if(page <= DIALOG.length)
+		{
+			currentPage = page - 1;
+			return DIALOG[page - 1];
+		}
+		else
+			return null;
+	}	
+	
+	public String[] getDialog() 
+	{
+		if(currentPage >= 0 && currentPage < DIALOG.length)
+			return DIALOG[currentPage];
+		else
+			return null;
+	}
+	
+	public String[] getNextDialogPage()
+	{
+		if(currentPage < DIALOG.length)
+		{
+			currentPage++;
+			return DIALOG[currentPage];
+		}
+		else
+			return null;
+	}
+	
+	public boolean hasNextPage()
+	{
+		return currentPage < DIALOG.length;
+	}
 	
 	//------------------------------------------------------------------------
 	 

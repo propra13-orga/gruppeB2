@@ -35,6 +35,10 @@ abstract class Enemy extends Rectangle
 	public abstract String getAvatar();
 	public abstract int getLevel();	
 	public abstract String [] getDialog(int page);
+	public abstract String [] getDialog();
+	public abstract String [] startDialog();
+	public abstract String [] getNextDialogPage();
+	public abstract boolean hasNextPage();
 	
 	public abstract String toString();
 	public abstract String getName();

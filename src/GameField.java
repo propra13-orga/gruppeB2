@@ -1,3 +1,4 @@
+import java.awt.event.KeyEvent;
 import java.util.*;
 
 
@@ -8,7 +9,7 @@ import java.util.*;
  *  die einzelnen Level geladen.
  * 
  */
-public class GameField implements Runnable
+public class GameField
 {
 	long delta = 0;
 	long last = 0;
@@ -51,7 +52,9 @@ public class GameField implements Runnable
 	double diffX, diffY;
 	
 	
+	char pressedKey = ' ';
 	int countE = 0;
+	boolean interacted = false;
 	
 	
 	//x- und y-Position des Spielers zu Beginn des Levels
@@ -146,7 +149,11 @@ public class GameField implements Runnable
 		logicLoop:
 		for(int i = 0; i < rows; i++)
 			for(int j = 0; j < columns; j++)
-			{	
+			{
+				//Pruefe Kollision des Spielers mit dem Spielfeldbloecken
+				coll = field[i][j].checkCollision(player1, delta);
+				
+			
 				if(player1.getHealth() < 1)
 				{
 					if(player1.getLives() > 1)
@@ -167,9 +174,6 @@ public class GameField implements Runnable
 						break logicLoop;
 					}
 				}
-				
-				//Pruefe Kollision des Spielers mit dem Spielfeldbloecken
-				coll = field[i][j].checkCollision(player1, delta);
 			
 				
 				//Schleife, die die Items des Feldes durchlaeuft. Prueft Kollision zwischen
@@ -203,6 +207,8 @@ public class GameField implements Runnable
 						
 						if(countE > 0)
 						{
+							interacted = true;
+							
 							String[] dialog = nextNPC.getDialog(countE);
 							
 							if(dialog != null)
@@ -216,13 +222,11 @@ public class GameField implements Runnable
 									if(opt.equals(Dialog.ABORT))
 										countE = 0;
 									else if(opt.equals(Dialog.APPROVE))
-									{
 										if(nextNPC instanceof CheckPointNPC)
 										{
 											player1.setCheckPoint(currentLvl, lvl.getCheckPointX(), lvl.getCheckPointY());
 											countE++;
 										}
-									}
 								}
 							}
 							else
@@ -231,53 +235,77 @@ public class GameField implements Runnable
 						else
 							status.drawDialog(Dialog.INFO_INTERACTION);
 					}
-					else
-						countE = 0;
-					
-					
-					Iterator<Enemy> en = enemy.iterator();	
-					
-					while(en.hasNext())
-					{
-						Enemy nextEnemy = en.next();
-						
-						if(nextEnemy.playerInLine(player1))
-						{
-							status.setAvatar(nextEnemy.getAvatar());
-							player1.stop();
-							player1.setDiretion(nextEnemy.getDirection());
-							
-							if(nextEnemy.checkCollision(player1) == Direction.NO_COLLISION)
-								nextEnemy.moveToPlayer(player1, delta);
-							else
-							{
-								nextEnemy.drawImg();
-								player1.draw();
-								
-								if(mapScreen && !battleScreen)
-								{
-									mapScreen = false;
-									battleScreen = true;
-									
-									snd.playSound(0);
-									new BattleScreen(this, snd, nextEnemy);
-								}
-							}
-						}
-					}
 					
 					//------------Kollision Spieler <-> NPC-----------------------------------
 					
 					if(coll == Direction.NO_COLLISION)
 						coll = nextNPC.checkCollision(player1);
+					
+				}
+
+
+				//------------Interaktionen mit Gegnern-----------------------------------
+					
+				Iterator<Enemy> en = enemy.iterator();	
+					
+				while(en.hasNext())
+				{
+					Enemy nextEnemy = en.next();
+						
+					if(nextEnemy.playerInLine(player1))
+					{
+						status.setAvatar(nextEnemy.getAvatar());
+						player1.stop();
+						player1.setDiretion(nextEnemy.getDirection());
+							
+						if(nextEnemy.checkCollision(player1) == Direction.NO_COLLISION)
+							nextEnemy.moveToPlayer(player1, delta);
+						else
+						{
+							interacted = true;
+							
+							nextEnemy.drawImg();
+							player1.draw();	
+								
+							status.drawDialog(nextEnemy.startDialog());
+								
+							if(countE > 0)
+							{
+								String[] dialog = nextEnemy.getDialog(countE + 1);
+								
+								if(dialog != null)
+									status.drawDialog(dialog);
+								else
+									if(mapScreen && !battleScreen)
+									{
+										status.drawDialog(nextEnemy.getDialog(countE));
+										
+										mapScreen = false;
+										battleScreen = true;
+										
+										snd.playSound(0);
+										new BattleScreen(this, snd, nextEnemy);
+									}
+								
+							}
+						}
+					}
+						
+					if(coll == Direction.NO_COLLISION)
+						coll = nextEnemy.checkCollision(player1);
 				}	
 				
 				//Verarbeite moegliche Kollision
 				handleCollision(coll);
 				
 				if(coll == Direction.COLLIDE_DOOR || coll == Direction.COLLIDE_BACK)
-					break logicLoop;		
-			}				
+					break logicLoop;	
+				
+				if(interacted)
+					interacted = false;
+				else
+					countE = 0;
+			}		
 	}
 	
 	/**
@@ -323,6 +351,7 @@ public class GameField implements Runnable
 			//um Ladefehler und Ruckeln zu vermeiden
 			StdDraw.show(3);
 			{
+				//System.out.println(StdDraw.isKeyPressedSingle('e'));
 				//Loesche die Zeichenflaeche
 				StdDraw.clear(StdDraw.BLACK);
 				
@@ -337,9 +366,9 @@ public class GameField implements Runnable
 				//Pruefe (moegliche) Tasteneingaben
 				if(StdDraw.hasPressedAnyKey())
 				{
-					if(player1.canMove())
+					//if(player1.canMove())
 						key.handleKeyInput();
-					else
+				//	else
 						player1.draw();
 				}
 				else

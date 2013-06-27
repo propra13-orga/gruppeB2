@@ -5,6 +5,7 @@ import java.awt.Font;
 public class Status 
 {
 	Player player;
+	String avatar;
 	
 	public Status(Player player)
 	{
@@ -34,6 +35,9 @@ public class Status
 	
 	public void drawDialog(String [] dialog)
 	{
+		StdDraw.picture(503, 28, "images/status/dialog_field.png");
+		StdDraw.picture(637, 35, avatar);
+		
 		int lines = dialog.length;
 		
 		Font font = new Font("Arial", Font.PLAIN, 13);
@@ -47,6 +51,6 @@ public class Status
 	
 	public void setAvatar(String avatar)
 	{
-		StdDraw.picture(637, 35, avatar);
+		this.avatar = avatar;
 	}
 }
