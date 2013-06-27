@@ -10,6 +10,10 @@ import java.util.*;
  */
 public class GameField implements Runnable
 {
+	long delta = 0;
+	long last = 0;
+	long fps = 0;
+	
 	//In diesem String-Array sind die einzelnen Level (Dateinamen) gespeichert.
 	String [] lvlArray;
 	int currentLvl;
@@ -66,9 +70,9 @@ public class GameField implements Runnable
 		//erzeugt das Array, in dem die Level-Textdateinamen gespeichert werden
 		lvlArray = new String[] 
 		{
-			"lvl1.txt", "lvl2.txt", "lvl3.txt", "lvl4.txt",
-			"lvl5.txt", "lvl6.txt", "lvl7.txt", "lvl8.txt",
-			"lvl9.txt", "lvl10.txt", "lvl11.txt", "lvl12.txt",
+			"level/lvl1.txt", "level/lvl2.txt", "level/lvl3.txt", "level/lvl4.txt",
+			"level/lvl5.txt", "level/lvl6.txt", "level/lvl7.txt", "level/lvl8.txt",
+			"level/lvl9.txt", "level/lvl10.txt", "level/lvl11.txt", "level/lvl12.txt",
 		};
 		
 		currentLvl = 0;
@@ -94,6 +98,8 @@ public class GameField implements Runnable
      */
 	public void initLvl(boolean back, boolean load)
 	{		
+		last = System.nanoTime();
+		
 		isAlive = true;
 
 		field = lvl.initLevel(lvlArray[currentLvl]);
@@ -113,7 +119,7 @@ public class GameField implements Runnable
 			playerPos = player1.getCheckPointPos();
 			
 		if(player1 == null)
-			player1 = new Player(playerPos[0], playerPos[1]);
+			player1 = new Player(playerPos[0], playerPos[1], delta);
 		else
 			player1.setPos(playerPos[0], playerPos[1]);
 		
@@ -163,7 +169,7 @@ public class GameField implements Runnable
 				}
 				
 				//Pruefe Kollision des Spielers mit dem Spielfeldbloecken
-				coll = field[i][j].checkCollision(player1);
+				coll = field[i][j].checkCollision(player1, delta);
 			
 				
 				//Schleife, die die Items des Feldes durchlaeuft. Prueft Kollision zwischen
@@ -239,12 +245,14 @@ public class GameField implements Runnable
 						{
 							status.setAvatar(nextEnemy.getAvatar());
 							player1.stop();
+							player1.setDiretion(nextEnemy.getDirection());
 							
 							if(nextEnemy.checkCollision(player1) == Direction.NO_COLLISION)
-								nextEnemy.moveToPlayer(player1);
+								nextEnemy.moveToPlayer(player1, delta);
 							else
 							{
 								nextEnemy.drawImg();
+								player1.draw();
 								
 								if(mapScreen && !battleScreen)
 								{
@@ -252,7 +260,7 @@ public class GameField implements Runnable
 									battleScreen = true;
 									
 									snd.playSound(0);
-									new BattleScreen(this, nextEnemy);
+									new BattleScreen(this, snd, nextEnemy);
 								}
 							}
 						}
@@ -310,6 +318,7 @@ public class GameField implements Runnable
 		//Spielschleife wird so lange durchlaufen, wie der Spieler am leben ist
 		while(isAlive && mapScreen)
 		{	
+			computeDelta();
 			//Wartet mit dem Zeichnen 5ms. Zeichne erst intern das neue Spielfeld
 			//um Ladefehler und Ruckeln zu vermeiden
 			StdDraw.show(3);
@@ -323,6 +332,7 @@ public class GameField implements Runnable
 				//Zeichne neues Feld
 				draw();
 				//Berechnet die Spiellogik
+				doLogic();
 				
 				//Pruefe (moegliche) Tasteneingaben
 				if(StdDraw.hasPressedAnyKey())
@@ -334,7 +344,7 @@ public class GameField implements Runnable
 				}
 				else
 					player1.draw();
-				doLogic();
+				
 			}
 		}
 	}
@@ -369,5 +379,13 @@ public class GameField implements Runnable
 					this.initLvl(true, false);	
 			break;
 		}
+	}
+	
+	private void computeDelta()
+	{
+		delta = System.nanoTime() - last;
+		last = System.nanoTime();
+		
+		fps = ((long) 1e9)/delta;
 	}
 }

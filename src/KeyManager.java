@@ -6,6 +6,8 @@ public class KeyManager
 	private GameField field;
 	private BattleScreen battle;
 	
+	long delta;
+	
 	public KeyManager(GameField field)
 	{
 		this.field = field;
@@ -25,6 +27,9 @@ public class KeyManager
 		
 		if(field != null)
 		{
+			delta = field.delta;
+			
+			
 			if(StdDraw.isKeyPressedSingle('e'))
 			{
 				field.countE++;
@@ -45,12 +50,12 @@ public class KeyManager
 				}		
 				if(!field.collideRight)
 				{
-					field.playerX = field.playerX + field.player1.getSpeed();
+					field.playerX = field.playerX + field.player1.getSpeed() * (delta/1e9);
 					field.player1.setPosX(field.playerX);
 				}
 	
 				if(!StdDraw.isKeyPressed(KeyEvent.VK_UP) && !StdDraw.isKeyPressed(KeyEvent.VK_DOWN))
-					field.player1.swapImg(Direction.RIGHT);
+					field.player1.swapImg(Direction.RIGHT, delta);
 		
 				noMove = false;
 			}
@@ -62,12 +67,12 @@ public class KeyManager
 				}
 				if(!field.collideLeft)
 				{
-					field.playerX = field.playerX - field.player1.getSpeed();
+					field.playerX = field.playerX - field.player1.getSpeed() * (delta/1e9);
 					field.player1.setPosX(field.playerX);
 				}
 		
 				if(!StdDraw.isKeyPressed(KeyEvent.VK_UP) && !StdDraw.isKeyPressed(KeyEvent.VK_DOWN))
-					field.player1.swapImg(Direction.LEFT);
+					field.player1.swapImg(Direction.LEFT, delta);
 		
 				noMove = false;
 			}
@@ -79,11 +84,11 @@ public class KeyManager
 				}
 				if(!field.collideUp)
 				{
-					field.playerY = field.playerY + field.player1.getSpeed();
+					field.playerY = field.playerY + field.player1.getSpeed() * (delta/1e9);
 					field.player1.setPosY(field.playerY);
 				}
 		
-				field.player1.swapImg(Direction.UP);
+				field.player1.swapImg(Direction.UP, delta);
 		
 				noMove = false;
 			}
@@ -95,11 +100,11 @@ public class KeyManager
 				}
 				if(!field.collideDown)
 				{
-					field.playerY = field.playerY - field.player1.getSpeed();
+					field.playerY = field.playerY - field.player1.getSpeed() * (delta/1e9);
 					field.player1.setPosY(field.playerY);
 				}
 		
-				field.player1.swapImg(Direction.DOWN);
+				field.player1.swapImg(Direction.DOWN, delta);
 		
 				noMove = false;
 			}

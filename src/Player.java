@@ -8,6 +8,9 @@ public class Player extends Rectangle
 {
 	private static final long serialVersionUID = 1L;
 	
+	long anim;
+	long delay;
+	
 	//x- und y-Position, an welcher der Spieler sich auf dem Spielfeld befindet.
 	private double posX, posY;
 
@@ -18,15 +21,18 @@ public class Player extends Rectangle
 	int swpD = 0;
 	
 	private int coins;
-	private int health;
-	private double mana;
+	private double health, maxHealth;
+	private double mana, maxMana;
 	private int lives;
 	
+	private String name;
+	private int level;
 	private double speed;
 	
 	private CheckPoint checkPoint;
 	
 	private boolean canMove;
+	private String direction;
 	
     /**
      * Konstruktor eines Player-Objekts
@@ -34,22 +40,30 @@ public class Player extends Rectangle
      * @param posX - die x-Position des Spielers zu Beginn (Rectangle)
      * @param posY - die y-Position des Spielers zu Beginn (Rectangle)
      */
-	public Player(int posX, int posY)
+	public Player(int posX, int posY, long delay)
 	{
 		//Das Player-Objekt ist ein Rectangle-Objekt der Groesse 26x26 
 		//(Etwas kleiner als ein Block fuer flexibelere Bewegung). Entsprechend
 		//wird die Position des Rectangles etwas versetzt angegeben
 		super(posX + 3, posY - 6, 30, 26);
 		
+		this.delay = delay;
+		
 		this.posX = posX;
 		this.posY = posY;
 		
-		this.setHealth(100);
-		this.setMana(0);
-		this.lives = 3;
-		speed = 3.25;
+		setHealth(100);
+		setMaxHealth(100);
+		setMana(0);
+		setMaxMana(50);
+		lives = 3;
+		speed = 125;
+		level = 1;
 		
-		this.canMove = true;
+		name = "Player";
+		
+		canMove = true;
+		direction = Direction.DOWN;
 	}
 
 	/**
@@ -58,8 +72,14 @@ public class Player extends Rectangle
      * 
      * @param direction - In welche Richtung bewegt sich der Spieler momentan
      */
-	public void swapImg(String direction)
+	public void swapImg(String direction, long delta)
 	{
+		anim = anim + (delta/1000000);
+		
+		if(anim > delay)
+		{
+			anim = 0;
+			
 		if(direction.equalsIgnoreCase(Direction.LEFT))
 		{
 			if(swpL < 5)
@@ -164,6 +184,9 @@ public class Player extends Rectangle
 					swpD = 0;					
 			}
 		}
+		
+		this.direction = direction;
+		}
 	}
 	
 	 /**
@@ -171,7 +194,16 @@ public class Player extends Rectangle
      */
 	public void draw()
 	{
-		StdDraw.picture(posX, posY, "images/player/player_down_"+2+".png");
+		if(direction.equals(Direction.DOWN))
+			StdDraw.picture(posX, posY, "images/player/player_down_"+2+".png");
+		else if(direction.equals(Direction.UP))
+			 StdDraw.picture(posX, posY, "images/player/player_up_"+2+".png");
+		else if(direction.equals(Direction.LEFT))
+			 StdDraw.picture(posX, posY, "images/player/player_left_"+2+".png");
+		else if(direction.equals(Direction.RIGHT))
+			 StdDraw.picture(posX, posY, "images/player/player_right_"+2+".png");
+		else
+			 StdDraw.picture(posX, posY, "images/player/player_down_"+2+".png");
 	}
 
 	 /**
@@ -257,15 +289,15 @@ public class Player extends Rectangle
 		coins = amount;
 	}
 	
-	public void increaseHealth(int amount)
+	public void increaseHealth(double amount)
 	{
 		health = health + amount;
 		
-		if(health > 100)
-			health = 100;
+		if(health > maxHealth)
+			health = maxHealth;
 	}
 	
-	public void decreaseHealth(int amount)
+	public void decreaseHealth(double amount)
 	{
 		health = health - amount;
 		
@@ -273,12 +305,12 @@ public class Player extends Rectangle
 			health = 0;
 	}
 	
-	public int getHealth()
+	public double getHealth()
 	{
 		return health;
 	}
 	
-	public void setHealth(int amount)
+	public void setHealth(double amount)
 	{
 		health = amount;
 	}
@@ -287,8 +319,8 @@ public class Player extends Rectangle
 	{
 		mana = mana + amount;
 		
-		if(mana > 100)
-			mana = 100;
+		if(mana > maxMana)
+			mana = maxMana;
 	}
 	
 	public void decreaseMana(double amount)
@@ -353,6 +385,36 @@ public class Player extends Rectangle
 	public void setSpeed(int amount)
 	{
 		speed = amount;
+	}
+	
+	public void levelUp()
+	{
+		level++;
+	}
+	
+	public int getLevel()
+	{
+		return level;
+	}
+	
+	public void setMaxHealth(int amount)
+	{
+		maxHealth = amount;
+	}
+	
+	public double getMaxHealth()
+	{
+		return maxHealth;
+	}
+	
+	public void setMaxMana(int amount)
+	{
+		maxMana = amount;
+	}
+	
+	public double getMaxMana()
+	{
+		return maxMana;
 	}
 	
 	//-------------------------------------------------------------------
@@ -421,5 +483,22 @@ public class Player extends Rectangle
 	public boolean canMove()
 	{
 		return canMove;
+	}
+	
+	public void setDiretion(String direction)
+	{
+		this.direction = direction;
+	}
+	
+	//-------------------------------------------------------------------
+	
+	public void setPlayerName(String name)
+	{
+		this.name = name;
+	}
+	
+	public String getPlayerName()
+	{
+		return name;
 	}
 }

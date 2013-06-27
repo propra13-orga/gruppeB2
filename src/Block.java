@@ -33,7 +33,7 @@ abstract class Block extends Rectangle
 		super(posX, posY, sizeX, sizeY);
 	}
 	
-	public int checkCollision(Rectangle rect)
+	public int checkCollision(Rectangle rect, long delta)
 	{	
 		if(this.intersects(rect) && this.isSolid())
 		{

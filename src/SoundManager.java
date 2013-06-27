@@ -7,6 +7,7 @@ import javax.swing.JOptionPane;
 
 public class SoundManager 
 {
+	private File file;
 	private ArrayList<AudioClip> sounds;
 	
 	public SoundManager()
@@ -20,10 +21,10 @@ public class SoundManager
 	{
 		try 
 		{
-			File file = new File("music/sounds/battle/battle_01.wav");
+			file = new File("music/sounds/battle/battle_01.wav");
 			sounds.add(0, Applet.newAudioClip(file.toURL()));
-
-			System.out.println(file.exists());
+			file = new File("music/sounds/battle/enemy_ready.wav");
+			sounds.add(1, Applet.newAudioClip(file.toURL()));
 			
 		} catch (MalformedURLException e) 
 		{

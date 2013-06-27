@@ -278,7 +278,7 @@ public class LevelManager
 
 				switch(npc)
 				{
-				case "NPC_CHECKPOINT": npcs.add(new CheckPointNPC(posX, posY)); break;
+				case "NPC_CHECKPOINT": npcs.add(new CheckPointNPC(posX, posY, 50)); break;
 				}
 			}	
 		}
@@ -325,10 +325,10 @@ public class LevelManager
 
 				switch(enemy)
 				{
-				case "ENEMY_KIDHIPSTER_RIGHT": enemys.add(new KidHipster(posX, posY, Direction.RIGHT)); break;
-				case "ENEMY_KIDHIPSTER_LEFT": enemys.add(new KidHipster(posX, posY, Direction.LEFT)); break;
-				case "ENEMY_KIDHIPSTER_UP": enemys.add(new KidHipster(posX, posY, Direction.UP)); break;
-				case "ENEMY_KIDHIPSTER_DOWN": enemys.add(new KidHipster(posX, posY, Direction.DOWN)); break;
+				case "ENEMY_KIDHIPSTER_RIGHT": enemys.add(new KidHipster(posX, posY, Direction.RIGHT, 50)); break;
+				case "ENEMY_KIDHIPSTER_LEFT": enemys.add(new KidHipster(posX, posY, Direction.LEFT, 50)); break;
+				case "ENEMY_KIDHIPSTER_UP": enemys.add(new KidHipster(posX, posY, Direction.UP, 50)); break;
+				case "ENEMY_KIDHIPSTER_DOWN": enemys.add(new KidHipster(posX, posY, Direction.DOWN, 50)); break;
 				}
 			}	
 		}

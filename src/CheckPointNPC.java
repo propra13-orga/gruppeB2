@@ -5,6 +5,7 @@ public class CheckPointNPC extends NPC
 {
 	private static final long serialVersionUID = 1L;
 
+	long delay;
 	private final double RANGE = 60;
 	
 	boolean moves;
@@ -22,19 +23,11 @@ public class CheckPointNPC extends NPC
 	
 	private boolean isSavePoint;
 	
-	public CheckPointNPC(int posX, int posY)
+	public CheckPointNPC(int posX, int posY, long delta)
 	{
 		super(posX, posY, 40, 40);
 		
-		this.posX = posX;
-		this.posY = posY;
-		
-		isSavePoint = false;
-	}
-
-	public CheckPointNPC(int posX, int posY, int sizeX, int sizeY)
-	{
-		super(posX, posY, sizeX, sizeY);
+		this.delay = delta;
 		
 		this.posX = posX;
 		this.posY = posY;
@@ -42,9 +35,23 @@ public class CheckPointNPC extends NPC
 		isSavePoint = false;
 	}
 
-	public CheckPointNPC(int posX, int posY, int sizeX, int sizeY, int moveDirection)
+	public CheckPointNPC(int posX, int posY, int sizeX, int sizeY, long delta)
 	{
 		super(posX, posY, sizeX, sizeY);
+		
+		this.delay = delta;
+		
+		this.posX = posX;
+		this.posY = posY;
+		
+		isSavePoint = false;
+	}
+
+	public CheckPointNPC(int posX, int posY, int sizeX, int sizeY, int moveDirection, long delay)
+	{
+		super(posX, posY, sizeX, sizeY);
+		
+		this.delay = delay;
 		
 		this.posX = posX;
 		this.posY = posY;

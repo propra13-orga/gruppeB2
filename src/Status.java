@@ -23,11 +23,11 @@ public class Status
 
 		StdDraw.picture(59.5, 45, "images/status/health_bar/health_bar.png");
 		StdDraw.setPenColor(Color.RED);
-		StdDraw.filledRectangle(24 + 0.5 * player.getHealth(), 45, 0.5 * player.getHealth(), 11);
+		StdDraw.filledRectangle(24 + player.getHealth() * (50.0 / player.getMaxHealth()), 45, player.getHealth() * (50.0 / player.getMaxHealth()), 11);
 		
 		StdDraw.picture(59.5, 9, "images/status/mana_bar/mana_bar.png");
 		StdDraw.setPenColor(Color.YELLOW);
-		StdDraw.filledRectangle(24 + 0.5 * player.getMana(), 9, 0.5 * player.getMana(), 11);
+		StdDraw.filledRectangle(24 + player.getMana() * (50.0 / player.getMaxMana()), 9, player.getMana() * (50.0 / player.getMaxMana()), 11);
 		
 		StdDraw.picture(503, 28, "images/status/dialog_field.png");
 	}

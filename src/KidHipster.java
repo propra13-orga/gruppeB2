@@ -5,6 +5,8 @@ public class KidHipster extends Enemy
 {
 	private static final long serialVersionUID = 1L;
 
+	long delay, anim;
+	
 	private final String AVATAR = "images/enemy/kid_hipster/avatar.png";
 	
 	private double posX, posY;
@@ -15,29 +17,46 @@ public class KidHipster extends Enemy
 	int swpU = 0;
 	int swpD = 0;
 	
+	double health, maxHealth;
+	double mana, maxMana;
+	
 	private final String DIRECTION;
 	private final int LEVEL;
 	
-	public KidHipster(int posX, int posY, String direction)
+	public KidHipster(int posX, int posY, String direction, long delay)
 	{
 		super(posX, posY, 40, 40);
+		
+		this.delay = delay;
 		
 		this.posX = posX;
 		this.posY = posY;
 		
 		this.DIRECTION = direction;
 		this.LEVEL = (int)(Math.random() * ((5 - 1) + 1) + 1);
+		
+		this.maxHealth = 50 + 15 * LEVEL;
+		this.health = maxHealth;
+		this.maxMana = 20 + 10 * LEVEL;
+		this.mana = maxMana;
 	}
 	
-	public KidHipster(int posX, int posY, String direction, int level)
+	public KidHipster(int posX, int posY, String direction, int level, long delay)
 	{
 		super(posX, posY, 40, 40);
+		
+		this.delay = delay;
 		
 		this.posX = posX;
 		this.posY = posY;
 		
 		this.DIRECTION = direction;
 		this.LEVEL = level;
+		
+		this.maxHealth = 50 + 15 * level;
+		this.health = maxHealth;
+		this.maxMana = 20 + 10 * level;
+		this.mana = maxMana;
 	}
 
 	public void drawImg() 
@@ -67,13 +86,13 @@ public class KidHipster extends Enemy
 		
 		//System.out.println((playerPosY < this.getCenterY() + 20) && (playerPosY > this.getCenterY() - 20) );
 		
-		if(playerPosX < this.getCenterX() + 10 && playerPosX > this.getCenterX() - 10)
+		if(playerPosX < this.getCenterX() + 15 && playerPosX > this.getCenterX() - 15)
 			if(playerPosY < this.getCenterY())
 				return DIRECTION.equals(Direction.DOWN);
 			else
 				return DIRECTION.equals(Direction.UP);
 		
-		if(playerPosY < this.getCenterY() + 10 && playerPosY > this.getCenterY() - 10)
+		if(playerPosY < this.getCenterY() + 15 && playerPosY > this.getCenterY() - 15)
 			if(playerPosX < this.getCenterX())
 				return DIRECTION.equals(Direction.LEFT);
 			else
@@ -82,7 +101,7 @@ public class KidHipster extends Enemy
 		return false;
 	}
 	
-	public void moveToPlayer(Player player)
+	public void moveToPlayer(Player player, long delta)
 	{
 		switch(DIRECTION)
 		{
@@ -91,7 +110,7 @@ public class KidHipster extends Enemy
 		case Direction.LEFT: this.setPosX(posX - 0.03); break;
 		case Direction.RIGHT: this.setPosX(posX + 0.03); break;
 		}
-		this.swapImg();
+		this.swapImg(delta);
 	}
 	
 	public int checkCollision(Rectangle rect) 
@@ -181,8 +200,13 @@ public class KidHipster extends Enemy
 		return posY;
 	}
 	
-	public void swapImg()
-	{
+	public void swapImg(long delta)
+	{		anim = anim + (delta/1000000);
+	
+		if(anim > delay)
+		{
+			anim = 0;
+			
 		if(DIRECTION.equals(Direction.LEFT))
 		{
 			if(swpL < 500)
@@ -290,10 +314,85 @@ public class KidHipster extends Enemy
 		}	
 
 		StdDraw.picture(posX, posY + 26, "images/enemy/inRange.png");
+		
+		}
 	}
 	
 	public String toString()
 	{
 		return "kid_hipster";
+	}
+	
+	public String getName()
+	{
+		return "Kid Hipster";
+	}
+	
+	public String getDirection()
+	{
+		if(this.DIRECTION.equals(Direction.DOWN))
+			return Direction.UP;
+		if(this.DIRECTION.equals(Direction.UP))
+			return Direction.DOWN;
+		if(this.DIRECTION.equals(Direction.LEFT))
+			return Direction.RIGHT;
+		if(this.DIRECTION.equals(Direction.RIGHT))
+			return Direction.LEFT;
+		else
+			return "Keine Richtung";
+	}
+	
+	//----------------------------------------------------------------------------------------
+	
+	public void increaseHealth(double amount)
+	{
+		health = health + amount;
+		
+		if(health > maxHealth)
+			health = maxHealth;
+	}
+	
+	public void decreaseHealth(double amount)
+	{
+		health = health - amount;
+		
+		if(health < 0)
+			health = 0;
+	}
+	
+	public void increaseMana(double amount)
+	{
+		mana = mana + amount;
+		
+		if(mana > maxMana)
+			mana = maxMana;
+	}
+	
+	public void decreaseMana(double amount)
+	{
+		mana = mana - amount;
+		
+		if(mana < 0)
+			mana = 0;
+	}
+	
+	public double getMaxHealth()
+	{
+		return maxHealth;
+	}
+	
+	public double getHealth()
+	{
+		return health;
+	}
+	
+	public double getMaxMana()
+	{
+		return maxMana;
+	}
+	
+	public double getMana()
+	{
+		return mana;
 	}
 }
