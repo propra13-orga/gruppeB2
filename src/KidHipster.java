@@ -7,6 +7,8 @@ public class KidHipster extends Enemy
 
 	long delay, anim;
 	
+	final double SPEED = 0.02;
+	
 	private final String AVATAR = "images/enemy/kid_hipster/avatar.png";	
 	
 	private final String [][] DIALOG = new String[][]
@@ -92,15 +94,13 @@ public class KidHipster extends Enemy
 		double playerPosX = player.getCenterX();
 		double playerPosY = player.getCenterY();
 		
-		//System.out.println((playerPosY < this.getCenterY() + 20) && (playerPosY > this.getCenterY() - 20) );
-		
-		if(playerPosX < this.getCenterX() + 15 && playerPosX > this.getCenterX() - 15)
+		if(playerPosX < this.getCenterX() + 15 && playerPosX > this.getCenterX() - 15 && Math.abs(this.getCenterY() - playerPosY) < 200)
 			if(playerPosY < this.getCenterY())
 				return DIRECTION.equals(Direction.DOWN);
 			else
 				return DIRECTION.equals(Direction.UP);
 		
-		if(playerPosY < this.getCenterY() + 15 && playerPosY > this.getCenterY() - 15)
+		if(playerPosY < this.getCenterY() + 15 && playerPosY > this.getCenterY() - 15 && Math.abs(this.getCenterX() - playerPosX) < 200)
 			if(playerPosX < this.getCenterX())
 				return DIRECTION.equals(Direction.LEFT);
 			else
@@ -113,10 +113,10 @@ public class KidHipster extends Enemy
 	{
 		switch(DIRECTION)
 		{
-		case Direction.DOWN: this.setPosY(posY - 0.03); break;
-		case Direction.UP: this.setPosY(posY + 0.03); break;
-		case Direction.LEFT: this.setPosX(posX - 0.03); break;
-		case Direction.RIGHT: this.setPosX(posX + 0.03); break;
+		case Direction.DOWN: this.setPosY(posY - SPEED); break;
+		case Direction.UP: this.setPosY(posY + SPEED); break;
+		case Direction.LEFT: this.setPosX(posX - SPEED); break;
+		case Direction.RIGHT: this.setPosX(posX + SPEED); break;
 		}
 		this.swapImg(delta);
 	}

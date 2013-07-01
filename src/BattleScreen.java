@@ -13,7 +13,8 @@ public class BattleScreen
 	long last = 0;
 	long fps = 0;
 	
-	boolean introPlayed;
+	boolean introPlayed, showIntroDialog, selectionOn, angrOn, magicOn;
+	boolean pressedE;
 	
 	Font font;
 	Font fontBold;
@@ -32,6 +33,10 @@ public class BattleScreen
 	
 	KeyManager key;
 	SoundManager snd;
+	
+	BattleDialog dialogs;
+	
+	int selection;
 	
 	public BattleScreen(GameField field, SoundManager snd, Enemy enemy)
 	{
@@ -57,11 +62,22 @@ public class BattleScreen
 		screenMidX = width / 2;
 		screenMidY = heigth / 2 - 40;
 		
-		key = new KeyManager(this);
+		this.key = new KeyManager(this);
 		this.snd = snd;
 		
+		dialogs = new BattleDialog(this);
+		
 		time = 0;
+		
 		introPlayed = false;
+		showIntroDialog = true;
+		selectionOn = false;
+		angrOn = false;
+		magicOn = false;
+		
+		pressedE = false;
+		
+		selection = 1;
 		
 		this.playBlending(0);
 		this.run();
@@ -99,38 +115,62 @@ public class BattleScreen
 				StdDraw.picture(screenMidX - 270 + time, screenMidY + 100, "images/enemy/" + enemy.toString() + "/battle.png");
 			
 				StdDraw.setPenColor(Color.BLACK);
-				StdDraw.filledRectangle(screenMidX - 270, screenMidY, 50, heigth / 2);
+				StdDraw.filledRectangle(screenMidX - 290, screenMidY, 50, heigth / 2);
 				
 				
 				// Zeichne den Spieler (von rechts nach links)
 				StdDraw.picture(screenMidX + 280 - time, screenMidY - 42, "images/player/battle.png");
 				
 				StdDraw.setPenColor(Color.BLACK);
-				StdDraw.filledRectangle(screenMidX + 280, screenMidY, 50, heigth / 2);
+				StdDraw.filledRectangle(screenMidX + 290, screenMidY, 50, heigth / 2);
 		}
 	}
 	
 	private void drawBattle()
 	{		
+		if(pressedE)
+		{
+			showIntroDialog = false;
+
+			if(!selectionOn)
+			{
+				angrOn = false;
+				magicOn = false;
+				selectionOn = true;
+				
+				selection = 1;
+			}
+			else if(!angrOn && selection == 1)
+			{
+				selectionOn = false;
+				angrOn = true;
+				
+				selection = 1;
+			}
+			else if(!magicOn && selection == 2)
+			{
+				selectionOn = false;
+				magicOn = true;
+				
+				selection = 1;
+			}
+			
+			pressedE = false;
+		}
+		
 		StdDraw.picture(screenMidX, screenMidY, "images/battle/intro/intro_screen.png");
 		
-		// Zeichne den Gegner von links nach rechts
+		// Zeichne den Gegner
 		StdDraw.picture(screenMidX - 270 + time, screenMidY + 100, "images/enemy/" + enemy.toString() + "/battle.png");
-	
-		StdDraw.setPenColor(Color.BLACK);
-		StdDraw.filledRectangle(screenMidX - 270, screenMidY, 50, heigth / 2);
 		
-		
-		// Zeichne den Spieler (von rechts nach links)
+		// Zeichne den Spieler
 		StdDraw.picture(screenMidX + 280 - time, screenMidY - 42, "images/player/battle.png");
-		
-		StdDraw.setPenColor(Color.BLACK);
-		StdDraw.filledRectangle(screenMidX + 280, screenMidY, 50, heigth / 2);
 	}
 	
 	private void drawStatus()
 	{
 		StdDraw.setFont(font);
+		StdDraw.setPenColor(Color.BLACK);
 
 		StdDraw.textLeft(screenMidX - 200, screenMidY + 165, "" + enemy.getName().toUpperCase());
 		StdDraw.setPenColor(Color.red);
@@ -175,9 +215,18 @@ public class BattleScreen
 					StdDraw.clear(Color.black);
 					
 					key.handleKeyInput();
-				
+					
 					drawBattle();
 					drawStatus();
+					
+					if(showIntroDialog)
+						dialogs.showIntroDialog();
+					else if(selectionOn)
+						dialogs.showSelectionDialog(selection);
+					else if(angrOn)
+						dialogs.showAngrDialog(selection);
+					else if(magicOn)
+						dialogs.showMagicDialog(selection);
 				}
 			}
 		}

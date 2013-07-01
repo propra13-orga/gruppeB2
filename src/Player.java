@@ -7,6 +7,9 @@ import java.awt.Rectangle;
 public class Player extends Rectangle
 {
 	private static final long serialVersionUID = 1L;
+
+	private Attack[] attacks = new Attack[4];
+	private Attack[] magic = new Attack[4];
 	
 	long anim;
 	long delay;
@@ -64,6 +67,17 @@ public class Player extends Rectangle
 		
 		canMove = true;
 		direction = Direction.DOWN;
+		
+
+		attacks[0] = new Attack("Schwerthieb", "Normal");
+		attacks[1] = new Attack("Schildblock", "Normal");
+		attacks[2] = null;
+		attacks[3] = null;
+		
+		magic[0] = new Attack("Magiepfeil", "Magie");
+		magic[1] = new Attack("Magierüstung", "Magie");
+		magic[2] = null;
+		magic[3] = null;
 	}
 
 	/**
@@ -500,5 +514,39 @@ public class Player extends Rectangle
 	public String getPlayerName()
 	{
 		return name;
+	}
+	
+	//-------------------------------------------------------------------
+	
+	public int getAttackCount()
+	{
+		int count = 0;
+		
+		for(int i = 0; i < 4; i++)
+			if(attacks[i] != null)
+				count ++;
+		
+		return count;
+	}
+	
+	public Attack getAttack(int attack)
+	{
+		return attacks[attack - 1];
+	}
+	
+	public int getMagicCount()
+	{
+		int count = 0;
+		
+		for(int i = 0; i < 4; i++)
+			if(magic[i] != null)
+				count ++;
+		
+		return count;
+	}
+	
+	public Attack getMagic(int attack)
+	{
+		return magic[attack - 1];
 	}
 }

@@ -1,4 +1,3 @@
-import java.awt.event.KeyEvent;
 import java.util.*;
 
 
@@ -151,8 +150,7 @@ public class GameField
 			for(int j = 0; j < columns; j++)
 			{
 				//Pruefe Kollision des Spielers mit dem Spielfeldbloecken
-				coll = field[i][j].checkCollision(player1, delta);
-				
+				coll = field[i][j].checkCollision(player1);
 			
 				if(player1.getHealth() < 1)
 				{
@@ -366,10 +364,7 @@ public class GameField
 				//Pruefe (moegliche) Tasteneingaben
 				if(StdDraw.hasPressedAnyKey())
 				{
-					//if(player1.canMove())
-						key.handleKeyInput();
-				//	else
-						player1.draw();
+					key.handleKeyInput();
 				}
 				else
 					player1.draw();
@@ -394,6 +389,7 @@ public class GameField
 
 					items.clear();
 					npc.clear();
+					enemy.clear();
 					
 					this.initLvl(false, false);					
 				}
@@ -404,6 +400,7 @@ public class GameField
 
 					items.clear();
 					npc.clear();
+					enemy.clear();
 					
 					this.initLvl(true, false);	
 			break;

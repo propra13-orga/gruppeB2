@@ -30,7 +30,7 @@ public class KeyManager
 		{
 			delta = field.delta;
 					
-			if(StdDraw.isKeyPressedSingle('e'))
+			if(StdDraw.isKeyPressedSingle(KeyEvent.VK_E))
 			{
 				field.countE++;
 			}
@@ -112,8 +112,68 @@ public class KeyManager
 		
 		else if(battle != null)
 		{
-			if(StdDraw.isKeyPressedSingle('e'))
-				System.out.println("LOL");
+			if(StdDraw.isKeyPressedSingle(KeyEvent.VK_E))
+				battle.pressedE = true;
+			
+			if(battle.selectionOn)
+			{
+				if(StdDraw.isKeyPressed(KeyEvent.VK_LEFT))
+				{
+					if(battle.selection == 2)
+						battle.selection = 1;
+					else if(battle.selection == 4)
+						battle.selection = 3;
+				}
+				else if(StdDraw.isKeyPressed(KeyEvent.VK_RIGHT))
+				{
+					if(battle.selection == 1)
+						battle.selection = 2;
+					else if(battle.selection == 3)
+						battle.selection = 4;
+				}
+				else if(StdDraw.isKeyPressed(KeyEvent.VK_UP))
+				{
+					if(battle.selection == 3)
+						battle.selection = 1;
+					else if(battle.selection == 4)
+						battle.selection = 2;
+				}
+				else if(StdDraw.isKeyPressed(KeyEvent.VK_DOWN))
+				{
+					if(battle.selection == 1)
+						battle.selection = 3;
+					else if(battle.selection == 2)
+						battle.selection = 4;
+				}
+			}
+			
+			if(battle.angrOn)
+			{
+				if(StdDraw.isKeyPressedSingle(KeyEvent.VK_UP))
+				{
+					if(battle.selection > 1)
+						battle.selection--;
+				}
+				else if(StdDraw.isKeyPressedSingle(KeyEvent.VK_DOWN))
+				{
+					if(battle.selection < battle.player.getAttackCount())
+						battle.selection++;
+				}
+			}
+			
+			if(battle.magicOn)
+			{
+				if(StdDraw.isKeyPressedSingle(KeyEvent.VK_UP))
+				{
+					if(battle.selection > 1)
+						battle.selection--;
+				}
+				else if(StdDraw.isKeyPressedSingle(KeyEvent.VK_DOWN))
+				{
+					if(battle.selection < battle.player.getMagicCount())
+						battle.selection++;
+				}
+			}
 		}
 	}
 }

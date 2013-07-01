@@ -126,6 +126,7 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 
     // queue of typed key characters
     private static LinkedList<Character> keysTyped = new LinkedList<Character>();
+    private static LinkedList<Integer> keysTypedOnce = new LinkedList<Integer>();
 
     // set of key codes currently pressed down
     private static TreeSet<Integer> keysDown = new TreeSet<Integer>();
@@ -1053,13 +1054,13 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
         }
     }
     
-    public static boolean isKeyPressedSingle(char keycode) {
+    public static boolean isKeyPressedSingle(int keycode) {
     	synchronized (keyLock) {
     		if(keyInBuffer && !keyExecuted)
     		{
-    			if(keysTyped.getFirst().equals(keycode))
+    			if(keysTypedOnce.getFirst()== keycode)
     				keyExecuted = true;
-    			return keysTyped.getFirst().equals(keycode);
+    			return keysTypedOnce.getFirst()== keycode;
     		}
     		else
     			return false;
@@ -1100,6 +1101,11 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
         synchronized (keyLock) {
             keysDown.add(e.getKeyCode());
             anyKeyPressed = true;
+            
+        	if(!keyInBuffer) {
+        		keysTypedOnce.addFirst(e.getKeyCode());
+        		keyInBuffer = true;
+        	}
         }
     }
 
@@ -1114,7 +1120,7 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
             	anyKeyPressed = false;
             
             if(keyInBuffer) {
-            	keysTyped.remove();
+            	keysTypedOnce.remove();
             	keyInBuffer = false;
     			keyExecuted = false;
             }
