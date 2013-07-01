@@ -52,4 +52,11 @@ abstract class Enemy extends Rectangle
 	public abstract double getHealth();
 	public abstract double getMaxMana();
 	public abstract double getMana();
+
+	public abstract double getArmor();
+	public abstract double getAttack();
+	public abstract void increaseArmor(double amount);
+	public abstract void increaseAttack(double amount);
+	public abstract void decreaseArmor(double amount);
+	public abstract void decreaseAttack(double amount);
 }

@@ -9,7 +9,7 @@ public class Player extends Rectangle
 	private static final long serialVersionUID = 1L;
 
 	private Attack[] attacks = new Attack[4];
-	private Attack[] magic = new Attack[4];
+	private Magic[] magic = new Magic[4];
 	
 	long anim;
 	long delay;
@@ -31,6 +31,11 @@ public class Player extends Rectangle
 	private String name;
 	private int level;
 	private double speed;
+	
+	private int attack;
+	private int defense;
+	private int spez;
+	private int gena;
 	
 	private CheckPoint checkPoint;
 	
@@ -54,7 +59,12 @@ public class Player extends Rectangle
 		
 		this.posX = posX;
 		this.posY = posY;
+
+		canMove = true;
+		direction = Direction.DOWN;
 		
+		//nur Testweise
+		//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		setHealth(100);
 		setMaxHealth(100);
 		setMana(0);
@@ -64,20 +74,29 @@ public class Player extends Rectangle
 		level = 1;
 		
 		name = "Player";
-		
-		canMove = true;
-		direction = Direction.DOWN;
-		
 
-		attacks[0] = new Attack("Schwerthieb", "Normal");
-		attacks[1] = new Attack("Schildblock", "Normal");
+		attacks[0] = new Attack("Schwerthieb", "Normal", true);
+		attacks[1] = new Attack("Schildblock", "Normal", false);
 		attacks[2] = null;
 		attacks[3] = null;
 		
-		magic[0] = new Attack("Magiepfeil", "Magie");
-		magic[1] = new Attack("Magierüstung", "Magie");
+		magic[0] = new Magic("Magiepfeil", "Magie", true, 15, 2);
+		magic[1] = new Magic("Magierüstung", "Magie", false, 20, 2);
 		magic[2] = null;
 		magic[3] = null;
+		
+		attacks[0].setStrength(25);
+		attacks[1].setStrength(20);
+		magic[0].setStrength(40);
+		magic[1].setStrength(50);
+		
+		
+		attack = 10;
+		defense = 10;
+		spez = 8;
+		gena = 8;
+		
+		//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	}
 
 	/**
@@ -404,6 +423,11 @@ public class Player extends Rectangle
 	public void levelUp()
 	{
 		level++;
+		
+		attack = attack + 5;
+		defense = defense + 5;
+		spez = spez + 4;
+		gena = gena + 4;
 	}
 	
 	public int getLevel()
@@ -545,8 +569,50 @@ public class Player extends Rectangle
 		return count;
 	}
 	
-	public Attack getMagic(int attack)
+	public Magic getMagic(int attack)
 	{
 		return magic[attack - 1];
+	}
+	
+	//------------------------------------------------------------------------------------------
+	
+	public void increaseAtt(int amount)
+	{
+		this.attack += amount;
+	}
+	
+	public int getAtt()
+	{
+		return attack;
+	}
+	
+	public void increaseDef(int amount)
+	{
+		this.defense += amount;
+	}
+	
+	public int getDef()
+	{
+		return defense;
+	}
+	
+	public void increaseSpez(int amount)
+	{
+		this.spez += amount;
+	}
+	
+	public int getSpez()
+	{
+		return spez;
+	}
+	
+	public void increaseGena(int amount)
+	{
+		this.gena += amount;
+	}
+	
+	public int getGena()
+	{
+		return gena;
 	}
 }

@@ -125,5 +125,18 @@ public class BattleDialog
 
 		StdDraw.textLeft(screenMidX - 220, screenMidY - 42, "TYP/");
 		StdDraw.textLeft(screenMidX - 210, screenMidY - 62, attack.getType());
+		StdDraw.textRight(screenMidX - 26, screenMidY - 82, attack.getDmgType() + " " + (int)attack.getStrength());
+	}
+	
+	public void showStats(Magic magic)
+	{
+		StdDraw.setFont(font);
+		StdDraw.setPenColor(Color.white);
+		
+		StdDraw.picture(screenMidX - 128, screenMidY - 60, "images/battle/logic/attack_stats.png");
+
+		StdDraw.textLeft(screenMidX - 220, screenMidY - 42, "TYP/");
+		StdDraw.textLeft(screenMidX - 210, screenMidY - 62, magic.getType());
+		StdDraw.textRight(screenMidX - 26, screenMidY - 82, magic.getDmgType() + " " + (int)magic.getStrength());
 	}
 }

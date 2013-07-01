@@ -9,6 +9,9 @@ public class KidHipster extends Enemy
 	
 	final double SPEED = 0.02;
 	
+	private double armor;
+	private double attack;
+	
 	private final String AVATAR = "images/enemy/kid_hipster/avatar.png";	
 	
 	private final String [][] DIALOG = new String[][]
@@ -49,6 +52,9 @@ public class KidHipster extends Enemy
 		this.health = maxHealth;
 		this.maxMana = 20 + 10 * LEVEL;
 		this.mana = maxMana;
+		
+		this.armor = LEVEL * 5;
+		this.attack = 30;
 	}
 	
 	public KidHipster(int posX, int posY, String direction, int level, long delay)
@@ -67,6 +73,9 @@ public class KidHipster extends Enemy
 		this.health = maxHealth;
 		this.maxMana = 20 + 10 * level;
 		this.mana = maxMana;
+
+		this.armor = LEVEL * 5;
+		this.attack = 30;
 	}
 
 	public void drawImg() 
@@ -437,5 +446,37 @@ public class KidHipster extends Enemy
 	public double getMana()
 	{
 		return mana;
+	}
+	
+	//----------------------------------------------------------------------------------------
+
+	public double getArmor()
+	{
+		return armor;
+	}
+	
+	public double getAttack()
+	{
+		return attack;
+	}
+	
+	public void increaseArmor(double amount)
+	{
+		armor += amount;
+	}
+
+	public void increaseAttack(double amount)
+	{
+		attack += amount;
+	}
+	
+	public void decreaseArmor(double amount)
+	{
+		armor -= amount;
+	}
+
+	public void decreaseAttack(double amount)
+	{
+		attack -= amount;
 	}
 }

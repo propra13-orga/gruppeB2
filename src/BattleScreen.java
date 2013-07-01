@@ -2,7 +2,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.io.*;
-import java.text.DecimalFormat;
 
 import javax.swing.JOptionPane;
 
@@ -15,11 +14,11 @@ public class BattleScreen
 	
 	boolean introPlayed, showIntroDialog, selectionOn, angrOn, magicOn;
 	boolean pressedE;
+
+	boolean playerAttacks;
 	
 	Font font;
 	Font fontBold;
-	
-	DecimalFormat df;
 	
 	Enemy enemy;
 	Player player;
@@ -38,6 +37,8 @@ public class BattleScreen
 	
 	int selection;
 	
+	Magic magic;
+	
 	public BattleScreen(GameField field, SoundManager snd, Enemy enemy)
 	{
 		try 
@@ -50,8 +51,6 @@ public class BattleScreen
 			JOptionPane.showMessageDialog(null, "Es trat ein Fehler beim Lesen der Schriftart auf (fonts/battle_font.ttf)");
 			System.exit(0);
 		}
-		
-		df = new DecimalFormat("0.0");
 		
 		this.enemy = enemy;
 		player = field.player1;
@@ -198,6 +197,51 @@ public class BattleScreen
 		StdDraw.text(screenMidX + 120, screenMidY - 75, (int)player.getHealth() + "/" + (int)player.getMaxHealth()); 
 	}
 	
+	private void doLogic()
+	{
+		if(pressedE)
+		{
+			if(angrOn)
+			{
+				playerAttacks = player.getAttack(selection).dealDmg();
+				
+				if(playerAttacks)
+				{
+					enemy.decreaseHealth(player.getAttack(selection).getStrength() * (100 - enemy.getArmor()) / 100);
+				}
+				else
+				{
+					player.increaseDef((int)player.getAttack(selection).getStrength());
+				}
+			}
+			else if(magicOn)
+			{
+				magic = player.getMagic(selection);
+				
+				if(magic.dealDmg() && player.getMana() >= magic.manaCost())
+				{
+					snd.playSound(magic.getSound());
+					enemy.decreaseHealth(magic.getStrength() * (100 - enemy.getArmor()) / 100);
+					player.decreaseMana(magic.manaCost());
+				}
+				else if(player.getMana() >= magic.manaCost())
+				{
+					player.increaseDef((int)magic.getStrength());
+					player.decreaseMana(magic.manaCost());
+				}
+				else
+				{
+					
+				}
+			}			
+		}
+	}
+	
+	private void animateAttack(Attack attack)
+	{
+		
+	}
+	
 	private void run()
 	{
 		while(true)
@@ -215,6 +259,8 @@ public class BattleScreen
 					StdDraw.clear(Color.black);
 					
 					key.handleKeyInput();
+					
+					doLogic();
 					
 					drawBattle();
 					drawStatus();

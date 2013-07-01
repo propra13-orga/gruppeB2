@@ -1,18 +1,22 @@
 
-public class Attack 
+public class Magic 
 {
 	private String name;
 	private String type;
 	
 	private double strength;
+	private double manaCost;
+	private int sound;
 	
 	private boolean dealDmg;
 	
-	public Attack(String name, String type, boolean dealDmg)
+	public Magic(String name, String type, boolean dealDmg, double manaCost, int sound)
 	{
 		this.name = name;
 		this.type = type;
 		this.dealDmg = dealDmg;
+		this.manaCost = manaCost;
+		this.sound = sound;
 	}
 	
 	//-----------------------------------------------------------------------------------------
@@ -50,5 +54,17 @@ public class Attack
 	public boolean dealDmg()
 	{
 		return dealDmg;
+	}
+	
+	public double manaCost()
+	{
+		return manaCost;
+	}
+	
+	//-----------------------------------------------------------------------------------------
+	
+	public int getSound()
+	{
+		return sound;
 	}
 }
