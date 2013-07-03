@@ -49,7 +49,7 @@ public class MainMenu
 		}
 		if(mouseX < 0.488 && mouseX > 0.281 && mouseY < 0.67 && mouseY > 0.622 && StdDraw.mouseClicked())
 		{ 
-			
+			new MapEditor();
 		}
 		if(mouseX < 0.485 && mouseX > 0.289 && mouseY < 0.544 && mouseY > 0.492 && StdDraw.mouseClicked())
 			System.exit(0);
