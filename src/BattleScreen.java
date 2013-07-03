@@ -12,10 +12,15 @@ public class BattleScreen
 	long last = 0;
 	long fps = 0;
 	
+	GameField parent;
+	
 	boolean introPlayed, showIntroDialog, selectionOn, angrOn, magicOn;
-	boolean pressedE;
+	boolean pressedE, pressedR;
 
 	boolean playerAttacks;
+	boolean animationFinished;
+	
+	boolean battleOn;
 	
 	Font font;
 	Font fontBold;
@@ -28,7 +33,7 @@ public class BattleScreen
 	double screenMidX;
 	double screenMidY;
 	
-	double time;
+	double time, anim;
 	
 	KeyManager key;
 	SoundManager snd;
@@ -36,11 +41,14 @@ public class BattleScreen
 	BattleDialog dialogs;
 	
 	int selection;
-	
+
+	Attack attack;
 	Magic magic;
 	
 	public BattleScreen(GameField field, SoundManager snd, Enemy enemy)
 	{
+		parent = field;
+		
 		try 
 		{
 			Font lfont = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream("fonts/battle_font.ttf"));
@@ -67,6 +75,7 @@ public class BattleScreen
 		dialogs = new BattleDialog(this);
 		
 		time = 0;
+		anim = 0;
 		
 		introPlayed = false;
 		showIntroDialog = true;
@@ -75,8 +84,11 @@ public class BattleScreen
 		magicOn = false;
 		
 		pressedE = false;
+		pressedR = false;
 		
 		selection = 1;
+		
+		battleOn = true;
 		
 		this.playBlending(0);
 		this.run();
@@ -127,11 +139,11 @@ public class BattleScreen
 	
 	private void drawBattle()
 	{		
-		if(pressedE)
+		if(pressedE && !playerAttacks)
 		{
 			showIntroDialog = false;
 
-			if(!selectionOn)
+			/*if(!selectionOn)
 			{
 				angrOn = false;
 				magicOn = false;
@@ -139,22 +151,47 @@ public class BattleScreen
 				
 				selection = 1;
 			}
-			else if(!angrOn && selection == 1)
+			else*/ 
+			if(selectionOn)
 			{
-				selectionOn = false;
-				angrOn = true;
+				if(selection == 1)
+				{
+					selectionOn = false;
+					angrOn = true;
 				
-				selection = 1;
-			}
-			else if(!magicOn && selection == 2)
-			{
-				selectionOn = false;
-				magicOn = true;
+					selection = 1;
+				}
+				else if(selection == 2)
+				{
+					selectionOn = false;
+					magicOn = true;
 				
-				selection = 1;
+					selection = 1;
+				}
 			}
+			else if(angrOn || magicOn)
+				playerAttacks = true;
+			else
+				selectionOn = true;
 			
 			pressedE = false;
+		}
+		else if(pressedR && !playerAttacks)
+		{
+			if(angrOn)
+			{
+				angrOn = false;
+				selection = 1;
+				selectionOn = true;
+			}
+			if(magicOn)
+			{
+				magicOn = false;
+				selection = 2;
+				selectionOn = true;
+			}
+			
+			pressedR = false;
 		}
 		
 		StdDraw.picture(screenMidX, screenMidY, "images/battle/intro/intro_screen.png");
@@ -199,52 +236,95 @@ public class BattleScreen
 	
 	private void doLogic()
 	{
-		if(pressedE)
-		{
-			if(angrOn)
-			{
-				playerAttacks = player.getAttack(selection).dealDmg();
-				
-				if(playerAttacks)
-				{
-					enemy.decreaseHealth(player.getAttack(selection).getStrength() * (100 - enemy.getArmor()) / 100);
-				}
-				else
-				{
-					player.increaseDef((int)player.getAttack(selection).getStrength());
-				}
-			}
-			else if(magicOn)
-			{
-				magic = player.getMagic(selection);
-				
-				if(magic.dealDmg() && player.getMana() >= magic.manaCost())
-				{
-					snd.playSound(magic.getSound());
-					enemy.decreaseHealth(magic.getStrength() * (100 - enemy.getArmor()) / 100);
-					player.decreaseMana(magic.manaCost());
-				}
-				else if(player.getMana() >= magic.manaCost())
-				{
-					player.increaseDef((int)magic.getStrength());
-					player.decreaseMana(magic.manaCost());
-				}
-				else
-				{
-					
-				}
-			}			
-		}
+		/*if(enemy.getHealth() == 0)
+			battleOn = false;*/
 	}
 	
-	private void animateAttack(Attack attack)
+	private void executeAttack(int selection)
 	{
+		if(angrOn)
+			attack = player.getAttack(selection);
+		else if(magicOn)
+			magic = player.getMagic(selection);
 		
+		if(attack != null)
+		{
+			if(anim == 0)
+				snd.playSound(attack.getSound());
+			
+			if(anim < 20 && attack.dealDmg())
+				StdDraw.picture(screenMidX - 100 + 12*anim, screenMidY - 25 + 8*anim, attack.getImageSrc());
+			else if(anim < 40 && !attack.dealDmg())
+				StdDraw.picture(screenMidX + 280 - time, screenMidY - 42, attack.getImageSrc());
+			
+			if(anim > 149 && attack.dealDmg())
+				enemy.decreaseHealth(attack.getStrength() / 50);
+			else if(!attack.dealDmg())
+				player.handleAttack(attack);
+			
+			if(anim < 99)
+				dialogs.showAttack(attack);
+			else
+				dialogs.showEffect(attack);
+			
+			anim++;
+			
+			if(anim > 199)
+			{
+				attack = null;
+				playerAttacks = false;
+				anim = 0;
+			}
+
+		}
+		else if(magic != null && player.getMana() >= magic.manaCost())
+		{
+			if(anim == 0)
+				snd.playSound(magic.getSound());
+			
+			if(anim < 20 && magic.dealDmg())
+				StdDraw.picture(screenMidX - 100 + 12*anim, screenMidY - 25 + 8*anim, magic.getImageSrc());
+			else if(anim < 30 && !magic.dealDmg())
+				StdDraw.picture(screenMidX + 280 - time, screenMidY - 42, magic.getImageSrc());
+			
+			if(anim > 149 && magic.dealDmg())
+				enemy.decreaseHealth(magic.getStrength() / 50);
+			else if(!magic.dealDmg())
+				player.handleMagic(magic);
+			
+			if(anim < 99)
+				dialogs.showMagic(magic);
+			else
+				dialogs.showEffect(magic);
+			
+			anim++;
+			
+			if(anim > 199)
+			{
+				player.decreaseMana(magic.manaCost());
+				magic = null;
+				playerAttacks = false;
+				anim = 0;
+			}
+		}
+		else
+		{
+			dialogs.showNoMana(magic);
+			
+			anim++;
+			
+			if(anim > 100)
+			{
+				magic = null;
+				playerAttacks = false;
+				anim = 0;
+			}
+		}
 	}
 	
 	private void run()
 	{
-		while(true)
+		while(battleOn)
 		{			
 			computeDelta();
 			
@@ -258,24 +338,39 @@ public class BattleScreen
 				{
 					StdDraw.clear(Color.black);
 					
-					key.handleKeyInput();
+					if(!playerAttacks)
+						key.handleKeyInput();
 					
 					doLogic();
 					
 					drawBattle();
 					drawStatus();
+
+					if(playerAttacks)
+						executeAttack(selection);
+					else
+					{
+						if(showIntroDialog)
+							dialogs.showIntroDialog();
+						else if(selectionOn)
+							dialogs.showSelectionDialog(selection);
+						else if(angrOn)
+							dialogs.showAngrDialog(selection);
+						else if(magicOn)
+							dialogs.showMagicDialog(selection);
+					}
 					
-					if(showIntroDialog)
-						dialogs.showIntroDialog();
-					else if(selectionOn)
-						dialogs.showSelectionDialog(selection);
-					else if(angrOn)
-						dialogs.showAngrDialog(selection);
-					else if(magicOn)
-						dialogs.showMagicDialog(selection);
 				}
 			}
 		}
+		/*
+		parent.mapScreen = true;
+		parent.battleScreen = false;
+		parent.enemy.remove(enemy);
+		snd.stopSound(0);
+		parent.player1.go();
+		parent.run();
+		*/
 	}
 	
 	private void computeDelta()

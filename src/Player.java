@@ -67,28 +67,28 @@ public class Player extends Rectangle
 		//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		setHealth(100);
 		setMaxHealth(100);
-		setMana(0);
-		setMaxMana(50);
+		setMana(100);
+		setMaxMana(100);
 		lives = 3;
 		speed = 125;
 		level = 1;
 		
 		name = "Player";
 
-		attacks[0] = new Attack("Schwerthieb", "Normal", true);
-		attacks[1] = new Attack("Schildblock", "Normal", false);
+		attacks[0] = new Attack("Schwerthieb", "Normal", true, 4);
+		attacks[1] = new Attack("Schildblock", "Normal", "vert.", false, 5, "duckt sich.");
 		attacks[2] = null;
 		attacks[3] = null;
 		
 		magic[0] = new Magic("Magiepfeil", "Magie", true, 15, 2);
-		magic[1] = new Magic("Magierüstung", "Magie", false, 20, 2);
+		magic[1] = new Magic("Magieruestung", "Magie", false, 20, 3, "vert.");
 		magic[2] = null;
 		magic[3] = null;
-		
+
 		attacks[0].setStrength(25);
-		attacks[1].setStrength(20);
+		attacks[1].setStrength(10);
 		magic[0].setStrength(40);
-		magic[1].setStrength(50);
+		magic[1].setStrength(5);
 		
 		
 		attack = 10;
@@ -614,5 +614,35 @@ public class Player extends Rectangle
 	public int getGena()
 	{
 		return gena;
+	}
+	
+	//------------------------------------------------------------------------------------------
+	
+	public void handleMagic(Magic magic)
+	{
+		switch(magic.getEffect())
+		{
+		case "none": break;
+		case "vert.": this.increaseDef((int)magic.getStrength()); break;
+		case "angr.": this.increaseAtt((int)magic.getStrength()); break;
+		case "spez": this.increaseSpez((int)magic.getStrength()); break;
+		case "gena": this.increaseGena((int)magic.getStrength()); break;
+		
+		default: break;
+		}
+	}
+	
+	public void handleAttack(Attack attack)
+	{
+		switch(attack.getEffect())
+		{
+		case "none": break;
+		case "vert.": this.increaseDef((int)attack.getStrength()); break;
+		case "angr.": this.increaseAtt((int)attack.getStrength()); break;
+		case "spez": this.increaseSpez((int)attack.getStrength()); break;
+		case "gena": this.increaseGena((int)attack.getStrength()); break;
+		
+		default: break;
+		}
 	}
 }

@@ -114,6 +114,9 @@ public class KeyManager
 		{
 			if(StdDraw.isKeyPressedSingle(KeyEvent.VK_E))
 				battle.pressedE = true;
+
+			if(StdDraw.isKeyPressedSingle(KeyEvent.VK_R))
+				battle.pressedR = true;
 			
 			if(battle.selectionOn)
 			{

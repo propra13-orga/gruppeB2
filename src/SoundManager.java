@@ -25,8 +25,14 @@ public class SoundManager
 			sounds.add(0, Applet.newAudioClip(file.toURL()));
 			file = new File("music/sounds/battle/enemy_ready.wav");
 			sounds.add(1, Applet.newAudioClip(file.toURL()));
-			file = new File("music/sounds/attacks/magical_arrow.wav");
+			file = new File("music/sounds/magic/magical_arrow.wav");
 			sounds.add(2, Applet.newAudioClip(file.toURL()));
+			file = new File("music/sounds/magic/magical_armor.wav");
+			sounds.add(3, Applet.newAudioClip(file.toURL()));
+			file = new File("music/sounds/attacks/sword_stroke.wav");
+			sounds.add(4, Applet.newAudioClip(file.toURL()));
+			file = new File("music/sounds/attacks/shield_block.wav");
+			sounds.add(5, Applet.newAudioClip(file.toURL()));
 			
 		} catch (MalformedURLException e) 
 		{
@@ -38,5 +44,10 @@ public class SoundManager
 	{
 		AudioClip play = sounds.get(i);
 		play.play();
+	}
+	public void stopSound(int i)
+	{
+		AudioClip play = sounds.get(i);
+		play.stop();
 	}
 }

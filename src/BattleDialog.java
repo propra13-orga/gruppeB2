@@ -99,7 +99,7 @@ public class BattleDialog
 		
 		for(int i = 1; i < 5; i++)
 		{
-			if(battle.player.getAttack(i) != null)
+			if(battle.player.getMagic(i) != null)
 				StdDraw.textLeft(screenMidX - 90, screenMidY - 100 - 20 * i, battle.player.getMagic(i).getName());
 			else
 				StdDraw.textLeft(screenMidX - 90, screenMidY - 100 - 20 * i, "-");
@@ -138,5 +138,63 @@ public class BattleDialog
 		StdDraw.textLeft(screenMidX - 220, screenMidY - 42, "TYP/");
 		StdDraw.textLeft(screenMidX - 210, screenMidY - 62, magic.getType());
 		StdDraw.textRight(screenMidX - 26, screenMidY - 82, magic.getDmgType() + " " + (int)magic.getStrength());
+	}
+
+	public void showAttack(Attack attack)
+	{
+		StdDraw.setFont(font);
+		StdDraw.setPenColor(Color.white);
+
+		StdDraw.textLeft(screenMidX - 220, screenMidY - 130, battle.player.getPlayerName());		
+		StdDraw.textLeft(screenMidX - 220, screenMidY - 160, "ben. " + attack.getName().toUpperCase());	
+		
+	}
+	public void showMagic(Magic magic)
+	{
+		StdDraw.setFont(font);
+		StdDraw.setPenColor(Color.white);
+
+		StdDraw.textLeft(screenMidX - 220, screenMidY - 130, battle.player.getPlayerName());		
+		StdDraw.textLeft(screenMidX - 220, screenMidY - 160, "ben. " + magic.getName().toUpperCase());	
+	}
+	public void showEffect(Attack attack)
+	{
+		StdDraw.setFont(font);
+		StdDraw.setPenColor(Color.white);
+
+		if(!attack.getEffect().equals("none"))
+		{
+			StdDraw.textLeft(screenMidX - 220, screenMidY - 130, battle.player.getPlayerName());		
+			StdDraw.textLeft(screenMidX - 220, screenMidY - 160, attack.getDesc());	
+		}
+		else
+		{
+			StdDraw.textLeft(screenMidX - 220, screenMidY - 130, battle.player.getPlayerName());		
+			StdDraw.textLeft(screenMidX - 220, screenMidY - 160, "ben. " + attack.getName().toUpperCase());	
+		}
+	}
+	public void showEffect(Magic magic)
+	{
+		StdDraw.setFont(font);
+		StdDraw.setPenColor(Color.white);
+
+		if(!magic.getEffect().equals("none"))
+		{
+			StdDraw.textLeft(screenMidX - 220, screenMidY - 130, battle.player.getPlayerName());		
+			StdDraw.textLeft(screenMidX - 220, screenMidY - 160, magic.getEffect().toUpperCase() + " steigt.");	
+		}
+		else
+		{
+			StdDraw.textLeft(screenMidX - 220, screenMidY - 130, battle.player.getPlayerName());		
+			StdDraw.textLeft(screenMidX - 220, screenMidY - 160, "ben. " + magic.getName().toUpperCase());	
+		}
+	}
+	public void showNoMana(Magic magic)
+	{
+		StdDraw.setFont(font);
+		StdDraw.setPenColor(Color.white);
+
+		StdDraw.textLeft(screenMidX - 220, screenMidY - 130, "Nicht genug Mana!");		
+		StdDraw.textLeft(screenMidX - 220, screenMidY - 160, "Benötigt: " + (int)magic.manaCost());		
 	}
 }

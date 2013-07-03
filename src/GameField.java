@@ -35,7 +35,7 @@ public class GameField
 	//Gibt zurueck, ob an einer Stelle (links, rechts, oben, unten) eine
 	//Kollision auftrat
 	boolean collideLeft, collideRight, collideUp, collideDown, inGameMenu;
-	boolean mapScreen, battleScreen;
+	public boolean mapScreen, battleScreen;
 	
 	//Der Spieler
 	Player player1;

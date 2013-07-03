@@ -3,6 +3,7 @@ public class Magic
 {
 	private String name;
 	private String type;
+	private String effect;
 	
 	private double strength;
 	private double manaCost;
@@ -17,6 +18,17 @@ public class Magic
 		this.dealDmg = dealDmg;
 		this.manaCost = manaCost;
 		this.sound = sound;
+		effect = "none";
+	}
+	
+	public Magic(String name, String type, boolean dealDmg, double manaCost, int sound, String effect)
+	{
+		this.name = name;
+		this.type = type;
+		this.dealDmg = dealDmg;
+		this.manaCost = manaCost;
+		this.sound = sound;
+		this.effect = effect;
 	}
 	
 	//-----------------------------------------------------------------------------------------
@@ -61,10 +73,20 @@ public class Magic
 		return manaCost;
 	}
 	
+	public String getEffect()
+	{
+		return effect;
+	}
+	
 	//-----------------------------------------------------------------------------------------
 	
 	public int getSound()
 	{
 		return sound;
+	}
+	
+	public String getImageSrc()
+	{
+		return "images/battle/magic/" + name.toLowerCase() + ".png";
 	}
 }
