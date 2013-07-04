@@ -1,4 +1,8 @@
 import java.awt.event.KeyEvent;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 
 public class MapEditor
@@ -20,6 +24,9 @@ public class MapEditor
 	
 	Block[][] field;
 	
+	//zum abspeichern in einer Datei
+	FileWriter file;
+	PrintWriter print;
 	
 	public MapEditor()
 	{
@@ -147,6 +154,10 @@ public class MapEditor
 		//setzt die Mauer innerhalb des begehbaren Feldes
 		if(StdDraw.isKeyPressedSingle(KeyEvent.VK_W))
 			setWall();
+		
+		//speichern
+		if(StdDraw.isKeyPressedSingle(KeyEvent.VK_S))
+			saveField();
 	}
 	
 	//Ausgang setzen
@@ -218,6 +229,55 @@ public class MapEditor
 					field[i][j].drawImg();
 			}
 		cursor.drawImg();
+	}
+	
+	public void saveField()
+	{	
+		try
+		{
+			
+			file = new FileWriter("saveMap");
+			print = new PrintWriter(file);
+			String info;
+		   
+		   for(int i=0;i<fieldSize;i++)
+		   {
+			   info = "";
+			   for(int j=0;j<fieldSize;j++)
+		       {
+				   if(field[i][j].toString().equalsIgnoreCase("wall"))
+					   info = info+'#';
+				   else if(field[i][j].toString().equalsIgnoreCase("door"))
+					   info = info+'E';
+				   else if(field[i][j].toString().equalsIgnoreCase("floor"))
+					   info = info+' ';
+					   
+			   }
+			   print.println(info);
+		   }
+		   //specihert den String(infos) in die Datei
+//		   file.write(info); 
+		   
+
+		}
+		catch(IOException ex)
+		{
+		   System.out.println("Datei konnte nicht gespeichert werden!");
+		}
+		
+		finally
+		{
+			//prueft, ob die Datei leer ist
+		   if (file != null)
+		      try
+		      {
+		        file.close();
+		      }
+		      catch(Exception ex)
+		      {
+		    	  System.out.println("Beim speichern, Datei konnte nicht geschlossen werden!");
+		      }
+		}
 	}
 	
 	public void run()
