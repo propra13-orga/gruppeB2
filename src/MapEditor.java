@@ -12,7 +12,11 @@ public class MapEditor
 	
 	private int posX, posY;
 	
-	boolean showCursor;
+	//Hilfsvariablen zum zwischenspeichern
+	int x=0,y=0;
+	int oldX=0, oldY=0;
+
+	boolean showCursor, isFieldSet, isExitSet, isPlayerSet;
 	
 	Block[][] field;
 	
@@ -24,20 +28,24 @@ public class MapEditor
 		field = new Block[MAX_SIZE][MAX_SIZE];
 		
 		showCursor = false;
+		isFieldSet = false;
+		isExitSet = false;
+		isPlayerSet = false;
 		
 		start();
 		run();
 	}
 	
+	/*
+	 * stellt das Feld dar mir Objekten Wall und Floor
+	 * Cursor wird gesetzt 
+	 */
 	public void start()
 	{
-//		StdDraw.setCanvasSize(600,600);
 		StdDraw.setCanvasSize(40 * fieldSize, 40 * (fieldSize + 2));
 		StdDraw.setXscale(0, 40 * fieldSize);
 		StdDraw.setYscale(0, 40 * (fieldSize + 2));
-		
-//		for(int i=0;i<field.length;i++)
-//			for(int j=0;j<field[0].length;j++)
+	
 		for(int i=0;i<fieldSize;i++)
 			for(int j=0;j<fieldSize;j++)
 			{
@@ -55,9 +63,13 @@ public class MapEditor
 			}
 	}
 	
+	/*
+	 * Feldgroesse wird veraendert nur quadratische Spielfelder moeglich 
+	 * und Groessenwahl begrenzt von 10mal10 bis 15mal15
+	 */
 	public void changeFieldSize(int act)
 	{
-		if(fieldSize + act >= MIN_SIZE && fieldSize +act <= MAX_SIZE)
+		if(fieldSize + act >= MIN_SIZE && fieldSize +act <= MAX_SIZE && isFieldSet==false)
 		{	
 			fieldSize = fieldSize + act;  
 				
@@ -65,8 +77,6 @@ public class MapEditor
 			StdDraw.setXscale(0, 40 * fieldSize);
 			StdDraw.setYscale(0, 40 * (fieldSize + 2));
 		
-			//		for(int i=0;i<field.length;i++)
-			//			for(int j=0;j<field[0].length;j++)
 			for(int i=0;i<fieldSize;i++)
 				for(int j=0;j<fieldSize;j++)
 				{
@@ -86,31 +96,55 @@ public class MapEditor
 			}
 	}
 	
-	public void calc()
+	/*
+	 * Tastatureingaben
+	 */
+	public void keyCommand()
 	{
-		if(StdDraw.isKeyPressedSingle(KeyEvent.VK_A))
-		{
-			changeFieldSize(1);
-			System.out.println("a");
-		}
-		if(StdDraw.isKeyPressedSingle(KeyEvent.VK_S))
-		{
-			changeFieldSize(-1);
-			System.out.println("s");
-		}
+		//Feldgroesse wird festgelegt
+		if(StdDraw.isKeyPressedSingle(KeyEvent.VK_F) && !isFieldSet)
+			isFieldSet = true;
 		
+		/*
+		 * Solange die Feldgroesse nicht festgelegt ist, kann diese vergroessert werden,
+		 * andernfalls dient die Richtungstate zur Navigation des Cursors 
+		 */
 		if(StdDraw.isKeyPressedSingle(KeyEvent.VK_RIGHT))
-			cursor.moveX(40);
-		if(StdDraw.isKeyPressedSingle(KeyEvent.VK_LEFT))
-			cursor.moveX(-40);
-		if(StdDraw.isKeyPressedSingle(KeyEvent.VK_UP))
-			cursor.moveY(40);
-		if(StdDraw.isKeyPressedSingle(KeyEvent.VK_DOWN))
-			cursor.moveY(-40);
+		{
+			if(!isFieldSet)
+				changeFieldSize(1);
+			else if(isFieldSet)
+				if(cursor.getPosX()<(fieldSize-1)*40)
+					cursor.moveX(40);
+		}
 		
+		/*
+		 * Solange die Feldgroesse nicht festgelegt ist, kann diese vergroessert werden,
+		 * andernfalls dient die Richtungstate zur Navigation des Cursors 
+		 */
+		if(StdDraw.isKeyPressedSingle(KeyEvent.VK_LEFT))
+		{
+			if(!isFieldSet)
+				changeFieldSize(-1);
+			else if(isFieldSet)
+				if(cursor.getPosX()>40)
+					cursor.moveX(-40);
+		}
+		
+		//Navigation des Cursors
+		if(StdDraw.isKeyPressedSingle(KeyEvent.VK_UP) && isFieldSet)
+			if(cursor.getPosY()<(fieldSize*40)+60)
+				cursor.moveY(40);
+		//Navigation des Cursors
+		if(StdDraw.isKeyPressedSingle(KeyEvent.VK_DOWN) && isFieldSet)
+			if(cursor.getPosY()>100)
+				cursor.moveY(-40);
+		
+		//setzt den Ausgang
 		if(StdDraw.isKeyPressedSingle(KeyEvent.VK_E))
 			setExit();
 		
+		//setzt die Mauer innerhalb des begehbaren Feldes
 		if(StdDraw.isKeyPressedSingle(KeyEvent.VK_W))
 			setWall();
 	}
@@ -118,26 +152,69 @@ public class MapEditor
 	//Ausgang setzen
 	public void setExit()
 	{	
+		//die Array eintraege der aktuellen Position des Cursors
 		int j = ((int)cursor.getPosX() - 40/2)/40;
-		
-		System.out.println(j);
-		
 		int i = (-((int) cursor.getPosY()) + (40 * (fieldSize + 2)) - 40/2)/40;
+				
+		if(field[i][j].toString().equalsIgnoreCase("wall") && i!=j && !(i<1 && j==fieldSize-1) && !(j<1 && i==fieldSize-1))
+		{	
+			//Ausgang wird gesetzt und daten gespeichert			
+			if(!isExitSet)	
+			{
+				int posX = j * 40 + 40/2;
+				int posY = (40 * (fieldSize + 2))-(i * 40 + 40/2);
 		
-		System.out.println(i);
+				field[i][j] = new Door(posX, posY, 40, 40);
+				
+				isExitSet = true;
+				
+				x=i;
+				y=j;
+				oldX = posX;
+				oldY = posY;
+			}
+			//Ausgang wird versetzt, alter Ausgang wird mit einem Objekt Wall ersetzt
+			else if(isExitSet)	
+			{
+				int posX = j * 40 + 40/2;
+				int posY = (40 * (fieldSize + 2))-(i * 40 + 40/2);
+		
+				field[i][j] = new Door(posX, posY, 40, 40);
+				
+				field[x][y]  = new Wall(oldX, oldY, 40, 40);
+				
+				x=i;
+				y=j;
+				oldX = posX;
+				oldY = posY;
+			}
+					
+		}	
 	}
+	
 	
 	public void setWall()
 	{
+		//die Array eintraege der aktuellen Position des Cursors
+		int j = ((int)cursor.getPosX() - 40/2)/40;
+		int i = (-((int) cursor.getPosY()) + (40 * (fieldSize + 2)) - 40/2)/40;
 		
+		if(field[i][j].toString().equalsIgnoreCase("floor") && !(field[i][j].toString().equalsIgnoreCase("door")) && i!=0 && j!=0)
+		{
+			int posX = j * 40 + 40/2;
+			int posY = (40 * (fieldSize + 2))-(i * 40 + 40/2);
+	
+			field[i][j] = new Wall(posX, posY, 40, 40);
+		}
 	}
 	
+	//zeichnet die aktuelle Karte
 	public void drawMap()
 	{
 		for(int i=0;i<fieldSize;i++)
 			for(int j=0;j<fieldSize;j++)
 			{
-				if(field[i][j].toString().equalsIgnoreCase("floor") || field[i][j].toString().equalsIgnoreCase("wall"))
+				if(field[i][j].toString().equalsIgnoreCase("floor") || field[i][j].toString().equalsIgnoreCase("door") || field[i][j].toString().equalsIgnoreCase("wall"))
 					field[i][j].drawImg();
 			}
 		cursor.drawImg();
@@ -153,7 +230,7 @@ public class MapEditor
 				
 				drawMap();
 				
-				calc();
+				keyCommand();
 			}
 		}
 		
