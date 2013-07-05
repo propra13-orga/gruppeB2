@@ -5,7 +5,7 @@ public class KeyManager
 {
 	private GameField field;
 	private BattleScreen battle;
-	
+	private InGameMenu menu;
 	
 	long delta;
 	
@@ -19,20 +19,27 @@ public class KeyManager
 		this.battle = battle;
 	}
 
+	public KeyManager(InGameMenu menu)
+	{
+		this.menu = menu;
+	}
+	
 	public void handleKeyInput()
 	{	
-		//TestZweck
-		if(StdDraw.isKeyPressedSingle('z'))
-			field.battleScreen = false;
-		
-		
 		if(field != null)
 		{
 			delta = field.delta;
-					
+			
 			if(StdDraw.isKeyPressedSingle(KeyEvent.VK_E))
 			{
 				field.countE++;
+			}
+			
+			if(StdDraw.isKeyPressedSingle(KeyEvent.VK_ESCAPE))
+			{
+				field.player1.stop();
+				field.mapScreen = false;
+				new InGameMenu(field, field.snd);
 			}
 		
 			//-----------------------------Movement-----------------------------
@@ -175,6 +182,119 @@ public class KeyManager
 				{
 					if(battle.selection < battle.player.getMagicCount())
 						battle.selection++;
+				}
+			}
+		}
+		
+		else if(menu != null)
+		{			
+			if(menu.mainSelOn)
+			{
+				if(StdDraw.isKeyPressedSingle(KeyEvent.VK_ENTER))
+				{
+					switch(menu.selection)
+					{
+					case 1:
+						menu.mainSelOn = false;
+						menu.itemSelOn = true;
+						menu.selection = 1;
+						menu.lower = 0;
+
+						if(menu.parent.player1.inventory.size() > 4)
+							menu.upper = 4;
+						else
+							menu.upper = menu.parent.player1.inventory.size();
+						
+						break;
+					case 2: break;
+					case 3: break;
+					case 4: break;
+					case 5:
+						menu.menuOn = false;
+						menu.parent.mapScreen = true;
+						menu.parent.player1.go();
+						menu.parent.run();
+						break;
+					}
+				}
+					
+					
+				if(StdDraw.isKeyPressedSingle(KeyEvent.VK_UP))
+				{
+					if(menu.selection > 1)
+						menu.selection--;
+				}
+				else if(StdDraw.isKeyPressedSingle(KeyEvent.VK_DOWN))
+				{
+					if(menu.selection < 5)
+						menu.selection++;
+				}
+				
+				
+				if(StdDraw.isKeyPressedSingle(KeyEvent.VK_ESCAPE))
+				{
+					menu.menuOn = false;
+					menu.parent.mapScreen = true;
+					menu.parent.player1.go();
+					menu.parent.run();
+				}
+			}
+			else if(menu.itemSelOn)
+			{
+				
+				if(StdDraw.isKeyPressedSingle(KeyEvent.VK_ENTER))
+				{
+					int size = menu.parent.player1.inventory.size();
+					
+					if(size > 0)
+					{
+						if(menu.parent.player1.inventory.getItemAt(menu.selection - 1).useItem(menu.parent.player1))
+							menu.parent.player1.inventory.removeOneItem(menu.parent.player1.inventory.getItemAt(menu.selection - 1));
+					}
+					
+					if(size > menu.parent.player1.inventory.size())
+					{
+						if(menu.selection > 1)
+							menu.selection--;
+					
+						if(menu.lower == 0)
+							menu.upper--;
+					}
+				}
+				
+				if(StdDraw.isKeyPressedSingle(KeyEvent.VK_UP))
+				{
+					if(menu.selection > 1)
+					{
+						menu.selection--;
+						
+						if(menu.selection > 1 && menu.selection <= menu.parent.player1.inventory.size() - 3)
+						{
+							menu.lower--;
+							menu.upper--;
+						}
+					}
+				}
+				else if(StdDraw.isKeyPressedSingle(KeyEvent.VK_DOWN))
+				{
+					if(menu.selection < menu.parent.player1.inventory.size())
+					{
+						menu.selection++;
+						
+						if(menu.selection > 4 && menu.selection <= menu.parent.player1.inventory.size())
+						{
+							menu.lower++;
+							menu.upper++;
+						}
+					}
+				}
+				
+				
+				if(StdDraw.isKeyPressedSingle(KeyEvent.VK_ESCAPE))
+				{
+					menu.itemSelOn = false;
+					menu.mainSelOn = true;
+					menu.selection = 1;
 				}
 			}
 		}

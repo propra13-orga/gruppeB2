@@ -54,7 +54,8 @@ public class BattleScreen
 			Font lfont = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream("fonts/battle_font.ttf"));
 			font = lfont.deriveFont(Font.TRUETYPE_FONT, 16);
 			fontBold = lfont.deriveFont(Font.BOLD, 16);
-		} catch (FontFormatException | IOException e) 
+		} 
+		catch (FontFormatException | IOException e) 
 		{
 			JOptionPane.showMessageDialog(null, "Es trat ein Fehler beim Lesen der Schriftart auf (fonts/battle_font.ttf)");
 			System.exit(0);

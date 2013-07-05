@@ -20,3 +20,5 @@ XXXXXXXXXXXXXXXXXXXXXXXXXX
 [npc]
 
 [enemy]
+
+[collectables]

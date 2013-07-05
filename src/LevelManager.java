@@ -26,6 +26,7 @@ public class LevelManager
 	private ArrayList<Item> items;
 	private ArrayList<NPC> npcs;
 	private ArrayList<Enemy> enemys;
+	private ArrayList<Collectable> collectables;
 	
 	private double checkPointX, checkPointY;
 	/**
@@ -43,6 +44,7 @@ public class LevelManager
 		items = new ArrayList<Item>();
 		npcs = new ArrayList<NPC>();
 		enemys = new ArrayList<Enemy>();
+		collectables = new ArrayList<Collectable>();
 		
 		checkPointX = -1;
 		checkPointY = -1;
@@ -99,6 +101,7 @@ public class LevelManager
 		this.readTriggers(lvl);
 		this.readNPC(lvl);
 		this.readEnemy(lvl);
+		this.readCollectables(lvl);
 		
 		return fieldInit;
 	}
@@ -339,6 +342,54 @@ public class LevelManager
 		}
 	}
 	
+	private void readCollectables(String file)
+	{
+		ArrayList<String> lines = new ArrayList<String>();
+		
+		int itemX, itemY, posX, posY;
+		String item;
+		
+		int l = 0;
+		
+		try
+		{
+			readFile = new FileReader(file);
+			lineRead = new BufferedReader(readFile);
+			
+			while(!lineRead.readLine().equals("[collectables]"));
+			
+			lines.add(l, lineRead.readLine());
+			
+			while(lines.get(l) != null && !lines.get(l).equals(""))
+			{
+				l++;
+				lines.add(l, lineRead.readLine());
+			}
+			
+			for(int i = 0; i < l; i++)
+			{
+				itemX = Integer.parseInt(lines.get(i).substring(0, lines.get(i).indexOf(",")));
+				itemY = Integer.parseInt(lines.get(i).substring(lines.get(i).indexOf(",") + 1, lines.get(i).indexOf(" ")));
+				
+				posX = itemX * sizeX + sizeX/2;
+				posY = (sizeY * (rows + 2))-(itemY * sizeY + sizeY/2);
+				
+				item = lines.get(i).substring(lines.get(i).indexOf("=") + 1, lines.get(i).length()).trim();
+
+				switch(item)
+				{
+				case "ITEM_HEALTH_BOTTLE": collectables.add(new HealthBottle(posX, posY)); break;
+				case "ITEM_MANA_BOTTLE": collectables.add(new ManaBottle(posX, posY)); break;
+				}
+			}	
+		}
+		catch(IOException e)
+		{			
+			JOptionPane.showMessageDialog(null, "Es trat ein unerwarteter Fehler beim Lesen der Datei auf (IOException).");
+			System.exit(0);
+		}
+	}
+	
 	//-----------------------------------------------------------------------------
 		
 	
@@ -379,6 +430,11 @@ public class LevelManager
 	public ArrayList<Enemy> getEnemys()
 	{
 		return enemys;
+	}
+	
+	public ArrayList<Collectable> getCollectables()
+	{
+		return collectables;
 	}
 	
 	public double getCheckPointX()

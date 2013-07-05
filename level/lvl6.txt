@@ -26,3 +26,5 @@ XXXXXXXXXXXXXXXXXXXX
 1,8 = NPC_CHECKPOINT
 
 [enemy]
+
+[collectables]

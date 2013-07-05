@@ -10,6 +10,7 @@ public class Player extends Rectangle
 
 	private Attack[] attacks = new Attack[4];
 	private Magic[] magic = new Magic[4];
+	Inventory inventory;
 	
 	long anim;
 	long delay;
@@ -65,23 +66,25 @@ public class Player extends Rectangle
 		
 		//nur Testweise
 		//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-		setHealth(100);
+		setHealth(10);
 		setMaxHealth(100);
-		setMana(100);
+		setMana(10);
 		setMaxMana(100);
 		lives = 3;
 		speed = 125;
 		level = 1;
 		
 		name = "Player";
+		
+		inventory = new Inventory(this);
 
-		attacks[0] = new Attack("Schwerthieb", "Normal", true, 4);
-		attacks[1] = new Attack("Schildblock", "Normal", "vert.", false, 5, "duckt sich.");
+		attacks[0] = Attacks.schwert_hieb;
+		attacks[1] = Attacks.schild_block;
 		attacks[2] = null;
 		attacks[3] = null;
 		
-		magic[0] = new Magic("Magiepfeil", "Magie", true, 15, 2);
-		magic[1] = new Magic("Magieruestung", "Magie", false, 20, 3, "vert.");
+		magic[0] = Attacks.magie_pfeil;
+		magic[1] = Attacks.magie_ruestung;
 		magic[2] = null;
 		magic[3] = null;
 

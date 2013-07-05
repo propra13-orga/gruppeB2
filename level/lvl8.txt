@@ -32,3 +32,5 @@ XXXXXXXXXXXXXXXXXXXXX
 
 [enemy]
 14,3 = ENEMY_KIDHIPSTER_LEFT
+
+[collectables]

@@ -49,6 +49,21 @@ public class Status
 			StdDraw.textLeft(353, 48 - l * 15, dialog[l]);
 	}
 	
+	public void drawInfo(String [] dialog)
+	{
+		StdDraw.picture(503, 28, "images/status/dialog_field.png");
+		
+		int lines = dialog.length;
+		
+		Font font = new Font("Arial", Font.PLAIN, 13);
+		
+		StdDraw.setPenColor(Color.WHITE);
+		StdDraw.setFont(font);
+		
+		for(int l = 0; l < lines; l++)
+			StdDraw.textLeft(353, 48 - l * 15, dialog[l]);
+	}
+	
 	public void setAvatar(String avatar)
 	{
 		this.avatar = avatar;

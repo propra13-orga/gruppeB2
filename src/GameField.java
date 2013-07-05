@@ -43,6 +43,7 @@ public class GameField
 	ArrayList<Item> items;
 	ArrayList<NPC> npc;
 	ArrayList<Enemy> enemy;
+	ArrayList<Collectable> collectables;
 	
 	//x- und y-Position des Spielers und x- und y-Position eines Spielfeldblockes 
 	//(zur Kollisionsabfrage und Logik)		
@@ -51,7 +52,6 @@ public class GameField
 	double diffX, diffY;
 	
 	
-	char pressedKey = ' ';
 	int countE = 0;
 	boolean interacted = false;
 	
@@ -131,6 +131,7 @@ public class GameField
 		items = lvl.getItems();
 		npc = lvl.getNPC();
 		enemy = lvl.getEnemys();
+		collectables = lvl.getCollectables();
 		
 		status = new Status(player1);
 	}
@@ -186,6 +187,50 @@ public class GameField
 						it.remove();
 				}
 	
+				Iterator<Collectable> co = collectables.iterator();
+				
+				while(co.hasNext())
+				{
+					Collectable nextColl = co.next();
+					
+					if(coll == Direction.NO_COLLISION)
+						coll = nextColl.checkCollision(player1);
+					
+					if(nextColl.checkCollision(player1) != Direction.NO_COLLISION)
+					{
+						if(countE > 0)
+						{
+							interacted = true;
+							
+							player1.stop();
+							
+							if(player1.inventory.canAddItem(nextColl))
+							{
+								status.drawInfo(player1.inventory.itemPicked(nextColl));
+								
+								if(countE == 2)
+								{
+									player1.inventory.addItem(nextColl);
+									countE = 0;
+									player1.go();
+									co.remove();
+								}
+							}
+							else
+							{
+								status.drawInfo(player1.inventory.itemNotPicked(nextColl));
+								
+								if(countE == 2)
+								{
+									countE = 0;
+									player1.go();
+								}								
+							}
+						}
+						else
+							countE = 0;
+					}
+				}
 				
 				//Schleife, die die NPC des Feldes durchlaeuft. Wenn der Spiel im Aktionsradius
 				//eine NPC ist, zeichne den entsprechenden NPC-Dialog. (e-Taste fuer Interaktion
@@ -329,6 +374,10 @@ public class GameField
 			if(!curEnemy.playerInLine(player1))
 				curEnemy.drawImg();
 		
+		//Einsammelbare Items
+		for(Collectable curColl : collectables)
+			curColl.drawImg();
+		
 		//Statusleiste
 		status.draw();
 	}
@@ -354,7 +403,7 @@ public class GameField
 				StdDraw.clear(StdDraw.BLACK);
 				
 				//Mana wird fuellt sich langsam auf
-				player1.increaseMana(0.04);
+				player1.increaseMana(0.01);
 
 				//Zeichne neues Feld
 				draw();
