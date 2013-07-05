@@ -431,7 +431,6 @@ public class BattleScreen
 						else if(escapeOn)
 							dialogs.showEscapeDialog();
 					}
-					
 				}
 			}
 		}
