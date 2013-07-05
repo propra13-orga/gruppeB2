@@ -20,9 +20,12 @@ public class MapEditor
 	int x=0,y=0;
 	int oldX=0, oldY=0;
 
-	boolean showCursor, isFieldSet, isExitSet, isPlayerSet;
+	boolean showCursor, isFieldSet, isExitSet, lastStep, isPlayerSet;
 	
 	Block[][] field;
+	Player pl;
+	
+	int[] playerPos = new int[2];
 	
 	//zum abspeichern in einer Datei
 	FileWriter file;
@@ -37,7 +40,9 @@ public class MapEditor
 		showCursor = false;
 		isFieldSet = false;
 		isExitSet = false;
+		lastStep = false;
 		isPlayerSet = false;
+		
 		
 		start();
 		run();
@@ -154,10 +159,19 @@ public class MapEditor
 		//setzt die Mauer innerhalb des begehbaren Feldes
 		if(StdDraw.isKeyPressedSingle(KeyEvent.VK_W))
 			setWall();
-					
+		
 		//speichern
 		if(StdDraw.isKeyPressedSingle(KeyEvent.VK_S))
 			saveField();
+			
+		//naechster Schritt
+		if(StdDraw.isKeyPressedSingle(KeyEvent.VK_1))
+			lastStep = true;
+		
+		//setzt Player
+		if(StdDraw.isKeyPressedSingle(KeyEvent.VK_P) && lastStep == true)
+			setPlayer();
+			
 	}
 	
 	//Ausgang setzen
@@ -229,6 +243,47 @@ public class MapEditor
 		}
 	}
 	
+	public void setPlayer()
+	{
+		playerPos[1] = ((int)cursor.getPosX() - 40/2)/40;
+		playerPos[0] = (-((int) cursor.getPosY()) + (40 * (fieldSize + 2)) - 40/2)/40;
+		
+		if(field[playerPos[0]][playerPos[1]].toString().equalsIgnoreCase("floor"))
+		{	
+			//Ausgang wird gesetzt und daten gespeichert			
+			if(!isPlayerSet)	
+			{
+				int posX = playerPos[1] * 40 + 40/2;
+				int posY = (40 * (fieldSize + 2))-(playerPos[0] * 40 + 40/2);
+		
+				pl = new Player(posX, posY, 40);
+				
+				isPlayerSet = true;
+				
+				x=playerPos[0];
+				y=playerPos[1];
+				oldX = posX;
+				oldY = posY;
+			}
+			//Ausgang wird versetzt, alter Ausgang wird mit einem Objekt Wall ersetzt
+			else if(isPlayerSet)	
+			{
+				int posX = playerPos[1] * 40 + 40/2;
+				int posY = (40 * (fieldSize + 2))-(playerPos[0] * 40 + 40/2);
+		
+				pl = new Player(posX, posY, 40);
+				
+				field[x][y]  = new Floor(oldX, oldY, 40, 40);
+				
+				x=playerPos[0];
+				y=playerPos[1];
+				oldX = posX;
+				oldY = posY;
+			}
+			
+					
+		}	
+	}
 	//zeichnet die aktuelle Karte
 	public void drawMap()
 	{
@@ -239,6 +294,8 @@ public class MapEditor
 					field[i][j].drawImg();
 			}
 		cursor.drawImg();
+		if(isPlayerSet)
+			pl.draw();
 	}
 	
 	public void saveField()
@@ -256,7 +313,7 @@ public class MapEditor
 			   for(int j=0;j<fieldSize;j++)
 		       {
 				   if(field[i][j].toString().equalsIgnoreCase("wall"))
-					   info = info+'#';
+					   info = info+'X';
 				   else if(field[i][j].toString().equalsIgnoreCase("door"))
 					   info = info+'E';
 				   else if(field[i][j].toString().equalsIgnoreCase("floor"))
@@ -267,7 +324,13 @@ public class MapEditor
 		   }
 		   //specihert den String(infos) in die Datei
 //		   file.write(info); 
+		   print.println();
 		   
+		   if(isPlayerSet)
+		   {
+			   print.println("[items]");
+			   print.println(playerPos[0] + ","+ playerPos[1] + " = " + "TRIGGER_PLAYER_START");
+		   }
 
 		}
 		catch(IOException ex)

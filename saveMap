@@ -1,12 +1,16 @@
-############
-#          #
-#          #
-#          #
-E          #
-#          #
-######     #
-#          #
-#          #
-#          #
-#          #
-############
+XXXXXXXXXXXXX
+X           X
+E           X
+XXXX        X
+X           X
+X           X
+X           X
+X           X
+X           X
+X           X
+X           X
+X           X
+XXXXXXXXXXXXX
+
+[items]
+2,3 = TRIGGER_PLAYER_START
