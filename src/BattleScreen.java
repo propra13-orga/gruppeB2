@@ -14,7 +14,7 @@ public class BattleScreen
 	
 	GameField parent;
 	
-	boolean introPlayed, showIntroDialog, selectionOn, angrOn, magicOn;
+	boolean introPlayed, showIntroDialog, selectionOn, angrOn, magicOn, inventarOn, escapeOn;
 	boolean pressedE, pressedR;
 
 	boolean playerAttacks;
@@ -41,6 +41,7 @@ public class BattleScreen
 	BattleDialog dialogs;
 	
 	int selection;
+	int lower, upper;
 
 	Attack attack;
 	Magic magic;
@@ -83,6 +84,8 @@ public class BattleScreen
 		selectionOn = false;
 		angrOn = false;
 		magicOn = false;
+		inventarOn = false;
+		escapeOn = false;
 		
 		pressedE = false;
 		pressedR = false;
@@ -138,6 +141,22 @@ public class BattleScreen
 		}
 	}
 	
+	private void playEscape()
+	{
+		/*for(int i = 0; i < 300; i++)
+		{
+			StdDraw.show(5);
+			{		
+				drawBattle();
+				drawStatus();
+			*/
+				StdDraw.textLeft(screenMidX - 220, screenMidY - 130, "Du bist entkommen...");
+				
+				System.out.println("kkkkkkk");
+			/*}
+		}*/
+	}
+	
 	private void drawBattle()
 	{		
 		if(pressedE && !playerAttacks)
@@ -169,9 +188,48 @@ public class BattleScreen
 				
 					selection = 1;
 				}
+				else if(selection == 3)
+				{
+					selectionOn = false;
+					inventarOn = true;
+					
+					selection = 1;
+					lower = 0;						
+					
+					if(parent.player1.inventory.size() > 4)
+						upper = 4;
+					else
+						upper = parent.player1.inventory.size();
+				}
+				else if(selection == 4)
+				{					
+					selectionOn = false;
+					escapeOn = true;
+				}
 			}
 			else if(angrOn || magicOn)
 				playerAttacks = true;
+			else if(inventarOn)
+			{
+				int size = parent.player1.inventory.size();
+				
+				if(size > 0)
+				{
+					if(parent.player1.inventory.getItemAt(selection - 1).useItem(parent.player1))
+						parent.player1.inventory.removeOneItem(parent.player1.inventory.getItemAt(selection - 1));
+				}
+				
+				if(size > parent.player1.inventory.size())
+				{
+					if(selection > 1)
+						selection--;
+				
+					if(lower == 0)
+						upper--;
+				}
+			}
+			else if(escapeOn)
+				battleOn = false;
 			else
 				selectionOn = true;
 			
@@ -189,6 +247,12 @@ public class BattleScreen
 			{
 				magicOn = false;
 				selection = 2;
+				selectionOn = true;
+			}
+			if(inventarOn)
+			{
+				inventarOn = false;
+				selection = 3;
 				selectionOn = true;
 			}
 			
@@ -359,19 +423,26 @@ public class BattleScreen
 							dialogs.showAngrDialog(selection);
 						else if(magicOn)
 							dialogs.showMagicDialog(selection);
+						else if(inventarOn)
+						{
+							dialogs.showSelectionDialog(3);
+							dialogs.showItemDialog(selection);
+						}		
+						else if(escapeOn)
+							dialogs.showEscapeDialog();
 					}
 					
 				}
 			}
 		}
-		/*
+
 		parent.mapScreen = true;
 		parent.battleScreen = false;
 		parent.enemy.remove(enemy);
 		snd.stopSound(0);
 		parent.player1.go();
 		parent.run();
-		*/
+
 	}
 	
 	private void computeDelta()
