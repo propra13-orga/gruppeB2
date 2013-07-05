@@ -33,6 +33,8 @@ public class SoundManager
 			sounds.add(4, Applet.newAudioClip(file.toURL()));
 			file = new File("music/sounds/attacks/shield_block.wav");
 			sounds.add(5, Applet.newAudioClip(file.toURL()));
+			file = new File("music/intro.wav");
+			sounds.add(6, Applet.newAudioClip(file.toURL()));
 			
 		} catch (MalformedURLException e) 
 		{

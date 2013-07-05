@@ -184,6 +184,64 @@ public class KeyManager
 						battle.selection++;
 				}
 			}
+			else if(battle.inventarOn)
+			{
+				
+				if(StdDraw.isKeyPressedSingle(KeyEvent.VK_ENTER))
+				{
+					int size = battle.parent.player1.inventory.size();
+					
+					if(size > 0)
+					{
+						if(battle.parent.player1.inventory.getItemAt(battle.selection - 1).useItem(battle.parent.player1))
+							battle.parent.player1.inventory.removeOneItem(battle.parent.player1.inventory.getItemAt(battle.selection - 1));
+					}
+					
+					if(size > battle.parent.player1.inventory.size())
+					{
+						if(battle.selection > 1)
+							battle.selection--;
+					
+						if(battle.lower == 0)
+							battle.upper--;
+					}
+				}
+				
+				if(StdDraw.isKeyPressedSingle(KeyEvent.VK_UP))
+				{
+					if(battle.selection > 1)
+					{
+						battle.selection--;
+						
+						if(battle.selection > 1 && battle.selection <= battle.parent.player1.inventory.size() - 3)
+						{
+							battle.lower--;
+							battle.upper--;
+						}
+					}
+				}
+				else if(StdDraw.isKeyPressedSingle(KeyEvent.VK_DOWN))
+				{
+					if(battle.selection < battle.parent.player1.inventory.size())
+					{
+						battle.selection++;
+						
+						if(battle.selection > 4 && battle.selection <= battle.parent.player1.inventory.size())
+						{
+							battle.lower++;
+							battle.upper++;
+						}
+					}
+				}
+				
+				
+				if(StdDraw.isKeyPressedSingle(KeyEvent.VK_ESCAPE))
+				{
+					battle.inventarOn = false;
+					battle.selectionOn = true;
+					battle.selection = 3;
+				}
+			}
 		}
 		
 		else if(menu != null)

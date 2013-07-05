@@ -67,7 +67,7 @@ public class GameField
      * Konstruktor des Spielfeldes
      *
      */
-	public GameField()
+	public GameField(SoundManager snd)
 	{	
 		//erzeugt das Array, in dem die Level-Textdateinamen gespeichert werden
 		lvlArray = new String[] 
@@ -82,7 +82,7 @@ public class GameField
 		//Erzeugt die Hilfsklasse zum Einlesen der Textdateien
 		lvl = new LevelManager(40, 40);
 		key = new KeyManager(this);
-		snd = new SoundManager();
+		this.snd = snd;
 		
 		inGameMenu = false;
 		
@@ -439,6 +439,7 @@ public class GameField
 					items.clear();
 					npc.clear();
 					enemy.clear();
+					collectables.clear();
 					
 					this.initLvl(false, false);					
 				}
@@ -450,6 +451,7 @@ public class GameField
 					items.clear();
 					npc.clear();
 					enemy.clear();
+					collectables.clear();
 					
 					this.initLvl(true, false);	
 			break;

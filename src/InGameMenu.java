@@ -125,6 +125,11 @@ public class InGameMenu
 			
 			if(parent.player1.inventory.size() == 0)				
 				StdDraw.textLeft(2 * screenMidX - 250, 2 * screenMidY - 70, "KEINE ITEMS");
+			
+			if(lower > 0)
+				StdDraw.picture(2 * screenMidX - 20, 2 * screenMidY - 60, "images/menu/in_game/arrow_up.png");
+			if(upper < parent.player1.inventory.size())
+				StdDraw.picture(2 * screenMidX - 20, 2 * screenMidY - 240, "images/menu/in_game/arrow_down.png");
 		}
 	}
 	

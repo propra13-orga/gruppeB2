@@ -16,6 +16,8 @@ public class BattleDialog
 	
 	double screenMidX, screenMidY;
 	
+	int posAbs;
+	
 	public BattleDialog(BattleScreen battle)
 	{
 		this.battle = battle;
@@ -116,6 +118,46 @@ public class BattleDialog
 		this.showStats(battle.player.getMagic(selection));
 	}
 	
+	public void showItemDialog(int selection)
+	{
+		StdDraw.setPenColor(Color.WHITE);
+		StdDraw.setFont(font);
+		
+		StdDraw.picture(screenMidX - 100, screenMidY - 40, "images/menu/in_game/items.png");
+		
+		for(int i = battle.lower; i < battle.upper; i++)
+		{
+			StdDraw.textLeft(screenMidX - 200, screenMidY + 20 - 40 * (i-battle.lower), battle.parent.player1.inventory.getItemAt(i).toString().toUpperCase());
+			StdDraw.picture(screenMidX - 30, screenMidY + 2 - 40 * (i-battle.lower), "images/menu/in_game/times.png");
+			StdDraw.textLeft(screenMidX - 20, screenMidY - 40 * (i-battle.lower), "" + battle.parent.player1.inventory.getItemAt(i).getCount());
+		}
+	
+		if(battle.parent.player1.inventory.size() > 3)
+		{
+			posAbs = battle.upper - selection;
+			
+			StdDraw.picture(screenMidX - 215, screenMidY - 98 + 40 * posAbs, "images/menu/in_game/selection_arrow.png");
+		}
+		else if(battle.parent.player1.inventory.size() > 0)
+		{
+			switch(selection)
+			{
+			case 1: StdDraw.picture(screenMidX - 215, screenMidY + 22, "images/menu/in_game/selection_arrow.png"); break;
+			case 2: StdDraw.picture(screenMidX - 215, screenMidY - 18, "images/menu/in_game/selection_arrow.png"); break;
+			case 3: StdDraw.picture(screenMidX - 215, screenMidY - 58, "images/menu/in_game/selection_arrow.png"); break;
+			case 4: StdDraw.picture(screenMidX - 215, screenMidY - 98, "images/menu/in_game/selection_arrow.png"); break;			
+			}
+		}
+		
+		if(battle.parent.player1.inventory.size() == 0)				
+			StdDraw.textLeft(screenMidX - 220, screenMidY + 40, "KEINE ITEMS");
+		
+		if(battle.lower > 0)
+			StdDraw.picture(screenMidX + 10, screenMidY + 50, "images/menu/in_game/arrow_up.png");
+		if(battle.upper < battle.parent.player1.inventory.size())
+			StdDraw.picture(screenMidX + 10, screenMidY - 130, "images/menu/in_game/arrow_down.png");
+	}
+	
 	public void showStats(Attack attack)
 	{
 		StdDraw.setFont(font);
@@ -196,5 +238,13 @@ public class BattleDialog
 
 		StdDraw.textLeft(screenMidX - 220, screenMidY - 130, "Nicht genug Mana!");		
 		StdDraw.textLeft(screenMidX - 220, screenMidY - 160, "Benötigt: " + (int)magic.manaCost());		
+	}
+	
+	public void showEscapeDialog()
+	{
+		StdDraw.setFont(font);
+		StdDraw.setPenColor(Color.white);
+
+		StdDraw.textLeft(screenMidX - 220, screenMidY - 130, "Du bist entkommen ...");
 	}
 }

@@ -3,11 +3,13 @@ import javax.swing.JOptionPane;
 public class MainMenu
 {
 	private double mouseX, mouseY;
+	SoundManager snd;
 	
 	public MainMenu(int w, int h)
 	{
+		snd = new SoundManager();
 		StdDraw.setCanvasSize(w, h);
-		//this.intro();
+		this.intro();
 		this.run();
 	}
 	
@@ -41,7 +43,8 @@ public class MainMenu
 		
 		if(mouseX < 0.5 && mouseX > 0.28 && mouseY < 0.93 && mouseY > 0.88 && StdDraw.mouseClicked())
 		{
-			new GameField();
+			snd.stopSound(6);
+			new GameField(snd);
 		}
 		if(mouseX < 0.496 && mouseX > 0.28 && mouseY < 0.797 && mouseY > 0.752 && StdDraw.mouseClicked())
 		{ 
@@ -69,6 +72,9 @@ public class MainMenu
 			{
 				StdDraw.picture(0.5, 0.5, "images/intro/Sponge"+i+".png");
 				Thread.sleep(100);
+				
+				if(i == 5)
+					snd.playSound(6);
 			}
 		}catch(InterruptedException e)
 		{
