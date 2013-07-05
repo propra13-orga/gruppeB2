@@ -154,7 +154,7 @@ public class MapEditor
 		//setzt die Mauer innerhalb des begehbaren Feldes
 		if(StdDraw.isKeyPressedSingle(KeyEvent.VK_W))
 			setWall();
-		
+					
 		//speichern
 		if(StdDraw.isKeyPressedSingle(KeyEvent.VK_S))
 			saveField();
@@ -167,7 +167,8 @@ public class MapEditor
 		int j = ((int)cursor.getPosX() - 40/2)/40;
 		int i = (-((int) cursor.getPosY()) + (40 * (fieldSize + 2)) - 40/2)/40;
 				
-		if(field[i][j].toString().equalsIgnoreCase("wall") && i!=j && !(i<1 && j==fieldSize-1) && !(j<1 && i==fieldSize-1))
+//		if(field[i][j].toString().equalsIgnoreCase("wall") && i!=j && !(i<1 && j==fieldSize-1) && !(j<1 && i==fieldSize-1))
+		if((i<1 || i>=fieldSize-1 || j<1 || j>=fieldSize-1) && i!=j && !(i<1 && j==fieldSize-1) && !(j<1 && i==fieldSize-1))
 		{	
 			//Ausgang wird gesetzt und daten gespeichert			
 			if(!isExitSet)	
@@ -199,6 +200,7 @@ public class MapEditor
 				oldX = posX;
 				oldY = posY;
 			}
+			
 					
 		}	
 	}
@@ -206,6 +208,7 @@ public class MapEditor
 	
 	public void setWall()
 	{
+		
 		//die Array eintraege der aktuellen Position des Cursors
 		int j = ((int)cursor.getPosX() - 40/2)/40;
 		int i = (-((int) cursor.getPosY()) + (40 * (fieldSize + 2)) - 40/2)/40;
@@ -216,6 +219,13 @@ public class MapEditor
 			int posY = (40 * (fieldSize + 2))-(i * 40 + 40/2);
 	
 			field[i][j] = new Wall(posX, posY, 40, 40);
+		}
+		else if(field[i][j].toString().equalsIgnoreCase("wall") && !(field[i][j].toString().equalsIgnoreCase("door")) && i!=0 && j!=0)
+		{
+			int posX = j * 40 + 40/2;
+			int posY = (40 * (fieldSize + 2))-(i * 40 + 40/2);
+			
+			field[i][j] = new Floor(posX, posY, 40, 40);
 		}
 	}
 	
