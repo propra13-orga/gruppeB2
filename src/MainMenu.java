@@ -1,5 +1,4 @@
 import javax.swing.JOptionPane;
-
 public class MainMenu
 {
 	private double mouseX, mouseY;
@@ -9,7 +8,7 @@ public class MainMenu
 	{
 		snd = new SoundManager();
 		StdDraw.setCanvasSize(w, h);
-		this.intro();
+		//this.intro();
 		this.run();
 	}
 	

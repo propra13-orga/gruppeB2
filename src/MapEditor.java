@@ -1,3 +1,6 @@
+
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.KeyEvent;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -13,14 +16,17 @@ public class MapEditor
 	private int fieldSize;
 	
 	MapEditCursor cursor = new MapEditCursor(0, 0);
+	MapIntroduction intro = new MapIntroduction();
 	
 	private int posX, posY;
+	
+	private int step;
 	
 	//Hilfsvariablen zum zwischenspeichern
 	int x=0,y=0;
 	int oldX=0, oldY=0;
 
-	boolean showCursor, isFieldSet, isExitSet, lastStep, isPlayerSet;
+	boolean isFieldSet, isExitSet, lastStep, isPlayerSet;
 	
 	Block[][] field;
 	Player pl;
@@ -37,12 +43,12 @@ public class MapEditor
 		
 		field = new Block[MAX_SIZE][MAX_SIZE];
 		
-		showCursor = false;
 		isFieldSet = false;
 		isExitSet = false;
 		lastStep = false;
 		isPlayerSet = false;
 		
+		step = 0;
 		
 		start();
 		run();
@@ -57,7 +63,7 @@ public class MapEditor
 		StdDraw.setCanvasSize(40 * fieldSize, 40 * (fieldSize + 2));
 		StdDraw.setXscale(0, 40 * fieldSize);
 		StdDraw.setYscale(0, 40 * (fieldSize + 2));
-	
+		
 		for(int i=0;i<fieldSize;i++)
 			for(int j=0;j<fieldSize;j++)
 			{
@@ -113,8 +119,12 @@ public class MapEditor
 	 */
 	public void keyCommand()
 	{
+		//naechster Schritt
+		if(StdDraw.isKeyPressedSingle(KeyEvent.VK_SPACE))
+			step = step +1;;
+		
 		//Feldgroesse wird festgelegt
-		if(StdDraw.isKeyPressedSingle(KeyEvent.VK_F) && !isFieldSet)
+		if(StdDraw.isKeyPressedSingle(KeyEvent.VK_F) && !isFieldSet && step==1)
 			isFieldSet = true;
 		
 		/*
@@ -123,7 +133,7 @@ public class MapEditor
 		 */
 		if(StdDraw.isKeyPressedSingle(KeyEvent.VK_RIGHT))
 		{
-			if(!isFieldSet)
+			if(!isFieldSet && step==1)
 				changeFieldSize(1);
 			else if(isFieldSet)
 				if(cursor.getPosX()<(fieldSize-1)*40)
@@ -136,7 +146,7 @@ public class MapEditor
 		 */
 		if(StdDraw.isKeyPressedSingle(KeyEvent.VK_LEFT))
 		{
-			if(!isFieldSet)
+			if(!isFieldSet && step==1)
 				changeFieldSize(-1);
 			else if(isFieldSet)
 				if(cursor.getPosX()>40)
@@ -296,6 +306,22 @@ public class MapEditor
 		cursor.drawImg();
 		if(isPlayerSet)
 			pl.draw();
+		drawIntroduction();
+	}
+	
+	public void drawIntroduction()
+	{
+		StdDraw.picture(160, 28, "images/mapeditor/mapIntroductions.png");
+		
+		Font font = new Font("Arial", Font.PLAIN, 13);
+		
+		StdDraw.setPenColor(Color.WHITE);
+		StdDraw.setFont(font);
+		
+		intro.setText(step);
+		StdDraw.textLeft(0, 42, intro.getText1() );
+		StdDraw.textLeft(0, 28, intro.getText2() );
+		StdDraw.textLeft(0, 14, intro.getText3() );
 	}
 	
 	public void saveField()
