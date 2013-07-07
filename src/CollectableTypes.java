@@ -18,4 +18,12 @@ public class CollectableTypes
 	public static final int WEAPON_GROSSE_AXT = 59;
 	public static final int WEAPON_BERSERKERWUT = 60;
 	public static final int WEAPON_BERSERKERZORN = 61;
+	
+	public static final int WEAPON_FAUST = 99;
+	
+	
+	public static final int ARMOR_BAUER = 150;
+	public static final int ARMOR_LEDER_HARNISCH = 151;
+	
+	public static final int ARMOR_NONE = 199;
 }

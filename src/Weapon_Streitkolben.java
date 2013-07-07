@@ -11,6 +11,8 @@ public class Weapon_Streitkolben extends Weapon
 		
 		this.posX = posX;
 		this.posY = posY;
+		
+		this.picture = "images/items/weapons/streitkolben.png";
 	}
 
 	public Weapon_Streitkolben(int posX, int posY, int anzahl) 
@@ -19,6 +21,8 @@ public class Weapon_Streitkolben extends Weapon
 		
 		this.posX = posX;
 		this.posY = posY;
+		
+		this.picture = "images/items/weapons/streitkolben.png";
 	}
 	
 	public String toString() 
@@ -31,16 +35,9 @@ public class Weapon_Streitkolben extends Weapon
 		StdDraw.picture(posX, posY, "images/items/weapons/streitkolben.png");
 	}
 	
-	public void equipWeapon(Player player)
+	public int getBonus()
 	{
-		this.equipped = true;
-		player.increaseAtt(15);
-	}
-	
-	public void unequipWeapon(Player player)
-	{
-		this.equipped = false;
-		player.decreaseAtt(15);
+		return 15;
 	}
 	
 	public int type()

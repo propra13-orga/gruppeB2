@@ -28,14 +28,10 @@ public class MapEditor
 
 	boolean isFieldSet, isExitSet, lastStep, isPlayerSet;
 	
-<<<<<<< HEAD
 	Block_Block[][] field;
-=======
-	Block[][] field;
 	Player pl;
 	
 	int[] playerPos = new int[2];
->>>>>>> c14d07e16ffcf8eeed0c5f043a4d6415a600a1c7
 	
 	//zum abspeichern in einer Datei
 	FileWriter file;
@@ -253,7 +249,7 @@ public class MapEditor
 			int posX = j * 40 + 40/2;
 			int posY = (40 * (fieldSize + 2))-(i * 40 + 40/2);
 			
-			field[i][j] = new Floor(posX, posY, 40, 40);
+			field[i][j] = new Block_Floor(posX, posY, 40, 40);
 		}
 	}
 	
@@ -287,7 +283,7 @@ public class MapEditor
 		
 				pl = new Player(posX, posY, 40);
 				
-				field[x][y]  = new Floor(oldX, oldY, 40, 40);
+				field[x][y]  = new Block_Floor(oldX, oldY, 40, 40);
 				
 				x=playerPos[0];
 				y=playerPos[1];

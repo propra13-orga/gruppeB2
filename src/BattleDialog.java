@@ -127,6 +127,11 @@ public class BattleDialog
 		
 		for(int i = battle.lower; i < battle.upper; i++)
 		{
+			if(battle.parent.player1.getEquippedWeapon().type() == battle.parent.player1.inventory.getItemAt(i).type())
+				StdDraw.setPenColor(Color.YELLOW);
+			else
+				StdDraw.setPenColor(Color.WHITE);
+			
 			StdDraw.textLeft(screenMidX - 200, screenMidY + 20 - 40 * (i-battle.lower), battle.parent.player1.inventory.getItemAt(i).toString().toUpperCase());
 			StdDraw.picture(screenMidX - 30, screenMidY + 2 - 40 * (i-battle.lower), "images/menu/in_game/times.png");
 			StdDraw.textLeft(screenMidX - 20, screenMidY - 40 * (i-battle.lower), "" + battle.parent.player1.inventory.getItemAt(i).getCount());

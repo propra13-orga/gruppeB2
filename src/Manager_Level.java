@@ -394,6 +394,10 @@ public class Manager_Level
 				case "WEAPON_BERSERKERWUT": collectables.add(new Weapon_Berserkerwut(posX, posY)); break;
 				case "WEAPON_BERSERKERZORN": collectables.add(new Weapon_Berserkerzorn(posX, posY)); break;
 				case "WEAPON_PRUNKSCHWERT": collectables.add(new Weapon_Prunkschwert(posX, posY)); break;
+				
+
+				case "ARMOR_BAUER": collectables.add(new Armor_Bauernkleidung(posX, posY)); break;
+				case "ARMOR_LEDER_HARNISCH": collectables.add(new Armor_Leder_Harnisch(posX, posY)); break;
 				}
 			}	
 		}

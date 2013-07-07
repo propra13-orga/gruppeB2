@@ -11,6 +11,8 @@ public class Weapon_Morgenstern extends Weapon
 		
 		this.posX = posX;
 		this.posY = posY;
+		
+		this.picture = "images/items/weapons/morgenstern.png";
 	}
 
 	public Weapon_Morgenstern(int posX, int posY, int anzahl) 
@@ -19,6 +21,8 @@ public class Weapon_Morgenstern extends Weapon
 		
 		this.posX = posX;
 		this.posY = posY;
+		
+		this.picture = "images/items/weapons/morgenstern.png";
 	}
 	
 	public String toString() 
@@ -31,16 +35,9 @@ public class Weapon_Morgenstern extends Weapon
 		StdDraw.picture(posX, posY, "images/items/weapons/morgenstern.png");
 	}
 	
-	public void equipWeapon(Player player)
+	public int getBonus()
 	{
-		this.equipped = true;
-		player.increaseAtt(30);
-	}
-	
-	public void unequipWeapon(Player player)
-	{
-		this.equipped = false;
-		player.decreaseAtt(30);
+		return 30;
 	}
 	
 	public int type()

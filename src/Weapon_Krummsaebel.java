@@ -11,6 +11,8 @@ public class Weapon_Krummsaebel extends Weapon
 		
 		this.posX = posX;
 		this.posY = posY;
+		
+		this.picture = "images/items/weapons/krummsaebel.png";
 	}
 
 	public Weapon_Krummsaebel(int posX, int posY, int anzahl) 
@@ -19,6 +21,8 @@ public class Weapon_Krummsaebel extends Weapon
 		
 		this.posX = posX;
 		this.posY = posY;
+		
+		this.picture = "images/items/weapons/krummsaebel.png";
 	}
 	
 	public String toString() 
@@ -31,16 +35,9 @@ public class Weapon_Krummsaebel extends Weapon
 		StdDraw.picture(posX, posY, "images/items/weapons/krummsaebel.png");
 	}
 	
-	public void equipWeapon(Player player)
+	public int getBonus()
 	{
-		this.equipped = true;
-		player.increaseAtt(23);
-	}
-	
-	public void unequipWeapon(Player player)
-	{
-		this.equipped = false;
-		player.decreaseAtt(23);
+		return 23;
 	}
 	
 	public int type()

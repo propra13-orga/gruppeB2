@@ -11,6 +11,8 @@ public class Weapon_Berserkerwut extends Weapon
 		
 		this.posX = posX;
 		this.posY = posY;
+		
+		this.picture = "images/items/weapons/berserkerwut.png";
 	}
 
 	public Weapon_Berserkerwut(int posX, int posY, int anzahl) 
@@ -19,6 +21,8 @@ public class Weapon_Berserkerwut extends Weapon
 		
 		this.posX = posX;
 		this.posY = posY;
+		
+		this.picture = "images/items/weapons/berserkerwut.png";
 	}
 	
 	public String toString() 
@@ -31,16 +35,9 @@ public class Weapon_Berserkerwut extends Weapon
 		StdDraw.picture(posX, posY, "images/items/weapons/berserkerwut.png");
 	}
 	
-	public void equipWeapon(Player player)
+	public int getBonus()
 	{
-		this.equipped = true;
-		player.increaseAtt(57);
-	}
-	
-	public void unequipWeapon(Player player)
-	{
-		this.equipped = false;
-		player.decreaseAtt(57);
+		return 57;
 	}
 	
 	public int type()

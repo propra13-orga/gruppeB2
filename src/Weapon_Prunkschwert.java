@@ -11,6 +11,8 @@ public class Weapon_Prunkschwert extends Weapon
 		
 		this.posX = posX;
 		this.posY = posY;
+		
+		this.picture = "images/items/weapons/prunkschwert.png";
 	}
 
 	public Weapon_Prunkschwert(int posX, int posY, int anzahl) 
@@ -19,6 +21,8 @@ public class Weapon_Prunkschwert extends Weapon
 		
 		this.posX = posX;
 		this.posY = posY;
+		
+		this.picture = "images/items/weapons/prunkschwert.png";
 	}
 	
 	public String toString() 
@@ -31,16 +35,9 @@ public class Weapon_Prunkschwert extends Weapon
 		StdDraw.picture(posX, posY, "images/items/weapons/prunkschwert.png");
 	}
 	
-	public void equipWeapon(Player player)
+	public int getBonus()
 	{
-		this.equipped = true;
-		player.increaseAtt(47);
-	}
-	
-	public void unequipWeapon(Player player)
-	{
-		this.equipped = false;
-		player.decreaseAtt(47);
+		return 47;
 	}
 	
 	public int type()

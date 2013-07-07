@@ -11,6 +11,8 @@ public class Weapon_Berserkerzorn extends Weapon
 		
 		this.posX = posX;
 		this.posY = posY;
+		
+		this.picture = "images/items/weapons/berserkerzorn.png";
 	}
 
 	public Weapon_Berserkerzorn(int posX, int posY, int anzahl) 
@@ -19,6 +21,8 @@ public class Weapon_Berserkerzorn extends Weapon
 		
 		this.posX = posX;
 		this.posY = posY;
+		
+		this.picture = "images/items/weapons/berserkerzorn.png";
 	}
 	
 	public String toString() 
@@ -31,16 +35,9 @@ public class Weapon_Berserkerzorn extends Weapon
 		StdDraw.picture(posX, posY, "images/items/weapons/berserkerzorn.png");
 	}
 	
-	public void equipWeapon(Player player)
+	public int getBonus()
 	{
-		this.equipped = true;
-		player.increaseAtt(70);
-	}
-	
-	public void unequipWeapon(Player player)
-	{
-		this.equipped = false;
-		player.decreaseAtt(70);
+		return 70;
 	}
 	
 	public int type()

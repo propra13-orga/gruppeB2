@@ -11,6 +11,8 @@ public class Weapon_Langschwert extends Weapon
 		
 		this.posX = posX;
 		this.posY = posY;
+		
+		this.picture = "images/items/weapons/langschwert.png";
 	}
 
 	public Weapon_Langschwert(int posX, int posY, int anzahl) 
@@ -19,6 +21,8 @@ public class Weapon_Langschwert extends Weapon
 		
 		this.posX = posX;
 		this.posY = posY;
+		
+		this.picture = "images/items/weapons/langschwert.png";
 	}
 	
 	public String toString() 
@@ -31,16 +35,9 @@ public class Weapon_Langschwert extends Weapon
 		StdDraw.picture(posX, posY, "images/items/weapons/langschwert.png");
 	}
 	
-	public void equipWeapon(Player player)
+	public int getBonus()
 	{
-		this.equipped = true;
-		player.increaseAtt(20);
-	}
-	
-	public void unequipWeapon(Player player)
-	{
-		this.equipped = false;
-		player.decreaseAtt(20);
+		return 20;
 	}
 	
 	public int type()

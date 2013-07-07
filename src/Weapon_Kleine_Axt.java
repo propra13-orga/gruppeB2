@@ -11,6 +11,8 @@ public class Weapon_Kleine_Axt extends Weapon
 		
 		this.posX = posX;
 		this.posY = posY;
+		
+		this.picture = "images/items/weapons/kleine_axt.png";
 	}
 
 	public Weapon_Kleine_Axt(int posX, int posY, int anzahl) 
@@ -19,6 +21,8 @@ public class Weapon_Kleine_Axt extends Weapon
 		
 		this.posX = posX;
 		this.posY = posY;
+		
+		this.picture = "images/items/weapons/kleine_axt.png";
 	}
 	
 	public String toString() 
@@ -31,16 +35,9 @@ public class Weapon_Kleine_Axt extends Weapon
 		StdDraw.picture(posX, posY, "images/items/weapons/kleine_axt.png");
 	}
 	
-	public void equipWeapon(Player player)
+	public int getBonus()
 	{
-		this.equipped = true;
-		player.increaseAtt(17);
-	}
-	
-	public void unequipWeapon(Player player)
-	{
-		this.equipped = false;
-		player.decreaseAtt(17);
+		return 17;
 	}
 	
 	public int type()

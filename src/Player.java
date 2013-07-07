@@ -43,6 +43,9 @@ public class Player extends Rectangle
 	private boolean canMove;
 	private String direction;
 	
+	private Weapon eqWep;
+	private Armor eqArm;
+	
     /**
      * Konstruktor eines Player-Objekts
      *
@@ -64,6 +67,9 @@ public class Player extends Rectangle
 		canMove = true;
 		direction = Direction.DOWN;
 		
+		this.eqWep = new Weapon_Faust();
+		this.eqArm = new Armor_None();
+		
 		//nur Testweise
 		//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		setHealth(10);
@@ -72,7 +78,7 @@ public class Player extends Rectangle
 		setMaxMana(100);
 		lives = 3;
 		speed = 125;
-		level = 1;
+		level = 5;
 		
 		name = "Player";
 		
@@ -667,5 +673,51 @@ public class Player extends Rectangle
 		
 		default: break;
 		}
+	}
+	
+	//------------------------------------------------------------------------------------------
+	
+	public void equipWeapon(Weapon wep)
+	{
+		this.eqWep = wep;
+		
+		this.increaseAtt(wep.getBonus());
+	}
+	
+	public void unequipWeapon()
+	{
+		if(this.eqWep != null)
+		{
+			this.decreaseAtt(eqWep.getBonus());
+			
+			this.eqWep = new Weapon_Faust();
+		}
+	}
+	
+	public Weapon getEquippedWeapon()
+	{
+		return this.eqWep;
+	}
+	
+	public void equipArmor(Armor arm)
+	{
+		this.eqArm = arm;
+		
+		this.increaseDef(arm.getBonus());
+	}
+	
+	public void unequipArmor()
+	{
+		if(this.eqArm != null)
+		{
+			this.decreaseDef(eqArm.getBonus());
+			
+			this.eqArm = new Armor_None();
+		}
+	}
+	
+	public Armor getEquippedArmor()
+	{
+		return this.eqArm;
 	}
 }

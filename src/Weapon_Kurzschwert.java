@@ -11,6 +11,8 @@ public class Weapon_Kurzschwert extends Weapon
 		
 		this.posX = posX;
 		this.posY = posY;
+		
+		this.picture = "images/items/weapons/kurzschwert.png";
 	}
 
 	public Weapon_Kurzschwert(int posX, int posY, int anzahl) 
@@ -19,6 +21,8 @@ public class Weapon_Kurzschwert extends Weapon
 		
 		this.posX = posX;
 		this.posY = posY;
+		
+		this.picture = "images/items/weapons/kurzschwert.png";
 	}
 	
 	public String toString() 
@@ -31,16 +35,9 @@ public class Weapon_Kurzschwert extends Weapon
 		StdDraw.picture(posX, posY, "images/items/weapons/kurzschwert.png");
 	}
 	
-	public void equipWeapon(Player player)
+	public int getBonus()
 	{
-		this.equipped = true;
-		player.increaseAtt(10);
-	}
-	
-	public void unequipWeapon(Player player)
-	{
-		this.equipped = false;
-		player.decreaseAtt(10);
+		return 10;
 	}
 	
 	public int type()

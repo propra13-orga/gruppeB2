@@ -1,5 +1,5 @@
 
-public abstract class Weapon extends Collectable
+public abstract class Armor extends Collectable
 {
 private static final long serialVersionUID = 1L;
 	
@@ -7,14 +7,14 @@ private static final long serialVersionUID = 1L;
 	
 	protected String picture;
 
-	public Weapon(int posX, int posY) 
+	public Armor(int posX, int posY) 
 	{
 		super(posX, posY, 32, 32, 1);
 		
 		this.equipped = false;
 	}
 
-	public Weapon(int posX, int posY, int anzahl) 
+	public Armor(int posX, int posY, int anzahl) 
 	{
 		super(posX, posY, 32, 32, anzahl);
 		
@@ -53,10 +53,6 @@ private static final long serialVersionUID = 1L;
 	{
 		return false;
 	}
-	
-//	public abstract void equipWeapon(Player player);
-	
-//	public abstract void unequipWeapon(Player player);
 	
 	public abstract int getBonus();
 	

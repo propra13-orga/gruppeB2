@@ -90,9 +90,10 @@ public class InGameMenu
 			
 			for(int i = lower; i < upper; i++)
 			{
-				
-				if(parent.player1.inventory.getItemAt(i).isEquipped())
+				if(parent.player1.getEquippedWeapon().type() == parent.player1.inventory.getItemAt(i).type())
 					StdDraw.setPenColor(Color.YELLOW);
+				else if(parent.player1.getEquippedArmor().type() == parent.player1.inventory.getItemAt(i).type())
+					StdDraw.setPenColor(Color.CYAN);
 				else
 					StdDraw.setPenColor(Color.WHITE);
 				

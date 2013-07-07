@@ -287,7 +287,7 @@ public class BattleScreen
 				StdDraw.picture(screenMidX + 280 - time, screenMidY - 42, attack.getImageSrc());
 			
 			if(anim > 149 && attack.dealDmg())
-				enemy.decreaseHealth(attack.getStrength() / 50);
+				enemy.decreaseHealth(attack.getStrength() * (player.getAtt() / 10) / 50);
 			else if(!attack.dealDmg())
 				player.handleAttack(attack);
 			

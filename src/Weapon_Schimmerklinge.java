@@ -11,6 +11,8 @@ public class Weapon_Schimmerklinge extends Weapon
 		
 		this.posX = posX;
 		this.posY = posY;
+		
+		this.picture = "images/items/weapons/schimmerklinge.png";
 	}
 
 	public Weapon_Schimmerklinge(int posX, int posY, int anzahl) 
@@ -19,6 +21,8 @@ public class Weapon_Schimmerklinge extends Weapon
 		
 		this.posX = posX;
 		this.posY = posY;
+		
+		this.picture = "images/items/weapons/schimmerklinge.png";
 	}
 	
 	public String toString() 
@@ -31,16 +35,9 @@ public class Weapon_Schimmerklinge extends Weapon
 		StdDraw.picture(posX, posY, "images/items/weapons/schimmerklinge.png");
 	}
 	
-	public void equipWeapon(Player player)
+	public int getBonus()
 	{
-		this.equipped = true;
-		player.increaseAtt(40);
-	}
-	
-	public void unequipWeapon(Player player)
-	{
-		this.equipped = false;
-		player.decreaseAtt(40);
+		return 40;
 	}
 	
 	public int type()
