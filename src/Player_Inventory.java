@@ -1,12 +1,12 @@
 import java.util.ArrayList;
 
 
-public class Inventory 
+public class Player_Inventory 
 {
 	private Player player;
 	private ArrayList<Collectable> items;
 	
-	public Inventory(Player player)
+	public Player_Inventory(Player player)
 	{
 		this.player = player;
 		items = new ArrayList<Collectable>();

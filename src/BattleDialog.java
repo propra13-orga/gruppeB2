@@ -132,21 +132,15 @@ public class BattleDialog
 			StdDraw.textLeft(screenMidX - 20, screenMidY - 40 * (i-battle.lower), "" + battle.parent.player1.inventory.getItemAt(i).getCount());
 		}
 	
-		if(battle.parent.player1.inventory.size() > 3)
+		if(battle.parent.player1.inventory.size() > 3 && !battle.itemUseOn)
 		{
-			posAbs = battle.upper - selection;
+			posAbs = battle.upper - battle.itemSel;
 			
 			StdDraw.picture(screenMidX - 215, screenMidY - 98 + 40 * posAbs, "images/menu/in_game/selection_arrow.png");
 		}
-		else if(battle.parent.player1.inventory.size() > 0)
-		{
-			switch(selection)
-			{
-			case 1: StdDraw.picture(screenMidX - 215, screenMidY + 22, "images/menu/in_game/selection_arrow.png"); break;
-			case 2: StdDraw.picture(screenMidX - 215, screenMidY - 18, "images/menu/in_game/selection_arrow.png"); break;
-			case 3: StdDraw.picture(screenMidX - 215, screenMidY - 58, "images/menu/in_game/selection_arrow.png"); break;
-			case 4: StdDraw.picture(screenMidX - 215, screenMidY - 98, "images/menu/in_game/selection_arrow.png"); break;			
-			}
+		else if(battle.parent.player1.inventory.size() > 0 && !battle.itemUseOn)
+		{				
+			StdDraw.picture(screenMidX - 215, screenMidY + 22 - 40 * (selection - 1), "images/menu/in_game/selection_arrow.png");
 		}
 		
 		if(battle.parent.player1.inventory.size() == 0)				
@@ -156,6 +150,17 @@ public class BattleDialog
 			StdDraw.picture(screenMidX + 10, screenMidY + 50, "images/menu/in_game/arrow_up.png");
 		if(battle.upper < battle.parent.player1.inventory.size())
 			StdDraw.picture(screenMidX + 10, screenMidY - 130, "images/menu/in_game/arrow_down.png");
+		
+		if(battle.itemUseOn)
+		{
+			StdDraw.setPenColor(Color.WHITE);
+			StdDraw.picture(screenMidX - 127, screenMidY + 96.5 - 40* (battle.key.selBefore - 1), "images/menu/in_game/items_use.png");	
+
+			StdDraw.textLeft(screenMidX - 202, screenMidY + 110 - 40* (battle.key.selBefore - 1), "BENUTZEN");
+			StdDraw.textLeft(screenMidX - 202, screenMidY + 70 - 40* (battle.key.selBefore - 1), "MÜLL");			
+			
+			StdDraw.picture(screenMidX - 217, screenMidY + 112 - 40* (battle.key.selBefore - 1) - 40 * (selection - 1), "images/menu/in_game/selection_arrow.png");
+		}
 	}
 	
 	public void showStats(Attack attack)

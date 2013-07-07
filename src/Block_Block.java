@@ -12,7 +12,7 @@ import java.awt.Rectangle;
  *  speziellen Blocks fuer die Logik des Spiels.
  *  </p>
  */
-abstract class Block extends Rectangle
+abstract class Block_Block extends Rectangle
 {
 	private static final long serialVersionUID = 1L;
 	
@@ -28,7 +28,7 @@ abstract class Block extends Rectangle
      * @param sizeX - die x-Groesse des Blocks fuer die Kollision(Rectangle)
      * @param sizeY - die y-Groesse des Blocks fuer die Kollision(Rectangle)
      */
-	public Block(int posX, int posY, int sizeX, int sizeY)
+	public Block_Block(int posX, int posY, int sizeX, int sizeY)
 	{
 		super(posX, posY, sizeX, sizeY);
 	}

@@ -14,7 +14,7 @@ public class BattleScreen
 	
 	GameField parent;
 	
-	boolean introPlayed, showIntroDialog, selectionOn, angrOn, magicOn, inventarOn, escapeOn;
+	boolean introPlayed, showIntroDialog, selectionOn, angrOn, magicOn, inventarOn, escapeOn, itemUseOn;
 	boolean pressedE, pressedR;
 
 	boolean playerAttacks;
@@ -35,18 +35,18 @@ public class BattleScreen
 	
 	double time, anim;
 	
-	KeyManager key;
-	SoundManager snd;
+	Manager_Key key;
+	Manager_Sound snd;
 	
 	BattleDialog dialogs;
 	
-	int selection;
+	int selection, itemSel;
 	int lower, upper;
 
 	Attack attack;
 	Magic magic;
 	
-	public BattleScreen(GameField field, SoundManager snd, Enemy enemy)
+	public BattleScreen(GameField field, Manager_Sound snd, Enemy enemy)
 	{
 		parent = field;
 		
@@ -71,7 +71,7 @@ public class BattleScreen
 		screenMidX = width / 2;
 		screenMidY = heigth / 2 - 40;
 		
-		this.key = new KeyManager(this);
+		this.key = new Manager_Key(this);
 		this.snd = snd;
 		
 		dialogs = new BattleDialog(this);
@@ -86,11 +86,13 @@ public class BattleScreen
 		magicOn = false;
 		inventarOn = false;
 		escapeOn = false;
+		itemUseOn = false;
 		
 		pressedE = false;
 		pressedR = false;
 		
 		selection = 1;
+		itemSel = 1;
 		
 		battleOn = true;
 		
@@ -139,22 +141,6 @@ public class BattleScreen
 				StdDraw.setPenColor(Color.BLACK);
 				StdDraw.filledRectangle(screenMidX + 290, screenMidY, 50, heigth / 2);
 		}
-	}
-	
-	private void playEscape()
-	{
-		/*for(int i = 0; i < 300; i++)
-		{
-			StdDraw.show(5);
-			{		
-				drawBattle();
-				drawStatus();
-			*/
-				StdDraw.textLeft(screenMidX - 220, screenMidY - 130, "Du bist entkommen...");
-				
-				System.out.println("kkkkkkk");
-			/*}
-		}*/
 	}
 	
 	private void drawBattle()
@@ -210,23 +196,7 @@ public class BattleScreen
 			else if(angrOn || magicOn)
 				playerAttacks = true;
 			else if(inventarOn)
-			{
-				int size = parent.player1.inventory.size();
-				
-				if(size > 0)
-				{
-					if(parent.player1.inventory.getItemAt(selection - 1).useItem(parent.player1))
-						parent.player1.inventory.removeOneItem(parent.player1.inventory.getItemAt(selection - 1));
-				}
-				
-				if(size > parent.player1.inventory.size())
-				{
-					if(selection > 1)
-						selection--;
-				
-					if(lower == 0)
-						upper--;
-				}
+			{			
 			}
 			else if(escapeOn)
 				battleOn = false;
@@ -247,12 +217,6 @@ public class BattleScreen
 			{
 				magicOn = false;
 				selection = 2;
-				selectionOn = true;
-			}
-			if(inventarOn)
-			{
-				inventarOn = false;
-				selection = 3;
 				selectionOn = true;
 			}
 			

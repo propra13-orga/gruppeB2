@@ -5,12 +5,12 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 
-public class SoundManager 
+public class Manager_Sound 
 {
 	private File file;
 	private ArrayList<AudioClip> sounds;
 	
-	public SoundManager()
+	public Manager_Sound()
 	{
 		sounds = new ArrayList<AudioClip>();
 		this.loadSounds();

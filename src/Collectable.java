@@ -9,7 +9,7 @@ import java.awt.Rectangle;
  *  Items fuer die Logik des Spiels.
  *  </p>
  */
-abstract class Collectable extends Rectangle
+abstract class Collectable extends Rectangle implements Equipable
 {
 	private static final long serialVersionUID = 1L;
 

@@ -3,11 +3,11 @@ import javax.swing.JOptionPane;
 public class MainMenu
 {
 	private double mouseX, mouseY;
-	SoundManager snd;
+	Manager_Sound snd;
 	
 	public MainMenu(int w, int h)
 	{
-		snd = new SoundManager();
+		snd = new Manager_Sound();
 		StdDraw.setCanvasSize(w, h);
 		this.intro();
 		this.run();

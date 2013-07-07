@@ -1,13 +1,13 @@
 
 
-public class Coin extends Item
+public class Item_Coin extends Item
 {
 	private static final long serialVersionUID = 1L;
 	
 	private double posX, posY;	
 	private final int value;
 
-	public Coin(int posX, int posY) 
+	public Item_Coin(int posX, int posY) 
 	{
 		super(posX, posY, 32, 32);
 		
@@ -18,7 +18,7 @@ public class Coin extends Item
 		value = (int)(Math.random() * ((100 - 10) + 1) + 10);
 	}
 	
-	public Coin(int posX, int posY, int sizeX, int sizeY, int value)
+	public Item_Coin(int posX, int posY, int sizeX, int sizeY, int value)
 	{
 		super(posX, posY, sizeX, sizeY);
 		

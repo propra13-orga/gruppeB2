@@ -1,7 +1,7 @@
 import java.awt.Rectangle;
 
 
-public class KidHipster extends Enemy
+public class Enemy_KidHipster extends Enemy
 {
 	private static final long serialVersionUID = 1L;
 
@@ -36,7 +36,7 @@ public class KidHipster extends Enemy
 	private final String DIRECTION;
 	private final int LEVEL;
 	
-	public KidHipster(int posX, int posY, String direction, long delay)
+	public Enemy_KidHipster(int posX, int posY, String direction, long delay)
 	{
 		super(posX, posY, 40, 40);
 		
@@ -57,7 +57,7 @@ public class KidHipster extends Enemy
 		this.attack = 30;
 	}
 	
-	public KidHipster(int posX, int posY, String direction, int level, long delay)
+	public Enemy_KidHipster(int posX, int posY, String direction, int level, long delay)
 	{
 		super(posX, posY, 40, 40);
 		

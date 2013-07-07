@@ -2,7 +2,7 @@
  *  <i>Wall</i>. Respaesentiert das Wand-Objekt, welches die nicht begehbare Wand
  *  dastellt
  */
-public class Wall extends Block
+public class Block_Wall extends Block_Block
 {
 	private static final long serialVersionUID = 1L;
 	
@@ -19,7 +19,7 @@ public class Wall extends Block
      * @param posX - die x-Position der Wand (Rectangle)
      * @param posY - die y-Position der Wand (Rectangle)
      */
-	public Wall(int posX, int posY, int sizeX, int sizeY)
+	public Block_Wall(int posX, int posY, int sizeX, int sizeY)
 	{
 		//Das Wall-Objekt ist ein Block-Objekt an der Position posX und posY
 		//mit der Groesse 32x32 Pixel (Rectangle)

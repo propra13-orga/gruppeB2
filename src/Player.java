@@ -10,7 +10,7 @@ public class Player extends Rectangle
 
 	private Attack[] attacks = new Attack[4];
 	private Magic[] magic = new Magic[4];
-	Inventory inventory;
+	Player_Inventory inventory;
 	
 	long anim;
 	long delay;
@@ -76,7 +76,7 @@ public class Player extends Rectangle
 		
 		name = "Player";
 		
-		inventory = new Inventory(this);
+		inventory = new Player_Inventory(this);
 
 		attacks[0] = Attacks.schwert_hieb;
 		attacks[1] = Attacks.schild_block;
@@ -578,10 +578,15 @@ public class Player extends Rectangle
 	}
 	
 	//------------------------------------------------------------------------------------------
-	
+
 	public void increaseAtt(int amount)
 	{
 		this.attack += amount;
+	}
+
+	public void decreaseAtt(int amount)
+	{
+		this.attack -= amount;
 	}
 	
 	public int getAtt()
@@ -593,6 +598,11 @@ public class Player extends Rectangle
 	{
 		this.defense += amount;
 	}
+
+	public void decreaseDef(int amount)
+	{
+		this.defense -= amount;
+	}
 	
 	public int getDef()
 	{
@@ -603,6 +613,11 @@ public class Player extends Rectangle
 	{
 		this.spez += amount;
 	}
+
+	public void decreaseSpez(int amount)
+	{
+		this.spez -= amount;
+	}
 	
 	public int getSpez()
 	{
@@ -612,6 +627,11 @@ public class Player extends Rectangle
 	public void increaseGena(int amount)
 	{
 		this.gena += amount;
+	}
+
+	public void decreaseGena(int amount)
+	{
+		this.gena -= amount;
 	}
 	
 	public int getGena()

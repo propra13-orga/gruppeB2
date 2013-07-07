@@ -1,7 +1,7 @@
 import java.awt.Rectangle;
 
 
-public class CheckPointNPC extends NPC
+public class NPC_CheckPoint extends NPC
 {
 	private static final long serialVersionUID = 1L;
 
@@ -23,7 +23,7 @@ public class CheckPointNPC extends NPC
 	
 	private boolean isSavePoint;
 	
-	public CheckPointNPC(int posX, int posY, long delta)
+	public NPC_CheckPoint(int posX, int posY, long delta)
 	{
 		super(posX, posY, 40, 40);
 		
@@ -35,7 +35,7 @@ public class CheckPointNPC extends NPC
 		isSavePoint = false;
 	}
 
-	public CheckPointNPC(int posX, int posY, int sizeX, int sizeY, long delta)
+	public NPC_CheckPoint(int posX, int posY, int sizeX, int sizeY, long delta)
 	{
 		super(posX, posY, sizeX, sizeY);
 		
@@ -47,7 +47,7 @@ public class CheckPointNPC extends NPC
 		isSavePoint = false;
 	}
 
-	public CheckPointNPC(int posX, int posY, int sizeX, int sizeY, int moveDirection, long delay)
+	public NPC_CheckPoint(int posX, int posY, int sizeX, int sizeY, int moveDirection, long delay)
 	{
 		super(posX, posY, sizeX, sizeY);
 		

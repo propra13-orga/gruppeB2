@@ -1,6 +1,6 @@
 
 
-public class Mana extends Item
+public class Item_Mana extends Item
 {
 	private static final long serialVersionUID = 1L;
 	
@@ -8,7 +8,7 @@ public class Mana extends Item
 	
 	private int anim;
 
-	public Mana(int posX, int posY) 
+	public Item_Mana(int posX, int posY) 
 	{
 		super(posX, posY, 32, 32);
 		

@@ -22,7 +22,7 @@ public class MapEditor
 
 	boolean showCursor, isFieldSet, isExitSet, isPlayerSet;
 	
-	Block[][] field;
+	Block_Block[][] field;
 	
 	//zum abspeichern in einer Datei
 	FileWriter file;
@@ -32,7 +32,7 @@ public class MapEditor
 	{
 		fieldSize = MIN_SIZE;
 		
-		field = new Block[MAX_SIZE][MAX_SIZE];
+		field = new Block_Block[MAX_SIZE][MAX_SIZE];
 		
 		showCursor = false;
 		isFieldSet = false;
@@ -61,12 +61,12 @@ public class MapEditor
 				
 				if(i<1 || i>=fieldSize-1 || j<1 || j>=fieldSize-1)
 				{
-					field[i][j] = new Wall(posX, posY, 40, 40);
+					field[i][j] = new Block_Wall(posX, posY, 40, 40);
 					if(i==0 && j==0)
 						cursor.setPos(posX, posY);
 				}
 				else
-					field[i][j] = new Floor(posX, posY, 40, 40);
+					field[i][j] = new Block_Floor(posX, posY, 40, 40);
 			}
 	}
 	
@@ -92,12 +92,12 @@ public class MapEditor
 					
 					if(i<1 || i>=fieldSize-1 || j<1 || j>=fieldSize-1)
 						{
-							field[i][j] = new Wall(posX, posY, 40, 40);
+							field[i][j] = new Block_Wall(posX, posY, 40, 40);
 							if(i==0 && j==0)
 								cursor.setPos(posX, posY);
 						}
 					else
-						field[i][j] = new Floor(posX, posY, 40, 40);
+						field[i][j] = new Block_Floor(posX, posY, 40, 40);
 				}
 			
 			}
@@ -175,7 +175,7 @@ public class MapEditor
 				int posX = j * 40 + 40/2;
 				int posY = (40 * (fieldSize + 2))-(i * 40 + 40/2);
 		
-				field[i][j] = new Door(posX, posY, 40, 40);
+				field[i][j] = new Block_Door(posX, posY, 40, 40);
 				
 				isExitSet = true;
 				
@@ -190,9 +190,9 @@ public class MapEditor
 				int posX = j * 40 + 40/2;
 				int posY = (40 * (fieldSize + 2))-(i * 40 + 40/2);
 		
-				field[i][j] = new Door(posX, posY, 40, 40);
+				field[i][j] = new Block_Door(posX, posY, 40, 40);
 				
-				field[x][y]  = new Wall(oldX, oldY, 40, 40);
+				field[x][y]  = new Block_Wall(oldX, oldY, 40, 40);
 				
 				x=i;
 				y=j;
@@ -215,7 +215,7 @@ public class MapEditor
 			int posX = j * 40 + 40/2;
 			int posY = (40 * (fieldSize + 2))-(i * 40 + 40/2);
 	
-			field[i][j] = new Wall(posX, posY, 40, 40);
+			field[i][j] = new Block_Wall(posX, posY, 40, 40);
 		}
 	}
 	

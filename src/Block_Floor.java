@@ -2,7 +2,7 @@
  *  <i>Floor</i>. Respaesentiert das Boden-Objekt, welches den begehbaren
  *  Untergrund des Spielfeldes darstellt.
  */
-public class Floor extends Block
+public class Block_Floor extends Block_Block
 {
 	private static final long serialVersionUID = 1L;
 	
@@ -19,7 +19,7 @@ public class Floor extends Block
      * @param posX - die x-Position des Bodens (Rectangle)
      * @param posY - die y-Position des Bodens (Rectangle)
      */
-	public Floor(int posX, int posY, int sizeX, int sizeY)
+	public Block_Floor(int posX, int posY, int sizeX, int sizeY)
 	{		
 		//Das Floor-Objekt ist ein Block-Objekt an der Position posX und posY
 		//mit der Groesse 32x32 Pixel (Rectangle)

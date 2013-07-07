@@ -1,12 +1,12 @@
 
 
-public class Heart extends Item
+public class Item_Heart extends Item
 {
 	private static final long serialVersionUID = 1L;
 	
 	private double posX, posY;	
 
-	public Heart(int posX, int posY) 
+	public Item_Heart(int posX, int posY) 
 	{
 		super(posX, posY, 32, 32);
 		

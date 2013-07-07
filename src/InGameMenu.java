@@ -11,24 +11,24 @@ public class InGameMenu
 {
 	boolean menuOn;
 	
-	boolean mainSelOn, itemSelOn;
+	boolean mainSelOn, itemSelOn, itemUseOn;
 	
 	GameField parent;
-	SoundManager snd;
+	Manager_Sound snd;
 	
 	Font font;
 	
 	double screenMidX;
 	double screenMidY;
 	
-	KeyManager key;
+	Manager_Key key;
 	boolean pressedE;
 	boolean pressedESC;
 	
-	int selection;
+	int selection, itemSel;
 	int upper, lower, posAbs;
 	
-	public InGameMenu(GameField field, SoundManager snd)
+	public InGameMenu(GameField field, Manager_Sound snd)
 	{
 		menuOn = true;
 		
@@ -49,14 +49,17 @@ public class InGameMenu
 		screenMidX = (field.columns * 40) / 2;
 		screenMidY = ((field.rows + 2) * 40 + 80) / 2 - 40;
 		
-		this.key = new KeyManager(this);
+		this.key = new Manager_Key(this);
 		
 		pressedE = false;
 		pressedESC = false;
 		
 		selection = 1;
+		itemSel = 1;
+		
 		mainSelOn = true;
 		itemSelOn = false;
+		itemUseOn = false;
 		
 		run();
 	}
@@ -76,14 +79,7 @@ public class InGameMenu
 		
 		if(mainSelOn)
 		{
-			switch(selection)
-			{
-			case 1: StdDraw.picture(2 * screenMidX - 195, 2 * screenMidY - 28, "images/menu/in_game/selection_arrow.png"); break;
-			case 2: StdDraw.picture(2 * screenMidX - 195, 2 * screenMidY - 68, "images/menu/in_game/selection_arrow.png"); break;
-			case 3: StdDraw.picture(2 * screenMidX - 195, 2 * screenMidY - 108, "images/menu/in_game/selection_arrow.png"); break;
-			case 4: StdDraw.picture(2 * screenMidX - 195, 2 * screenMidY - 148, "images/menu/in_game/selection_arrow.png"); break;
-			case 5: StdDraw.picture(2 * screenMidX - 195, 2 * screenMidY - 188, "images/menu/in_game/selection_arrow.png"); break;
-			}
+			StdDraw.picture(2 * screenMidX - 195, 2 * screenMidY - 28 - 40 * (selection - 1), "images/menu/in_game/selection_arrow.png");
 		}
 		else if(itemSelOn)
 		{
@@ -92,35 +88,28 @@ public class InGameMenu
 			
 			StdDraw.picture(2 * screenMidX - 130, 2 * screenMidY - 150, "images/menu/in_game/items.png");
 			
-			/*for(int i = 0; i < parent.player1.inventory.size(); i++)
-			{
-				StdDraw.textLeft(2 * screenMidX - 230, 2 * screenMidY - 90 - 40 * i, parent.player1.inventory.getItemAt(i).toString().toUpperCase());
-				StdDraw.picture(2 * screenMidX - 60, 2 * screenMidY - 108 - 40 * i, "images/menu/in_game/times.png");
-				StdDraw.textLeft(2 * screenMidX - 50, 2 * screenMidY - 110 - 40 * i, "" + parent.player1.inventory.getItemAt(i).getCount());
-			}*/
-			
 			for(int i = lower; i < upper; i++)
 			{
+				
+				if(parent.player1.inventory.getItemAt(i).isEquipped())
+					StdDraw.setPenColor(Color.YELLOW);
+				else
+					StdDraw.setPenColor(Color.WHITE);
+				
 				StdDraw.textLeft(2 * screenMidX - 230, 2 * screenMidY - 90 - 40 * (i-lower), parent.player1.inventory.getItemAt(i).toString().toUpperCase());
 				StdDraw.picture(2 * screenMidX - 60, 2 * screenMidY - 108 - 40 * (i-lower), "images/menu/in_game/times.png");
 				StdDraw.textLeft(2 * screenMidX - 50, 2 * screenMidY - 110 - 40 * (i-lower), "" + parent.player1.inventory.getItemAt(i).getCount());
 			}
 		
-			if(parent.player1.inventory.size() > 3)
+			if(parent.player1.inventory.size() > 3 && !itemUseOn)
 			{
-				posAbs = upper - selection;
+				posAbs = upper - itemSel;
 				
 				StdDraw.picture(2 * screenMidX - 245, 2 * screenMidY - 208 + 40 * posAbs, "images/menu/in_game/selection_arrow.png");
 			}
-			else if(parent.player1.inventory.size() > 0)
+			else if(parent.player1.inventory.size() > 0 && !itemUseOn)
 			{
-				switch(selection)
-				{
-				case 1: StdDraw.picture(2 * screenMidX - 245, 2 * screenMidY - 88, "images/menu/in_game/selection_arrow.png"); break;
-				case 2: StdDraw.picture(2 * screenMidX - 245, 2 * screenMidY - 128, "images/menu/in_game/selection_arrow.png"); break;
-				case 3: StdDraw.picture(2 * screenMidX - 245, 2 * screenMidY - 168, "images/menu/in_game/selection_arrow.png"); break;
-				case 4: StdDraw.picture(2 * screenMidX - 245, 2 * screenMidY - 208, "images/menu/in_game/selection_arrow.png"); break;			
-				}
+				StdDraw.picture(2 * screenMidX - 245, 2 * screenMidY - 88 - 40 * (selection - 1), "images/menu/in_game/selection_arrow.png");
 			}
 			
 			if(parent.player1.inventory.size() == 0)				
@@ -130,6 +119,17 @@ public class InGameMenu
 				StdDraw.picture(2 * screenMidX - 20, 2 * screenMidY - 60, "images/menu/in_game/arrow_up.png");
 			if(upper < parent.player1.inventory.size())
 				StdDraw.picture(2 * screenMidX - 20, 2 * screenMidY - 240, "images/menu/in_game/arrow_down.png");
+			
+			if(itemUseOn)
+			{
+				StdDraw.setPenColor(Color.WHITE);
+				StdDraw.picture(2 * screenMidX - 157, 2 * screenMidY - 153.5 - 40* (key.selBefore - 1), "images/menu/in_game/items_use.png");	
+
+				StdDraw.textLeft(2 * screenMidX - 232, 2 * screenMidY - 140 - 40* (key.selBefore - 1), "BENUTZEN");
+				StdDraw.textLeft(2 * screenMidX - 232, 2 * screenMidY - 180 - 40* (key.selBefore - 1), "MÜLL");			
+				
+				StdDraw.picture(2 * screenMidX - 247, 2 * screenMidY - 138 - 40* (key.selBefore - 1) - 40 * (selection - 1), "images/menu/in_game/selection_arrow.png");
+			}
 		}
 	}
 	

@@ -1,12 +1,12 @@
 
 
-public class ManaBottle extends Collectable
+public class Item_HealthBottle extends Collectable
 {
 	private static final long serialVersionUID = 1L;
 	
 	private double posX, posY;	
 
-	public ManaBottle(int posX, int posY) 
+	public Item_HealthBottle(int posX, int posY) 
 	{
 		super(posX, posY, 32, 32, 1);
 		
@@ -14,7 +14,7 @@ public class ManaBottle extends Collectable
 		this.posY = posY;
 	}
 
-	public ManaBottle(int posX, int posY, int anzahl) 
+	public Item_HealthBottle(int posX, int posY, int anzahl) 
 	{
 		super(posX, posY, 32, 32, anzahl);
 		
@@ -48,19 +48,19 @@ public class ManaBottle extends Collectable
 
 	public String toString() 
 	{
-		return "Manatrank";
+		return "Heiltrank";
 	}
 
 	public void drawImg() 
 	{
-		StdDraw.picture(posX, posY, "images/items/mana_bottle.png");
+		StdDraw.picture(posX, posY, "images/items/health_bottle.png");
 	}
 	
 	public boolean useItem(Player player) 
 	{
-		if(player.getMana() < player.getMaxMana())
+		if(player.getHealth() < player.getMaxHealth())
 		{
-			player.increaseMana(0.5 * player.getMaxMana());
+			player.increaseHealth(0.5 * player.getMaxHealth());
 			return true;
 		}
 		else
@@ -69,6 +69,11 @@ public class ManaBottle extends Collectable
 	
 	public int type()
 	{
-		return CollectableTypes.MANA_BOTTLE;
+		return CollectableTypes.HEALTH_BOTTLE;
+	}
+	
+	public boolean isEquipped() 
+	{
+		return false;
 	}
 }

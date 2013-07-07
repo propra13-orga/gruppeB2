@@ -1,38 +1,37 @@
 import java.awt.Rectangle;
 
 /**
- *  <i>Stairs</i>. Respaesentiert das Stairs-Objekt, welches den Eingang 
- *  eines neuen Levels darstellt. Eventuell, um zum vorherigen Level
- *  zu kommen.
+ *  <i>Door</i>. Respaesentiert das Tuer-Objekt zum Wechsel zwischen den
+ *  einzelnen Leveln.
  */
-public class Stairs extends Block
+public class Block_Door extends Block_Block
 {
 	private static final long serialVersionUID = 1L;
 	
-	//x- und y-Position, an welcher der Eingang sich auf dem Spielfeld befindet.
+	//x- und y-Position, an welcher der Ausgang sich auf dem Spielfeld befindet.
 	private double posX, posY;
 	
     /**
-     * Konstruktor eines Stairs-Objekts
+     * Konstruktor eines Door-Objekts
      *
-     * @param posX - die x-Position der Treppe (Rectangle)
-     * @param posY - die y-Position der Treppe (Rectangle)
+     * @param posX - die x-Position der Tuer (Rectangle)
+     * @param posY - die y-Position der Tuer (Rectangle)
      */
-	public Stairs(int posX, int posY, int sizeX, int sizeY)
+	public Block_Door(int posX, int posY, int sizeX, int sizeY)
 	{
-		//Das Stairs-Objekt ist ein Block-Objekt an der Position posX und posY
+		//Das Tuer-Objekt ist ein Block-Objekt an der Position posX und posY
 		//mit der Groesse 32x32 Pixel (Rectangle)
 		super(posX, posY, sizeX, sizeY);
 		
 		this.posX = posX;
-		this.posY = posY;
+		this.posY = posY;		
 	}
 	
 	public int checkCollision(Rectangle rect)
 	{
 		if(this.intersects(rect) && rect instanceof Player)
 		{
-			return Direction.COLLIDE_BACK;
+			return Direction.COLLIDE_DOOR;
 		}
 		else
 			return Direction.NO_COLLISION;
@@ -43,7 +42,7 @@ public class Stairs extends Block
      */
 	public void drawImg()
 	{
-		StdDraw.picture(posX, posY, "images/arena/Exit_Tile_"+2+".png");
+		StdDraw.picture(posX, posY, "images/arena/Exit_Tile_"+1+".png");
 	}
 	
     /**
@@ -60,6 +59,6 @@ public class Stairs extends Block
      */
 	public String toString()
 	{
-		return "stairs";
+		return "door";
 	}
 }

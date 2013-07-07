@@ -1,6 +1,6 @@
 import java.awt.Rectangle;
 
-public class MapEditCursor extends Block
+public class MapEditCursor extends Block_Block
 {
 	private static final long serialVersionUID = 1L;
 

@@ -6,7 +6,7 @@ import javax.swing.JOptionPane;
 /**
  *  <i>ReadLevel</i>. Klasse, welche das Level aus einer Textdatei einliest
  */
-public class LevelManager 
+public class Manager_Level 
 {
 	//FileReader und BufferedReader um die Datei einzulesen
 	private FileReader readFile;
@@ -14,7 +14,7 @@ public class LevelManager
 	
 	//das eigentliche Feld, gespeichert als char-Array
 	private char [][] field;
-	private Block [][] fieldInit;
+	private Block_Block [][] fieldInit;
 	
 	private int rows, columns;
 	
@@ -33,7 +33,7 @@ public class LevelManager
      * Konstruktor des ReadLevel-Objekts
      *
      */
-	public LevelManager(int sizeX, int sizeY)
+	public Manager_Level(int sizeX, int sizeY)
 	{
 		this.sizeX = sizeX;
 		this.sizeY = sizeY;
@@ -62,7 +62,7 @@ public class LevelManager
      * 
      * @throws IOException falls beim Einlesen der Datei ein Fehler auftrat
      */
-	public Block[][] initLevel(String lvl)
+	public Block_Block[][] initLevel(String lvl)
 	{
 		field = this.readField(lvl);
 		
@@ -75,7 +75,7 @@ public class LevelManager
 		columns = field[0].length;
 		rows = field.length;
 		
-		fieldInit = new Block[rows][columns];
+		fieldInit = new Block_Block[rows][columns];
 		
 		for(int i = 0; i < rows; i++)
 		{
@@ -87,12 +87,12 @@ public class LevelManager
 				
 				switch(field[i][j])
 				{
-				case ' ': fieldInit[i][j] = new Floor(posX, posY, sizeX, sizeY); break;
-				case 'X': fieldInit[i][j] = new Wall(posX, posY, sizeX, sizeY); break;
-				case 'E': fieldInit[i][j] = new Door(posX, posY, sizeX, sizeY); break;
-				case 'T': fieldInit[i][j] = new Stairs(posX, posY, sizeX, sizeY); break;			
+				case ' ': fieldInit[i][j] = new Block_Floor(posX, posY, sizeX, sizeY); break;
+				case 'X': fieldInit[i][j] = new Block_Wall(posX, posY, sizeX, sizeY); break;
+				case 'E': fieldInit[i][j] = new Block_Door(posX, posY, sizeX, sizeY); break;
+				case 'T': fieldInit[i][j] = new Block_Stairs(posX, posY, sizeX, sizeY); break;			
 				
-				default: fieldInit[i][j] = new Floor(posX, posY, sizeX, sizeY); break;
+				default: fieldInit[i][j] = new Block_Floor(posX, posY, sizeX, sizeY); break;
 				}	
 			}
 		}
@@ -183,9 +183,9 @@ public class LevelManager
 
 				switch(item)
 				{
-				case "ITEM_HEART": items.add(new Heart(posX, posY)); break;
-				case "ITEM_COINS": items.add(new Coin(posX, posY)); break;
-				case "ITEM_MANA": items.add(new Mana(posX, posY)); break;
+				case "ITEM_HEART": items.add(new Item_Heart(posX, posY)); break;
+				case "ITEM_COINS": items.add(new Item_Coin(posX, posY)); break;
+				case "ITEM_MANA": items.add(new Item_Mana(posX, posY)); break;
 				}
 			}	
 		}
@@ -281,7 +281,7 @@ public class LevelManager
 
 				switch(npc)
 				{
-				case "NPC_CHECKPOINT": npcs.add(new CheckPointNPC(posX, posY, 50)); break;
+				case "NPC_CHECKPOINT": npcs.add(new NPC_CheckPoint(posX, posY, 50)); break;
 				}
 			}	
 		}
@@ -328,10 +328,10 @@ public class LevelManager
 
 				switch(enemy)
 				{
-				case "ENEMY_KIDHIPSTER_RIGHT": enemys.add(new KidHipster(posX, posY, Direction.RIGHT, 50)); break;
-				case "ENEMY_KIDHIPSTER_LEFT": enemys.add(new KidHipster(posX, posY, Direction.LEFT, 50)); break;
-				case "ENEMY_KIDHIPSTER_UP": enemys.add(new KidHipster(posX, posY, Direction.UP, 50)); break;
-				case "ENEMY_KIDHIPSTER_DOWN": enemys.add(new KidHipster(posX, posY, Direction.DOWN, 50)); break;
+				case "ENEMY_KIDHIPSTER_RIGHT": enemys.add(new Enemy_KidHipster(posX, posY, Direction.RIGHT, 50)); break;
+				case "ENEMY_KIDHIPSTER_LEFT": enemys.add(new Enemy_KidHipster(posX, posY, Direction.LEFT, 50)); break;
+				case "ENEMY_KIDHIPSTER_UP": enemys.add(new Enemy_KidHipster(posX, posY, Direction.UP, 50)); break;
+				case "ENEMY_KIDHIPSTER_DOWN": enemys.add(new Enemy_KidHipster(posX, posY, Direction.DOWN, 50)); break;
 				}
 			}	
 		}
@@ -378,8 +378,22 @@ public class LevelManager
 
 				switch(item)
 				{
-				case "ITEM_HEALTH_BOTTLE": collectables.add(new HealthBottle(posX, posY)); break;
-				case "ITEM_MANA_BOTTLE": collectables.add(new ManaBottle(posX, posY)); break;
+				case "ITEM_HEALTH_BOTTLE": collectables.add(new Item_HealthBottle(posX, posY)); break;
+				case "ITEM_MANA_BOTTLE": collectables.add(new Item_ManaBottle(posX, posY)); break;
+				
+				
+				case "WEAPON_KURZSCHWERT": collectables.add(new Weapon_Kurzschwert(posX, posY)); break;
+				case "WEAPON_LANGSCHWERT": collectables.add(new Weapon_Langschwert(posX, posY)); break;
+				case "WEAPON_KRUMMSCHWERT": collectables.add(new Weapon_Krummschwert(posX, posY)); break;
+				case "WEAPON_SCHIMMERKLINGE": collectables.add(new Weapon_Schimmerklinge(posX, posY)); break;
+				case "WEAPON_MORGENSTERN": collectables.add(new Weapon_Morgenstern(posX, posY)); break;
+				case "WEAPON_STREITKOLBEN": collectables.add(new Weapon_Streitkolben(posX, posY)); break;
+				case "WEAPON_KLEINE_AXT": collectables.add(new Weapon_Kleine_Axt(posX, posY)); break;
+				case "WEAPON_GROSSE_AXT": collectables.add(new Weapon_Grosse_Axt(posX, posY)); break;
+				case "WEAPON_KRUMMSAEBEL": collectables.add(new Weapon_Krummsaebel(posX, posY)); break;
+				case "WEAPON_BERSERKERWUT": collectables.add(new Weapon_Berserkerwut(posX, posY)); break;
+				case "WEAPON_BERSERKERZORN": collectables.add(new Weapon_Berserkerzorn(posX, posY)); break;
+				case "WEAPON_PRUNKSCHWERT": collectables.add(new Weapon_Prunkschwert(posX, posY)); break;
 				}
 			}	
 		}

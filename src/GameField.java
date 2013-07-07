@@ -19,13 +19,13 @@ public class GameField
 	int currentLvl;
 	
 	//Array, in welchem die Objekte des Spielfeldes gespeichert sind
-	Block[][] field;
+	Block_Block[][] field;
 
 	//Eine Klasse ReadLevel, welche sich um das Einlesen der Level aus
 	//Textdatein kuemmert
-	LevelManager lvl;
-	KeyManager key;
-	SoundManager snd;
+	Manager_Level lvl;
+	Manager_Key key;
+	Manager_Sound snd;
 	
 	Status status;
 	
@@ -67,7 +67,7 @@ public class GameField
      * Konstruktor des Spielfeldes
      *
      */
-	public GameField(SoundManager snd)
+	public GameField(Manager_Sound snd)
 	{	
 		//erzeugt das Array, in dem die Level-Textdateinamen gespeichert werden
 		lvlArray = new String[] 
@@ -80,8 +80,8 @@ public class GameField
 		currentLvl = 0;
 		
 		//Erzeugt die Hilfsklasse zum Einlesen der Textdateien
-		lvl = new LevelManager(40, 40);
-		key = new KeyManager(this);
+		lvl = new Manager_Level(40, 40);
+		key = new Manager_Key(this);
 		this.snd = snd;
 		
 		inGameMenu = false;
@@ -265,7 +265,7 @@ public class GameField
 									if(opt.equals(Dialog.ABORT))
 										countE = 0;
 									else if(opt.equals(Dialog.APPROVE))
-										if(nextNPC instanceof CheckPointNPC)
+										if(nextNPC instanceof NPC_CheckPoint)
 										{
 											player1.setCheckPoint(currentLvl, lvl.getCheckPointX(), lvl.getCheckPointY());
 											countE++;

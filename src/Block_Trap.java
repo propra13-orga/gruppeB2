@@ -2,7 +2,7 @@
  *  <i>Trap</i>. Respaesentiert das Fallen-Objekt, welches eine einfache
  *  Bodenfalle auf dem Spielfeld darstellt.
  */
-public class Trap extends Block 
+public class Block_Trap extends Block_Block 
 {
 	private static final long serialVersionUID = 1L;
 	
@@ -15,7 +15,7 @@ public class Trap extends Block
      * @param posX - die x-Position der Falle (Rectangle)
      * @param posY - die y-Position der Falle (Rectangle)
      */
-	public Trap(int posX, int posY, int sizeX, int sizeY)
+	public Block_Trap(int posX, int posY, int sizeX, int sizeY)
 	{
 		//Das Trap-Objekt ist ein Block-Objekt an der Position posX und posY
 		//mit der Groesse 32x32 Pixel (Rectangle)
