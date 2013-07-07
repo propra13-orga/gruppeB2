@@ -15,6 +15,8 @@ abstract class Collectable extends Rectangle implements Equipable
 
 	private int count;
 	
+	protected String picture;
+	
     /**
      * Konstruktor eines Item-Objekts
      *
@@ -51,6 +53,7 @@ abstract class Collectable extends Rectangle implements Equipable
 	}
 	
 	public abstract boolean useItem(Player player);
+	public abstract int getBonus();
 	
 	public abstract int type();
 }

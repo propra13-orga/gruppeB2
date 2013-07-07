@@ -14,6 +14,9 @@ public class Shop_Descriptions
 	public void getWeaponInfo(Weapon wep)
 	{
 		String[] info;
+
+		StdDraw.setPenColor(Color.WHITE);
+		StdDraw.setFont(new Font("Arial", Font.BOLD, 13));
 		
 		switch(wep.type())
 		{
@@ -159,6 +162,9 @@ public class Shop_Descriptions
 	{
 		String[] info;
 		
+		StdDraw.setPenColor(Color.WHITE);
+		StdDraw.setFont(new Font("Arial", Font.BOLD, 13));
+		
 		switch(wep.type())
 		{
 		case CollectableTypes.ARMOR_BAUER: 
@@ -196,6 +202,54 @@ public class Shop_Descriptions
 		StdDraw.textLeft(shop.screenMidX - 200, shop.screenMidY + 55, "Def - " + wep.getBonus());
 	}
 	
+	public void getItemInfo(Collectable wep)
+	{
+		String[] info;
+		
+		StdDraw.setPenColor(Color.WHITE);
+		StdDraw.setFont(new Font("Arial", Font.BOLD, 13));
+		
+		switch(wep.type())
+		{
+		case CollectableTypes.HEALTH_BOTTLE: 
+			info = new String[] {
+				"Der grosse Heiltrank", 
+				"fuer den grossen Hunger.",
+				"Im Notfall ein echter",
+				"Lebensretter!",
+				"",
+				"Ganze 50 Prozent der HP",
+				"wird durch dieses Gesoeff",
+				"regeneriert. - Was drinn",
+				"ist? I dont know!"
+			};
+			StdDraw.textLeft(shop.screenMidX - 200, shop.screenMidY + 55, "Heilt " + wep.getBonus() + " HP");
+			break;
+			
+		case CollectableTypes.MANA_BOTTLE: 
+			info = new String[] {
+				"Du brauchst irgendeine", 
+				"mysterioese magische",
+				"Kraft? Dieser Trank kann",
+				"das.",
+				"",
+				"Nicht ganz billig, aber",
+				"dann kannst du wieder",
+				"Feuer und Eis und so",
+				"machen!",
+				"",
+				"Whhooosshh!"
+			};
+			StdDraw.textLeft(shop.screenMidX - 200, shop.screenMidY + 55, "Heilt " + wep.getBonus() + " MP");
+			break;
+			
+		default: info = new String[] {""};
+	}
+		
+		drawInfo(info);
+
+		StdDraw.textLeft(shop.screenMidX - 200, shop.screenMidY + 80, "Lvl - All");
+	}
 	
 	
 	public int getReqLvl(Collectable itm)
@@ -225,9 +279,6 @@ public class Shop_Descriptions
 	private void drawInfo(String [] info)
 	{
 		int lines = info.length;
-		
-		StdDraw.setPenColor(Color.WHITE);
-		StdDraw.setFont(new Font("Arial", Font.BOLD, 13));
 		
 		for(int l = 0; l < lines; l++)
 			StdDraw.textLeft(shop.screenMidX - 270, shop.screenMidY + 15 - l * 15, info[l]);

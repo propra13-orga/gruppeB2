@@ -87,7 +87,30 @@ public class Shop_Items
 	
 	public void showItems()
 	{
+		shop.maxSelection = 0;
 		
+		for(int i = 0; i < items.length; i++)
+		{
+			if(desc.getReqLvl(items[i]) > shop.field.player1.getLevel())
+			{
+				StdDraw.setPenColor(Color.DARK_GRAY);
+			}
+			else
+			{
+				StdDraw.setPenColor(Color.WHITE);
+				shop.maxSelection++;
+			}
+			
+			StdDraw.textLeft(screenMidX - 30, screenMidY + 80 - i * (21), items[i].toString());
+		}
+
+		StdDraw.setPenColor(Color.WHITE);
+		
+		StdDraw.picture(screenMidX - 45, screenMidY + 82 - 21 * shop.selection, "images/menu/in_game/selection_arrow.png");
+		
+		StdDraw.picture(screenMidX - 245, screenMidY + 70, items[shop.selection].picture);
+		
+		desc.getItemInfo(items[shop.selection]);
 	}
 	
 	
@@ -102,5 +125,9 @@ public class Shop_Items
 	
 	private Armor[] armors = new Armor[] {
 			new Armor_Bauernkleidung(0,0), new Armor_Leder_Harnisch(0,0)
+	};
+	
+	private Collectable[] items = new Collectable[] {
+			new Item_HealthBottle(0,0), new Item_ManaBottle(0,0)
 	};
 }

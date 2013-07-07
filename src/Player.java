@@ -78,7 +78,7 @@ public class Player extends Rectangle
 		setMaxMana(100);
 		lives = 3;
 		speed = 125;
-		level = 5;
+		level = 15;
 		
 		name = "Player";
 		

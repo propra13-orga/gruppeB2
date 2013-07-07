@@ -12,6 +12,8 @@ public class Item_ManaBottle extends Collectable
 		
 		this.posX = posX;
 		this.posY = posY;
+		
+		this.picture = "images/items/mana_bottle.png";
 	}
 
 	public Item_ManaBottle(int posX, int posY, int anzahl) 
@@ -20,6 +22,8 @@ public class Item_ManaBottle extends Collectable
 		
 		this.posX = posX;
 		this.posY = posY;
+		
+		this.picture = "images/items/mana_bottle.png";
 	}
 	
 	public int checkCollision(Player player)
@@ -65,6 +69,11 @@ public class Item_ManaBottle extends Collectable
 		}
 		else
 			return false;
+	}
+	
+	public int getBonus()
+	{
+		return 50;
 	}
 	
 	public int type()
