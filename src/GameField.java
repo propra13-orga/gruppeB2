@@ -54,6 +54,7 @@ public class GameField
 	
 	int countE = 0;
 	boolean interacted = false;
+	String option = "";
 	
 	
 	//x- und y-Position des Spielers zu Beginn des Levels
@@ -260,16 +261,28 @@ public class GameField
 								
 								if(nextNPC.isOptionDialog(countE))
 								{
-									String opt = nextNPC.interactWithPlayer();
-									
-									if(opt.equals(Dialog.ABORT))
+									if(option.equals(Dialog.ABORT))
+									{
 										countE = 0;
-									else if(opt.equals(Dialog.APPROVE))
+										option = "";
+									}
+									else if(option.equals(Dialog.APPROVE))
+									{
 										if(nextNPC instanceof NPC_CheckPoint)
 										{
-											player1.setCheckPoint(currentLvl, lvl.getCheckPointX(), lvl.getCheckPointY());
 											countE++;
+											option = "";
+											player1.setCheckPoint(currentLvl, lvl.getCheckPointX(), lvl.getCheckPointY());
 										}
+										else if(nextNPC instanceof NPC_Shop)
+										{
+											countE++;
+											option = "";
+											player1.stop();
+											mapScreen = false;
+											new Shop(this, snd);
+										}
+									}
 								}
 							}
 							else

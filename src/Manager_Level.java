@@ -90,7 +90,8 @@ public class Manager_Level
 				case ' ': fieldInit[i][j] = new Block_Floor(posX, posY, sizeX, sizeY); break;
 				case 'X': fieldInit[i][j] = new Block_Wall(posX, posY, sizeX, sizeY); break;
 				case 'E': fieldInit[i][j] = new Block_Door(posX, posY, sizeX, sizeY); break;
-				case 'T': fieldInit[i][j] = new Block_Stairs(posX, posY, sizeX, sizeY); break;			
+				case 'T': fieldInit[i][j] = new Block_Stairs(posX, posY, sizeX, sizeY); break;	
+				case 'S': fieldInit[i][j] = new Block_Shop(posX, posY, sizeX, sizeY); break;
 				
 				default: fieldInit[i][j] = new Block_Floor(posX, posY, sizeX, sizeY); break;
 				}	
@@ -282,6 +283,10 @@ public class Manager_Level
 				switch(npc)
 				{
 				case "NPC_CHECKPOINT": npcs.add(new NPC_CheckPoint(posX, posY, 50)); break;
+				case "NPC_SHOP_DOWN": npcs.add(new NPC_Shop(posX, posY, Direction.DOWN)); break;
+				case "NPC_SHOP_UP": npcs.add(new NPC_Shop(posX, posY, Direction.UP)); break;
+				case "NPC_SHOP_LEFT": npcs.add(new NPC_Shop(posX, posY, Direction.LEFT)); break;
+				case "NPC_SHOP_RIGHT": npcs.add(new NPC_Shop(posX, posY, Direction.RIGHT)); break;
 				}
 			}	
 		}

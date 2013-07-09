@@ -37,16 +37,19 @@ public class Manager_Key
 		{
 			delta = field.delta;
 			
-			if(StdDraw.isKeyPressedSingle(KeyEvent.VK_I))
-			{
-				field.player1.stop();
-				field.mapScreen = false;
-				new Shop(field, field.snd);
-			}
-			
 			if(StdDraw.isKeyPressedSingle(KeyEvent.VK_E))
 			{
 				field.countE++;
+			}
+			
+			if(StdDraw.isKeyPressedSingle(KeyEvent.VK_J))
+			{
+				field.option = Dialog.APPROVE;
+			}
+			
+			if(StdDraw.isKeyPressedSingle(KeyEvent.VK_N))
+			{
+				field.option = Dialog.ABORT;
 			}
 			
 			if(StdDraw.isKeyPressedSingle(KeyEvent.VK_ESCAPE))
@@ -563,41 +566,94 @@ public class Manager_Key
 				}
 			}
 		}
+		
 		else if(shop != null)
 		{
-			if(StdDraw.isKeyPressedSingle(KeyEvent.VK_RIGHT))
+			if(!shop.buyOn)
 			{
-				if(shop.selTab < 2)
+				if(StdDraw.isKeyPressedSingle(KeyEvent.VK_RIGHT))
 				{
-					shop.selTab++;
-					shop.selection = 0;
+					if(shop.selTab < 2)
+					{
+						shop.selTab++;
+						shop.selection = 0;
+					}
 				}
-			}
-			else if(StdDraw.isKeyPressedSingle(KeyEvent.VK_LEFT))
-			{
-				if(shop.selTab > 0)
+				else if(StdDraw.isKeyPressedSingle(KeyEvent.VK_LEFT))
 				{
-					shop.selTab--;
-					shop.selection = 0;
+					if(shop.selTab > 0)
+					{
+						shop.selTab--;
+						shop.selection = 0;
+					}
 				}
-			}
-			if(StdDraw.isKeyPressedSingle(KeyEvent.VK_UP))
-			{
-				if(shop.selection > 0)
-					shop.selection--;
-			}
-			else if(StdDraw.isKeyPressedSingle(KeyEvent.VK_DOWN))
-			{
-				if(shop.selection < shop.maxSelection - 1)
-					shop.selection++;
-			}
+				if(StdDraw.isKeyPressedSingle(KeyEvent.VK_UP))
+				{
+					if(shop.selection > 0)
+						shop.selection--;
+				}
+				else if(StdDraw.isKeyPressedSingle(KeyEvent.VK_DOWN))
+				{
+					if(shop.selection < shop.maxSelection - 1)
+						shop.selection++;
+				}
 			
-			if(StdDraw.isKeyPressedSingle(KeyEvent.VK_ESCAPE))
+				if(StdDraw.isKeyPressedSingle(KeyEvent.VK_ESCAPE))
+				{
+					shop.shopOn = false;
+					shop.field.mapScreen = true;
+					shop.field.player1.go();
+					shop.field.run();
+				}
+			
+				if(StdDraw.isKeyPressedSingle(KeyEvent.VK_ENTER))
+				{
+					shop.buyOn = true;
+				
+					shop.buy = true;
+					shop.abort = false;
+				}
+			}
+			else if(shop.buyOn)
 			{
-				shop.shopOn = false;
-				shop.field.mapScreen = true;
-				shop.field.player1.go();
-				shop.field.run();
+				if(StdDraw.isKeyPressedSingle(KeyEvent.VK_RIGHT))
+				{
+					shop.buy = false;
+					shop.abort = true;
+				}
+				if(StdDraw.isKeyPressedSingle(KeyEvent.VK_LEFT))
+				{
+					shop.buy = true;
+					shop.abort = false;
+				}
+				
+				if(StdDraw.isKeyPressedSingle(KeyEvent.VK_ESCAPE))
+				{
+					shop.buyOn = false;
+				}
+				
+				if(StdDraw.isKeyPressedSingle(KeyEvent.VK_ENTER))
+				{
+					if(shop.buy)
+					{
+						shop.time = 0;
+						
+						if(shop.field.player1.getCoins() >= shop.price && !shop.field.player1.inventory.isFull())
+						{
+							shop.successOn = true;
+							shop.field.player1.inventory.addItem(shop.item);
+							shop.field.player1.decreaseCoins(shop.price);
+						}
+						else
+						{
+							shop.errorOn = true;
+						}
+					}
+					else if(shop.abort)
+					{
+						shop.buyOn = false;
+					}
+				}
 			}
 		}
 	}

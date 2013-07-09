@@ -12,8 +12,6 @@ public class Shop_Items
 	Font font;
 	Font fontBold;
 	
-	int lower, upper;
-	
 	public Shop_Items(Shop shop)
 	{
 		this.shop = shop;
@@ -24,9 +22,6 @@ public class Shop_Items
 		
 		this.font = shop.font;
 		this.fontBold = shop.fontBold;
-		
-		lower = 0;
-		upper = 4;
 	}
 	
 	public void showWeapons()
@@ -55,6 +50,9 @@ public class Shop_Items
 		StdDraw.picture(screenMidX - 245, screenMidY + 70, weapons[shop.selection].picture);
 		
 		desc.getWeaponInfo(weapons[shop.selection]);
+		
+		shop.price = desc.getPrice(weapons[shop.selection]);
+		shop.item = weapons[shop.selection];
 	}
 	
 	public void showArmors()
@@ -83,6 +81,9 @@ public class Shop_Items
 		StdDraw.picture(screenMidX - 245, screenMidY + 70, armors[shop.selection].picture);
 		
 		desc.getArmorInfo(armors[shop.selection]);
+		
+		shop.price = desc.getPrice(armors[shop.selection]);
+		shop.item = armors[shop.selection];
 	}
 	
 	public void showItems()
@@ -111,8 +112,45 @@ public class Shop_Items
 		StdDraw.picture(screenMidX - 245, screenMidY + 70, items[shop.selection].picture);
 		
 		desc.getItemInfo(items[shop.selection]);
+		
+		shop.price = desc.getPrice(items[shop.selection]);
+		shop.item = items[shop.selection];
 	}
 	
+	
+	public void showConfirmDialog()
+	{
+		StdDraw.picture(screenMidX, screenMidY, "images/shop/bg_confirm.png");
+
+		StdDraw.textLeft(screenMidX - 90, screenMidY + 40, "Wollen Sie das");
+		StdDraw.textLeft(screenMidX - 90, screenMidY + 10, "Item kaufen?");
+
+		StdDraw.textLeft(screenMidX - 60, screenMidY - 40, "Ja");
+		StdDraw.textLeft(screenMidX + 20, screenMidY - 40, "Nein");
+		
+		if(shop.buy)
+			StdDraw.picture(screenMidX - 75, screenMidY - 35, "images/menu/in_game/selection_arrow.png");
+		else
+			StdDraw.picture(screenMidX + 5, screenMidY - 35, "images/menu/in_game/selection_arrow.png");			
+	}
+	
+	public void showSuccess()
+	{
+		StdDraw.picture(screenMidX, screenMidY, "images/shop/bg_confirm.png");
+
+		StdDraw.textLeft(screenMidX - 70, screenMidY + 30, "Sie haben das");
+		StdDraw.textLeft(screenMidX - 70, screenMidY, "Item erfolg-");
+		StdDraw.textLeft(screenMidX - 70, screenMidY - 30, "reich gekauft.");
+	}
+	
+	public void showError()
+	{
+		StdDraw.picture(screenMidX, screenMidY, "images/shop/bg_confirm.png");
+
+		StdDraw.textLeft(screenMidX - 70, screenMidY + 30, "Nicht genug");
+		StdDraw.textLeft(screenMidX - 70, screenMidY, "Geld. Item");
+		StdDraw.textLeft(screenMidX - 70, screenMidY - 30, "nicht gekauft.");
+	}
 	
 	//------------------------------------------------------------------------------------------
 

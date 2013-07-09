@@ -30,7 +30,6 @@ abstract class NPC extends Rectangle
 	public abstract void drawImg();
 	public abstract int checkCollision(Rectangle rect);
 	public abstract boolean playerInRange(Player player);
-	public abstract String interactWithPlayer();
 	
 	public abstract String getAvatar();
 	public abstract String [] getDialog(int page);

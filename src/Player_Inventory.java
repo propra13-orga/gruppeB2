@@ -12,6 +12,11 @@ public class Player_Inventory
 		items = new ArrayList<Collectable>();
 	}
 	
+	public boolean isFull()
+	{
+		return items.size() > 14;
+	}
+	
 	public boolean canAddItem(Collectable item)
 	{
 		if(items.size() < 15 || items.contains(item))

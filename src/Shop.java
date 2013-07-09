@@ -21,12 +21,16 @@ public class Shop
 	Font fontBold;
 	
 	Player player;
+	int price;
+	Collectable item;
 
 	double screenMidX, screenMidY;
 	
-	boolean weaponsOn, armorOn, itemsOn;
+	boolean weaponsOn, armorOn, itemsOn, buyOn, successOn, errorOn;
 	
-	int selection, maxSelection, selTab;
+	boolean buy, abort;
+	
+	int selection, maxSelection, selTab, time;
 	
 	public Shop(GameField field, Manager_Sound snd)
 	{
@@ -48,6 +52,10 @@ public class Shop
 		}
 		
 		player = field.player1;
+		price = 0;
+		item = null;
+		
+		buyOn = successOn = errorOn = false;
 		
 		screenMidX = (field.columns * 40) / 2;
 		screenMidY = ((field.rows + 2) * 40 + 80) / 2 - 40;
@@ -59,6 +67,8 @@ public class Shop
 		selection = 0;
 		maxSelection = 0;
 		selTab = 0;
+		
+		time = 0;
 		
 		run();
 	}
@@ -116,6 +126,24 @@ public class Shop
 			StdDraw.setPenRadius();
 			
 			sells.showItems();
+		}
+		if(buyOn)
+		{
+			sells.showConfirmDialog();
+			
+			if(successOn && time < 50)
+				sells.showSuccess();
+			else if(errorOn && time < 50)
+				sells.showError();
+
+			if(time < 50)
+				time++;
+			else
+			{
+				successOn = false;
+				errorOn = false;
+				time = 0;
+			}
 		}
 	}
 	

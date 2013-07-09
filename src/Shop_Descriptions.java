@@ -156,6 +156,10 @@ public class Shop_Descriptions
 
 		StdDraw.textLeft(shop.screenMidX - 200, shop.screenMidY + 80, "Lvl - " + getReqLvl(wep));
 		StdDraw.textLeft(shop.screenMidX - 200, shop.screenMidY + 55, "Dmg - " + wep.getBonus());
+		
+		StdDraw.setFont(new Font("Arial", Font.BOLD, 20));
+		
+		StdDraw.textLeft(shop.screenMidX + 30, shop.screenMidY - 139, "" + getPrice(wep));
 	}
 	
 	public void getArmorInfo(Armor wep)
@@ -200,6 +204,10 @@ public class Shop_Descriptions
 
 		StdDraw.textLeft(shop.screenMidX - 200, shop.screenMidY + 80, "Lvl - " + getReqLvl(wep));
 		StdDraw.textLeft(shop.screenMidX - 200, shop.screenMidY + 55, "Def - " + wep.getBonus());
+		
+		StdDraw.setFont(new Font("Arial", Font.BOLD, 20));
+		
+		StdDraw.textLeft(shop.screenMidX + 30, shop.screenMidY - 139, "" + getPrice(wep));
 	}
 	
 	public void getItemInfo(Collectable wep)
@@ -249,6 +257,10 @@ public class Shop_Descriptions
 		drawInfo(info);
 
 		StdDraw.textLeft(shop.screenMidX - 200, shop.screenMidY + 80, "Lvl - All");
+		
+		StdDraw.setFont(new Font("Arial", Font.BOLD, 20));
+		
+		StdDraw.textLeft(shop.screenMidX + 30, shop.screenMidY - 139, "" + getPrice(wep));
 	}
 	
 	
@@ -274,6 +286,34 @@ public class Shop_Descriptions
 		}
 		
 		return lvl;
+	}
+	
+	public int getPrice(Collectable itm)
+	{
+		int price = 0;
+		
+		switch(itm.type())
+		{
+		case CollectableTypes.WEAPON_KURZSCHWERT: price = 200; break;
+		case CollectableTypes.WEAPON_STREITKOLBEN: price = 450; break;
+		case CollectableTypes.WEAPON_KLEINE_AXT: price = 550; break;
+		case CollectableTypes.WEAPON_LANGSCHWERT: price = 1000; break;
+		case CollectableTypes.WEAPON_KRUMMSAEBEL: price = 1200; break;
+		case CollectableTypes.WEAPON_KRUMMSCHWERT: price = 1350; break;
+		case CollectableTypes.WEAPON_MORGENSTERN: price = 1800; break;
+		case CollectableTypes.WEAPON_GROSSE_AXT: price = 2100; break;
+		case CollectableTypes.WEAPON_PRUNKSCHWERT: price = 2500; break;
+		
+
+		case CollectableTypes.ARMOR_BAUER: price = 150; break;
+		case CollectableTypes.ARMOR_LEDER_HARNISCH: price = 500; break;
+		
+
+		case CollectableTypes.HEALTH_BOTTLE: price = 100; break;
+		case CollectableTypes.MANA_BOTTLE: price = 150; break;
+		}
+		
+		return price;
 	}
 	
 	private void drawInfo(String [] info)

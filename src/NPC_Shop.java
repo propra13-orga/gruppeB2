@@ -1,70 +1,55 @@
 import java.awt.Rectangle;
 
 
-public class NPC_CheckPoint extends NPC
+public class NPC_Shop extends NPC
 {
 	private static final long serialVersionUID = 1L;
 
-	long delay;
-	private final double RANGE = 60;
+	private final double RANGE = 50;
 	
 	boolean moves;
 	int moveDirection;
 	
 	private double posX, posY;	
 	
-	private final String AVATAR = "images/npc/checkPoint/avatar.png";
+	private final String AVATAR = "images/npc/shop/avatar.png";
+	
+	private String direction;
 	
 	private final String [][] DIALOG = new String[][]
 			{
-			{"Moechten Sie ihren Spielstand", "speichern?", " ", "[J] - Ja     [N] - Nein"},
-			{"Spiel gespeichert!"}
+			{"Moechtest du einen Blick auf", "meine Waren werfen?", " ", "[J] - Ja     [N] - Nein"}
 			};
 	
-	private boolean isSavePoint;
-	
-	public NPC_CheckPoint(int posX, int posY, long delta)
+	public NPC_Shop(int posX, int posY, String direction)
 	{
 		super(posX, posY, 40, 40);
 		
-		this.delay = delta;
-		
 		this.posX = posX;
 		this.posY = posY;
 		
-		isSavePoint = false;
+		this.direction = direction;
 	}
 
-	public NPC_CheckPoint(int posX, int posY, int sizeX, int sizeY, long delta)
+	public NPC_Shop(int posX, int posY, int sizeX, int sizeY, String direction)
 	{
 		super(posX, posY, sizeX, sizeY);
 		
-		this.delay = delta;
-		
 		this.posX = posX;
 		this.posY = posY;
 		
-		isSavePoint = false;
-	}
-
-	public NPC_CheckPoint(int posX, int posY, int sizeX, int sizeY, int moveDirection, long delay)
-	{
-		super(posX, posY, sizeX, sizeY);
-		
-		this.delay = delay;
-		
-		this.posX = posX;
-		this.posY = posY;
-		
-		moves = true;
-		this.moveDirection = moveDirection;
-		
-		isSavePoint = false;
+		this.direction = direction;
 	}
 
 	public void drawImg() 
 	{
-		StdDraw.picture(posX, posY, "images/npc/checkPoint/checkPoint_Down_2.png");
+		switch(direction)
+		{
+		case Direction.DOWN: StdDraw.picture(posX, posY, "images/npc/shop/shop_down.png"); break;
+		case Direction.UP: StdDraw.picture(posX, posY, "images/npc/shop/shop_uo.png"); break;
+		case Direction.LEFT: StdDraw.picture(posX, posY, "images/npc/shop/shop_left.png"); break;
+		case Direction.RIGHT: StdDraw.picture(posX, posY, "images/npc/shop/shop_right.png"); break;
+		}
 	}
 
 	public int checkCollision(Rectangle rect) 
@@ -130,15 +115,5 @@ public class NPC_CheckPoint extends NPC
 			return true;
 		else
 			return false;
-	}
-	
-	public void setSavePoint(Player player)
-	{
-		this.isSavePoint = true;
-	}
-	
-	public boolean isSavePoint()
-	{
-		return isSavePoint;
 	}
 }
