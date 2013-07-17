@@ -1,11 +1,11 @@
 XXXXXXXXXXXXXXXX
-TSX            X
-X X            X
+T X         S  X
+X X           SX
 X X            X
 X X            E
-X X            X
-X X            X
-X              X
+X X         X  X
+X X         X  X
+X           X  X
 XXXXXXXXXXXXXXXX
 
 [triggers]
@@ -13,13 +13,20 @@ XXXXXXXXXXXXXXXX
 14,4 = TRIGGER_PLAYER_BACK
 
 [items]
-7,4 = ITEM_HEART
-9,3 = ITEM_HEART
-6,1 = ITEM_COINS
-12,5 = ITEM_MANA
+14,7 = ITEM_COINS
+13,7 = ITEM_COINS
+14,6 = ITEM_COINS
+13,6 = ITEM_COINS
 
 [npc]
+13,2 = NPC_SHOP_DOWN
 
 [enemy]
+3,3 = ENEMY_KIDHIPSTER_RIGHT
+5,1 = ENEMY_KIDHIPSTER_DOWN
+14,5 = ENEMY_KIDHIPSTER_LEFT
 
 [collectables]
+3,1 = ITEM_HEALTH_BOTTLE
+3,2 = ITEM_MANA_BOTTLE
+4,1 = ITEM_HEALTH_BOTTLE

@@ -1,16 +1,32 @@
 import java.awt.Color;
 import java.awt.Font;
 
-
+/**
+ * Enthaelt die Informationen zu den einzelnen Shop-Items, wie zum Beispiel deren
+ * Preis, das benoetigte Level und eine Kurzbeschreibung.
+ * @author Mike Bechtel
+ *
+ */
 public class Shop_Descriptions 
 {
+	/**
+	 * Speichert den geoeffneten Shop
+	 */
 	Shop shop;
 	
+	/**
+	 * Konstruktor des Beshreibung
+	 * @param shop - Zugehoeriger Shop
+	 */
 	public Shop_Descriptions(Shop shop)
 	{
 		this.shop = shop;
 	}
 	
+	/**
+	 * Gibt die Kurzbeschreibung der selektierten Waffe zurueck und zeichnet diese
+	 * @param wep - Selektierte Waffe
+	 */
 	public void getWeaponInfo(Weapon wep)
 	{
 		String[] info;
@@ -162,6 +178,10 @@ public class Shop_Descriptions
 		StdDraw.textLeft(shop.screenMidX + 30, shop.screenMidY - 139, "" + getPrice(wep));
 	}
 	
+	/**
+	 * Gibt die Kurzbeschreibung der selektierten Ruestung zurueck und zeichnet diese
+	 * @param wep - Selektierte Ruestung
+	 */
 	public void getArmorInfo(Armor wep)
 	{
 		String[] info;
@@ -210,6 +230,10 @@ public class Shop_Descriptions
 		StdDraw.textLeft(shop.screenMidX + 30, shop.screenMidY - 139, "" + getPrice(wep));
 	}
 	
+	/**
+	 * Gibt die Kurzbeschreibung des selektierten Items zurueck und zeichnet diese
+	 * @param wep - Selektiertes Item
+	 */
 	public void getItemInfo(Collectable wep)
 	{
 		String[] info;
@@ -263,7 +287,11 @@ public class Shop_Descriptions
 		StdDraw.textLeft(shop.screenMidX + 30, shop.screenMidY - 139, "" + getPrice(wep));
 	}
 	
-	
+	/**
+	 * Gibt das benoetigte Level der Auswahl zurueck
+	 * @param itm - Ausgewaehltes Item
+	 * @return Benoetigtes Level
+	 */
 	public int getReqLvl(Collectable itm)
 	{
 		int lvl = 1;
@@ -288,6 +316,11 @@ public class Shop_Descriptions
 		return lvl;
 	}
 	
+	/**
+	 * Gibt den Preis der Auswahl zurueck
+	 * @param itm - Ausgewaehltes Item
+	 * @return Preis
+	 */
 	public int getPrice(Collectable itm)
 	{
 		int price = 0;
@@ -316,6 +349,10 @@ public class Shop_Descriptions
 		return price;
 	}
 	
+	/**
+	 * Zeichnet die Information
+	 * @param info - Zu zeichnende Information
+	 */
 	private void drawInfo(String [] info)
 	{
 		int lines = info.length;

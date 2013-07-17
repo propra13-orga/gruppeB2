@@ -1,12 +1,8 @@
 import java.awt.Rectangle;
 
 /**
- *  <i>Block</i>. Diese abstrakte Klasse stellt die Spielbloecke des Spiels dar.
+ *  Diese abstrakte Klasse stellt die Spielbloecke des Spiels dar.
  *  Sie erben von der Klasse Rectangle, um die Kollisionen zu realisieren.
- *  Die Methoden <i>isHidden</i> und <i>setHidden</i> werden hier direkt implementiert,
- *  da ausnahmslos jeder Block diese Methoden besitzen muss (zur korrekten Spielfeld-
- *  zeichnung).
- * 
  *  <p>
  *  Die vererbten, abstrakten Methoden beschreiben genauer die Eigenschaften des
  *  speziellen Blocks fuer die Logik des Spiels.
@@ -15,10 +11,6 @@ import java.awt.Rectangle;
 abstract class Block_Block extends Rectangle
 {
 	private static final long serialVersionUID = 1L;
-	
-	//Speichert einen Wahrheitswert, ob dieser Block gerade auf dem Spielfeld zu sehen
-	//ist (gezeichnet werden soll) oder nicht
-	protected boolean hidden;
 	
     /**
      * Konstruktor eines Block-Objekts
@@ -33,6 +25,11 @@ abstract class Block_Block extends Rectangle
 		super(posX, posY, sizeX, sizeY);
 	}
 	
+	/**
+	 * Prueft die Kollision des Block-Objektes mit dem uebergebenen Rectangle.
+	 * 
+	 * @param rect - Das Rectangle-Objekt fuer welches die Kollision geprueft wird
+	 */
 	public int checkCollision(Rectangle rect)
 	{	
 		if(this.intersects(rect) && this.isSolid())
@@ -59,7 +56,19 @@ abstract class Block_Block extends Rectangle
 	
 	//-------------------------------------------------------------------------
 	
+	/**
+	 * Gibt zurueck, ob der Block als solide gilt
+	 * @return <b>true</b> wenn der Block solide ist, <b>false</b> wenn nicht
+	 */
 	public abstract boolean isSolid();
+	
+	/**
+	 * Gibt eine String-Repraesentation des Blocks zurueck
+	 */
 	public abstract String toString();
+	
+	/**
+	 * Zeichnet den Block auf das Spielfeld
+	 */
 	public abstract void drawImg();
 }

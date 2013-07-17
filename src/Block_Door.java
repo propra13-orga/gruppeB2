@@ -1,14 +1,16 @@
 import java.awt.Rectangle;
 
 /**
- *  <i>Door</i>. Respaesentiert das Tuer-Objekt zum Wechsel zwischen den
- *  einzelnen Leveln.
+ *  Respaesentiert das Tuer-Objekt zum Wechsel zwischen den
+ *  einzelnen Raeumen.
  */
 public class Block_Door extends Block_Block
 {
 	private static final long serialVersionUID = 1L;
 	
-	//x- und y-Position, an welcher der Ausgang sich auf dem Spielfeld befindet.
+	/**
+	 * Speichert die x- und y-Position des Blocks auf dem Spielfeld
+	 */
 	private double posX, posY;
 	
     /**
@@ -16,6 +18,8 @@ public class Block_Door extends Block_Block
      *
      * @param posX - die x-Position der Tuer (Rectangle)
      * @param posY - die y-Position der Tuer (Rectangle)
+     * @param sizeX - x-Groesse des Objekts
+     * @param sizeY - y-Groesse des Objekts
      */
 	public Block_Door(int posX, int posY, int sizeX, int sizeY)
 	{
@@ -27,6 +31,12 @@ public class Block_Door extends Block_Block
 		this.posY = posY;		
 	}
 	
+	/**
+	 * Prueft die Kollision des Door-Objektes mit dem uebergebenen Rectangle.
+	 * 
+	 * @param rect - Das Rectangle-Objekt fuer welches die Kollision geprueft wird
+	 * @return ein <b>int</b>, ob eine Kollision stattfindet oder nicht
+	 */
 	public int checkCollision(Rectangle rect)
 	{
 		if(this.intersects(rect) && rect instanceof Player)

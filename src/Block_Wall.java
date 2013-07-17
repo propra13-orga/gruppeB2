@@ -1,16 +1,20 @@
 /**
- *  <i>Wall</i>. Respaesentiert das Wand-Objekt, welches die nicht begehbare Wand
+ *  Respaesentiert das Wand-Objekt, welches die nicht begehbare Wand
  *  dastellt
  */
 public class Block_Wall extends Block_Block
 {
 	private static final long serialVersionUID = 1L;
 	
-	//Zufallsvariable um jedem Bodenobjekt ein zufaelliges Bild zuzuordnen
-	//(damit die Optik nicht allzu monoton aussieht)
+	/**
+	 * Speichert fuer jedes Floor-Objekt eine Zufallszahl, damit das dargestellte
+	 * Image variiert
+	 */
 	private double rand;
 	
-	//x- und y-Position, an welcher der Ausgang sich auf dem Spielfeld befindet.
+	/**
+	 * Speichert die x- und y-Position des Blocks auf dem Spielfeld
+	 */
 	private double posX, posY;
 	
     /**
@@ -18,6 +22,8 @@ public class Block_Wall extends Block_Block
      *
      * @param posX - die x-Position der Wand (Rectangle)
      * @param posY - die y-Position der Wand (Rectangle)
+     * @param sizeX - x-Groesse des Objekts
+     * @param sizeY - y-Groesse des Objekts
      */
 	public Block_Wall(int posX, int posY, int sizeX, int sizeY)
 	{
@@ -27,9 +33,6 @@ public class Block_Wall extends Block_Block
 		
 		this.posX = posX;
 		this.posY = posY;
-		
-		//Wird als versteckt initialisiert
-		hidden = true;	
 		
 		//Jedes Objekt bekommt ein zufaelliges Bild
 		rand = Math.random();

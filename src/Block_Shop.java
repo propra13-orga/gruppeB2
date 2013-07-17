@@ -1,23 +1,29 @@
 /**
- *  <i>Floor</i>. Respaesentiert das Boden-Objekt, welches den begehbaren
- *  Untergrund des Spielfeldes darstellt.
+ *  Respaesentiert das Shop-Objekt, welches Kisten und Faesser
+ *  auf dem Spielfeld darstellt (bevorzugt beim Shop-NPC zu finden)
  */
 public class Block_Shop extends Block_Block
 {
 	private static final long serialVersionUID = 1L;
 	
-	//Zufallsvariable um jedem Bodenobjekt ein zufaelliges Bild zuzuordnen
-	//(damit die Optik nicht allzu monoton aussieht)
+	/**
+	 * Speichert fuer jedes Floor-Objekt eine Zufallszahl, damit das dargestellte
+	 * Image variiert
+	 */
 	private double rand;
 	
-	//x- und y-Position, an welcher der Ausgang sich auf dem Spielfeld befindet.
+	/**
+	 * Speichert die x- und y-Position des Blocks auf dem Spielfeld
+	 */
 	private double posX, posY;
 	
     /**
-     * Konstruktor eines Floor-Objekts
+     * Konstruktor eines Shop-Objekts
      *
      * @param posX - die x-Position des Bodens (Rectangle)
      * @param posY - die y-Position des Bodens (Rectangle)
+     * @param sizeX - x-Groesse des Objekts
+     * @param sizeY - y-Groesse des Objekts
      */
 	public Block_Shop(int posX, int posY, int sizeX, int sizeY)
 	{		
@@ -27,9 +33,6 @@ public class Block_Shop extends Block_Block
 		
 		this.posX = posX;
 		this.posY = posY;
-		
-		//Wird als versteckt initialisiert
-		hidden = true;	
 		
 		//Jedes Objekt bekommt ein zufaelliges Bild
 		rand = Math.random();

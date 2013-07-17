@@ -6,26 +6,66 @@ import java.io.IOException;
 
 import javax.swing.JOptionPane;
 
-
+/**
+ * Stellt das In-Game-Menu dar (wenn der Spieler waehrend des Spiels die ESC
+ * Taste drueckt.
+ * @author Mike Bechtel
+ *
+ */
 public class InGameMenu 
 {
+	/**
+	 * Speichert, ob das Menu noch geoeffnet ist
+	 */
 	boolean menuOn;
 	
+	/**
+	 * Speichert, welche Layer gezeichnet werden sollen
+	 */
 	boolean mainSelOn, itemSelOn, itemUseOn;
 	
+	/**
+	 * Speichert das Eltern-Spielfeld, auf welchem das Menu gezeichnet wird
+	 */
 	GameField parent;
+	/**
+	 * Speichert den Sound-Manager
+	 */
 	Manager_Sound snd;
 	
+	/**
+	 * Seichert die Schriftart
+	 */
 	Font font;
 	
+	/**
+	 * Speichert die x-Mitte des Fensters
+	 */
 	double screenMidX;
+	/**
+	 * Speichert die y-Mitte des Fensters
+	 */
 	double screenMidY;
 	
+	/**
+	 * Speichert den Tasten-Manager
+	 */
 	Manager_Key key;
 	
+	/**
+	 * Speichert die momentane Auswahl bzw. Item-Auswahl
+	 */
 	int selection, itemSel;
+	/**
+	 * Hilfsvariablen zur Darstellung des Item-Auswahlmenus
+	 */
 	int upper, lower, posAbs;
 	
+	/**
+	 * Konstruktor des InGameMenus
+	 * @param field - Eltern-Spielfeld, auf dem das InGameMenu gezeichnet wird
+	 * @param snd - Sound-Manager wird vom Spielfeld uebergeben
+	 */
 	public InGameMenu(GameField field, Manager_Sound snd)
 	{
 		menuOn = true;
@@ -59,6 +99,9 @@ public class InGameMenu
 		run();
 	}
 	
+	/**
+	 * Zeichnet das Menu und die entsprechenden Layer
+	 */
 	public void draw()
 	{
 		StdDraw.setPenColor(Color.WHITE);
@@ -129,6 +172,9 @@ public class InGameMenu
 		}
 	}
 	
+	/**
+	 * Spielschleife des Menus
+	 */
 	public void run()
 	{
 		while(menuOn)

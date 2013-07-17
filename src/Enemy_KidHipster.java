@@ -1,46 +1,101 @@
 import java.awt.Rectangle;
 
-
+/**
+ * Stellt den Gegner "KidHipster" dar. Erbt von der Oberklasse Enemy.
+ * @author Mike Bechtel
+ *
+ */
 public class Enemy_KidHipster extends Enemy
 {
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * Hilftvariablen zur flussigen Animation
+	 */
 	long delay, anim;
 	
+	/**
+	 * Geschwindigkeit, mit welcher sich der Feind ueber das Spielfeld bewegt
+	 */
 	final double SPEED = 0.02;
 	
+	/**
+	 * Array, in dem die Attacken gespeichert werden, die dem KidHipster
+	 * zur Verfuegung stehen
+	 */
 	private Attack[] attacks = new Attack[]
 			{
 			Attacks.kidhipster_smartphone,
 			Attacks.kidhipster_metrobarriere
 			};
 	
+	/**
+	 * Array, in dem die Zauber gespeichert werden, die dem KidHipster
+	 * zur Verfuegung stehen
+	 */
 	private Magic[] magics = new Magic[]
 			{
 			Attacks.kidhipster_obey
 			};
 	
+	/**
+	 * Dateipfad der Avatars (fuer Spielfelddialog)
+	 */
 	private final String AVATAR = "images/enemy/kid_hipster/avatar.png";	
 	
+	/**
+	 * Array mit den Dialog-Seiten
+	 */
 	private final String [][] DIALOG = new String[][]
 			{
 			{"Du Fashiongurke sieht ja", "lächerlich aus! Geh", "lieber in nen Keller!", "                                      weiter mit [e]"},
 			{"Was?! Du bist ja immernoch", "hier!", "COME AT ME BRO!", "                                      weiter mit [e]"}
 			};
 	
+	/**
+	 * Speichert die momentan angezeige Dialog-Seite
+	 */
 	private int currentPage = 0;
 	
+	/**
+	 * x- und y-Position des Gegners auf dem Spielfeld
+	 */
 	private double posX, posY;
 
-	//Variablen zur Animation der Bewegung
+	/**
+	 * Hilfsvariable zur Animation der Bewegung
+	 */
 	int swpL = 0;
+	/**
+	 * Hilfsvariable zur Animation der Bewegung
+	 */
 	int swpR = 0;
+	/**
+	 * Hilfsvariable zur Animation der Bewegung
+	 */
 	int swpU = 0;
+	/**
+	 * Hilfsvariable zur Animation der Bewegung
+	 */
 	int swpD = 0;
 	
+	/**
+	 * Speichert die Ausrichtung des Gegner auf dem Feld
+	 */
 	private final String DIRECTION;
+	/**
+	 * Speichert das Level des Gegners
+	 */
 	private final int LEVEL;
 	
+	
+	/**
+	 * Konstruktor eines KidHipsters
+	 * @param posX - x-Position auf dem Spielfeld
+	 * @param posY - y-Position auf dem Spielfeld
+	 * @param direction - Ausrichtung des Gegners auf dem Feld
+	 * @param delay - Hilfsvariable zur fluessigen Animation
+	 */
 	public Enemy_KidHipster(int posX, int posY, String direction, long delay)
 	{
 		super(posX, posY, 40, 40);
@@ -66,11 +121,21 @@ public class Enemy_KidHipster extends Enemy
 		this.xp = LEVEL * 20;
 		this.gold = LEVEL * 50 + (int)(Math.random() * ((50 - 10) + 10) + 10);
 
+		this.type = Types.hip;
+		
 		this.attacks[0].setStrength(20);
 		this.attacks[1].setStrength(10);
 		this.magics[0].setStrength(30);
 	}
 	
+	/**
+	 * Konstruktor eines KidHipsters
+	 * @param posX - x-Position auf dem Spielfeld
+	 * @param posY - y-Position auf dem Spielfeld
+	 * @param direction - Ausrichtung des Gegners auf dem Feld
+	 * @param level - Level des Gegners
+	 * @param delay - Hilfsvariable zur fluessigen Animation
+	 */
 	public Enemy_KidHipster(int posX, int posY, String direction, int level, long delay)
 	{
 		super(posX, posY, 40, 40);
@@ -95,8 +160,13 @@ public class Enemy_KidHipster extends Enemy
 		
 		this.xp = LEVEL * 20;
 		this.gold = LEVEL * 50 + (int)(Math.random() * ((50 - 10) + 10) + 10);
+		
+		this.type = Types.hip;
 	}
 
+	/**
+	 * Zeichnet das Bild des Gegners, wenn er sich nicht bewegt
+	 */
 	public void drawImg() 
 	{
 		switch(DIRECTION)
@@ -116,7 +186,10 @@ public class Enemy_KidHipster extends Enemy
 		}
 	}
 
-	@Override
+	/**
+	 * Prueft, ob der Spieler sich in Angriffslinie befindet
+	 * @param player - Player, fuer den die Angriffslinie geprueft wird
+	 */
 	public boolean playerInLine(Player player) 
 	{
 		double playerPosX = player.getCenterX();
@@ -137,6 +210,11 @@ public class Enemy_KidHipster extends Enemy
 		return false;
 	}
 	
+	/**
+	 * Methode, welche den Gegner sich zum Spieler bewegen laesst
+	 * @param player - Spieler, zu dem sich der Gegner bewegt
+	 * @param delta - Hilfsvariable zur Animation
+	 */
 	public void moveToPlayer(Player player, long delta)
 	{
 		switch(DIRECTION)
@@ -149,6 +227,10 @@ public class Enemy_KidHipster extends Enemy
 		this.swapImg(delta);
 	}
 	
+	/**
+	 * Prueft die Kollision des Gegner mit einem anderen Rectangle
+	 * @param rect - Rectangle, mit dem die Kollision gecheckt wird
+	 */
 	public int checkCollision(Rectangle rect) 
 	{
 		if(this.intersects(rect))
@@ -175,23 +257,35 @@ public class Enemy_KidHipster extends Enemy
 	
 	//------------------------------------------------------------------------
 	
-	
+	/**
+	 * Gibt den Dateipfad des Avatars zurueck
+	 */
 	public String getAvatar() 
 	{
 		return AVATAR;
 	}
 	
+	/**
+	 * Gibt den Level des Gegeners zurueck
+	 */
 	public int getLevel()
 	{
 		return LEVEL;
 	}
 	
+	/**
+	 * Gibt den Startdialog (erste Seite) des Dialogs zurueck
+	 */
 	public String[] startDialog()
 	{
 		currentPage = 0;
 		return DIALOG[0];
 	}
 	
+	/**
+	 * Gibt die Dialogseite <i>int</i> zurueck
+	 * @param page - anzuzeigende Seite
+	 */
 	public String[] getDialog(int page) 
 	{
 		if(page <= DIALOG.length)
@@ -203,6 +297,9 @@ public class Enemy_KidHipster extends Enemy
 			return null;
 	}	
 	
+	/**
+	 * Gibt den gesamten Dialog zurueck
+	 */
 	public String[] getDialog() 
 	{
 		if(currentPage >= 0 && currentPage < DIALOG.length)
@@ -211,6 +308,9 @@ public class Enemy_KidHipster extends Enemy
 			return null;
 	}
 	
+	/**
+	 * Gibt die naechste Dialogseite zurueck
+	 */
 	public String[] getNextDialogPage()
 	{
 		if(currentPage < DIALOG.length)
@@ -222,6 +322,9 @@ public class Enemy_KidHipster extends Enemy
 			return null;
 	}
 	
+	/**
+	 * Prueft, ob es eine weitere Dialogseite gibt
+	 */
 	public boolean hasNextPage()
 	{
 		return currentPage < DIALOG.length;
@@ -271,6 +374,10 @@ public class Enemy_KidHipster extends Enemy
 		return posY;
 	}
 	
+	/**
+	 * Methode, die die Bewegung des Gegner animiert
+	 * @param delta - Hilfsvariable zur fluessigen Animation
+	 */
 	public void swapImg(long delta)
 	{		anim = anim + (delta/1000000);
 	
@@ -389,16 +496,25 @@ public class Enemy_KidHipster extends Enemy
 		}
 	}
 	
+	/**
+	 * Gibt eine String-Repraesentation des Gegners zurueck
+	 */
 	public String toString()
 	{
 		return "kid_hipster";
 	}
 	
+	/**
+	 * Gibt den Namen des Gegners zur konkrekten Dialoganzeige zurueck
+	 */
 	public String getName()
 	{
 		return "Kid Hipster";
 	}
 	
+	/**
+	 * Gibt die Ausrichtung des Gegners zurueck
+	 */
 	public String getDirection()
 	{
 		if(this.DIRECTION.equals(Direction.DOWN))
@@ -416,6 +532,9 @@ public class Enemy_KidHipster extends Enemy
 	
 	//----------------------------------------------------------------------------------------
 	
+	/**
+	 * Gibt eine zufaellige Attacke zurueck, welche im Kampf benutzt wird
+	 */
 	public Attack getEnemyAttack()
 	{
 		double att= Math.random();
@@ -426,6 +545,9 @@ public class Enemy_KidHipster extends Enemy
 			return this.attacks[1];
 	}
 	
+	/**
+	 * Gibt einen zufaelligen Zauber zuruek, welcher im Kapf benutzt werden kann
+	 */
 	public Magic getEnemyMagic()
 	{
 		return this.magics[0];

@@ -6,32 +6,85 @@ import java.io.IOException;
 
 import javax.swing.JOptionPane;
 
-
+/**
+ * Stellt den Shop des Spiels dar. Berechnet Logic und laesst die verschiedenen
+ * Layer auf der Zeichenflaeche zeichnen.
+ * @author Mike Bechtel
+ *
+ */
 public class Shop 
 {
+	/**
+	 * Speichert, ob der Shop noch aktiv ist
+	 */
 	boolean shopOn;
 	
+	/**
+	 * Speichert das Spielfeld, auf dem der Shop aufgerufen wurde
+	 */
 	GameField field;
+	/**
+	 * Speicher den Sound-Manager fuer die Sound-Wiedergabe
+	 */
 	Manager_Sound snd;
+	/**
+	 * Speichert den Key-Manager fuer Tastendruecke
+	 */
 	Manager_Key key;
 	
+	/**
+	 * Speicher die shopbaren Items
+	 */
 	Shop_Items sells;
 	
+	/**
+	 * Speichert die Schriftart
+	 */
 	Font font;
-	Font fontBold;
 	
+	/**
+	 * Speichert den Spieler
+	 */
 	Player player;
+	/**
+	 * Speichert den Preis des ausgewaehlten Items
+	 */
 	int price;
+	/**
+	 * Speichert das ausgewaehlte Item
+	 */
 	Collectable item;
-
+	
+	/**
+	 * Speichert die x- und y-Fenstermitte
+	 */
 	double screenMidX, screenMidY;
 	
+	/**
+	 * Speichert <b>booleans</b> welche Layer gezeichnet werden
+	 */
 	boolean weaponsOn, armorOn, itemsOn, buyOn, successOn, errorOn;
 	
+	/**
+	 * Speichert, ob der Spieler ein Item kaufen will oder Abbrechen will
+	 */
 	boolean buy, abort;
 	
-	int selection, maxSelection, selTab, time;
+	/**
+	 * Speichert die momentane Auswahl, die maximale Auswahl, das selektierte Tab
+	 */
+	int selection, maxSelection, selTab;
 	
+	/**
+	 * Hilfsvariable fuer fluessige Animation
+	 */
+	int time;
+	
+	/**
+	 * Konstruktor des Shops
+	 * @param field - GameField in dem der Shop erzeugt wurde
+	 * @param snd - Sound-Manager des GameFields
+	 */
 	public Shop(GameField field, Manager_Sound snd)
 	{
 		shopOn = true;
@@ -43,7 +96,6 @@ public class Shop
 		{
 			Font lfont = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream("fonts/battle_font.ttf"));
 			font = lfont.deriveFont(Font.TRUETYPE_FONT, 16);
-			fontBold = lfont.deriveFont(Font.BOLD, 16);
 		} 
 		catch (FontFormatException | IOException e) 
 		{
@@ -73,6 +125,9 @@ public class Shop
 		run();
 	}
 	
+	/**
+	 * Zeichnet den Shop und dessen Layer
+	 */
 	public void draw()
 	{
 		switch(selTab)
@@ -147,6 +202,9 @@ public class Shop
 		}
 	}
 	
+	/**
+	 * Spielschleife des Shops
+	 */
 	public void run()
 	{
 		while(shopOn)

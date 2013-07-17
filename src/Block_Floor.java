@@ -1,16 +1,20 @@
 /**
- *  <i>Floor</i>. Respaesentiert das Boden-Objekt, welches den begehbaren
+ *  Respaesentiert das Boden-Objekt, welches den begehbaren
  *  Untergrund des Spielfeldes darstellt.
  */
 public class Block_Floor extends Block_Block
 {
 	private static final long serialVersionUID = 1L;
-	
-	//Zufallsvariable um jedem Bodenobjekt ein zufaelliges Bild zuzuordnen
-	//(damit die Optik nicht allzu monoton aussieht)
+
+	/**
+	 * Speichert fuer jedes Floor-Objekt eine Zufallszahl, damit das dargestellte
+	 * Image variiert
+	 */
 	private double rand;
 	
-	//x- und y-Position, an welcher der Ausgang sich auf dem Spielfeld befindet.
+	/**
+	 * Speichert die x- und y-Position des Blocks auf dem Spielfeld
+	 */
 	private double posX, posY;
 	
     /**
@@ -18,6 +22,8 @@ public class Block_Floor extends Block_Block
      *
      * @param posX - die x-Position des Bodens (Rectangle)
      * @param posY - die y-Position des Bodens (Rectangle)
+     * @param sizeX - x-Groesse des Objekts
+     * @param sizeY - y-Groesse des Objekts
      */
 	public Block_Floor(int posX, int posY, int sizeX, int sizeY)
 	{		
@@ -27,9 +33,6 @@ public class Block_Floor extends Block_Block
 		
 		this.posX = posX;
 		this.posY = posY;
-		
-		//Wird als versteckt initialisiert
-		hidden = true;	
 		
 		//Jedes Objekt bekommt ein zufaelliges Bild
 		rand = Math.random();
@@ -41,15 +44,14 @@ public class Block_Floor extends Block_Block
      */
 	public void drawImg()
 	{
-		//if(!this.hidden)
-			if(rand < 0.25)
-				StdDraw.picture(posX, posY, "images/arena/Ground_Tile_"+1+".png");
-			else if(rand < 0.5)
-				StdDraw.picture(posX, posY, "images/arena/Ground_Tile_"+2+".png");
-			else if(rand < 0.75)
-				StdDraw.picture(posX, posY, "images/arena/Ground_Tile_"+3+".png");
-			else
-				StdDraw.picture(posX, posY, "images/arena/Ground_Tile_"+4+".png");
+		if(rand < 0.25)
+			StdDraw.picture(posX, posY, "images/arena/Ground_Tile_"+1+".png");
+		else if(rand < 0.5)
+			StdDraw.picture(posX, posY, "images/arena/Ground_Tile_"+2+".png");
+		else if(rand < 0.75)
+			StdDraw.picture(posX, posY, "images/arena/Ground_Tile_"+3+".png");
+		else
+			StdDraw.picture(posX, posY, "images/arena/Ground_Tile_"+4+".png");
 	}
 	
     /**

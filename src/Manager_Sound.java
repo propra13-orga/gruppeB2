@@ -4,18 +4,37 @@ import java.net.MalformedURLException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
-
+/**
+ * Der Sound-Manager laedt die versch. Sounddateien und spielt diese bei Bedarf ab bzw.
+ * beendet das Abspielen
+ * @author Mike Bechtel
+ *
+ */
 public class Manager_Sound 
 {
+	/**
+	 * File fuer die jeweilige Sound-Datei
+	 */
 	private File file;
+	/**
+	 * ArrayList aus AudioClips, in dem alle Sounds gespeichert werden
+	 */
 	private ArrayList<AudioClip> sounds;
 	
+	/**
+	 * Konstruktor des Managers. Bei der Konstruktion des Managers werden direkt
+	 * die Sounds geladen
+	 */
 	public Manager_Sound()
 	{
 		sounds = new ArrayList<AudioClip>();
 		this.loadSounds();
 	}
 	
+	/**
+	 * Liest die Sound-Dateien ein
+	 * @throws MalformedURLException Wenn die Sound-Datei nicht gefunden wird.
+	 */
 	@SuppressWarnings("deprecation")
 	public void loadSounds()
 	{
@@ -44,11 +63,19 @@ public class Manager_Sound
 		}
 	}
 	
+	/**
+	 * Spiel einen Sound aus der ArrayList ab
+	 * @param i - Spiel den Sound an der Position <b>i</b> in der ArrayList ab
+	 */
 	public void playSound(int i)
 	{
 		AudioClip play = sounds.get(i);
 		play.play();
 	}
+	/**
+	 * Stoppt wenn moeglich einen Sound aus der ArrayList
+	 * @param i - Stoppt den Sound an der Position <b>i</b> in der ArrayList
+	 */
 	public void stopSound(int i)
 	{
 		AudioClip play = sounds.get(i);

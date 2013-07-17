@@ -3,34 +3,71 @@ import java.awt.event.*;
 
 public class Manager_Key
 {
+	/**
+	 * Speichert das GameField um ihm Tastendruecke anzuzeigen
+	 */
 	private GameField field;
+	/**
+	 * Speichert den BattleScreen um ihm Tastendruecke anzuzeigen
+	 */
 	private BattleScreen battle;
+	/**
+	 * Speichert das InGameMenu um ihm Tastendruecke anzuzeigen
+	 */
 	private InGameMenu menu;
+	/**
+	 * Speichert das Shop-Interface um ihm Tastendruecke anzuzeigen
+	 */
 	private Shop shop;
 	
+	/**
+	 * Hilfsvariable zur fluessigen Animation
+	 */
 	long delta;
+	/**
+	 * Speichert die vorherige Auswahl einer Szene
+	 */
 	int selBefore;
 	
+	/**
+	 * Konstruktor fuer das GameField
+	 * @param field - Das Spielfeld
+	 */
 	public Manager_Key(GameField field)
 	{
 		this.field = field;
 	}
-	
+
+	/**
+	 * Konstruktor fuer den BattleScreen
+	 * @param battle - Der Kampf
+	 */
 	public Manager_Key(BattleScreen battle)
 	{
 		this.battle = battle;
 	}
 
+	/**
+	 * Konstruktor fuer das InGameMenu
+	 * @param menu - Das InGameMenu
+	 */
 	public Manager_Key(InGameMenu menu)
 	{
 		this.menu = menu;
 	}
-	
+
+	/**
+	 * Konstruktor fuer den Shop
+	 * @param shop - Der Shop
+	 */
 	public Manager_Key(Shop shop)
 	{
 		this.shop = shop;
 	}
 	
+	/**
+	 * Kuemmert sich um die Tasteneingaben des Benutzers
+	 */
 	public void handleKeyInput()
 	{	
 		if(field != null)
@@ -135,8 +172,24 @@ public class Manager_Key
 		}
 		
 		else if(battle != null)
-		{			
-			if(battle.winOn)
+		{					
+			if(battle.newAttOn)
+			{
+				if(StdDraw.isKeyPressedSingle(KeyEvent.VK_E) || StdDraw.isKeyPressedSingle(KeyEvent.VK_ENTER))
+				{
+					battle.battleOn = false;
+					battle.snd.stopSound(7);
+				}
+			}			
+			else if(battle.lvlOn)
+			{
+				if(StdDraw.isKeyPressedSingle(KeyEvent.VK_E) || StdDraw.isKeyPressedSingle(KeyEvent.VK_ENTER))
+				{
+					battle.battleOn = false;
+					battle.snd.stopSound(7);
+				}
+			}	
+			else if(battle.winOn)
 			{
 				if(StdDraw.isKeyPressedSingle(KeyEvent.VK_E) || StdDraw.isKeyPressedSingle(KeyEvent.VK_ENTER))
 				{

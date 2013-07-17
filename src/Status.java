@@ -1,17 +1,34 @@
 import java.awt.Color;
 import java.awt.Font;
 
-
+/**
+ * Stellt die Statusleiste des Spielfeldes zur Verfuegung
+ * @author Mike Bechtel
+ *
+ */
 public class Status 
 {
+	/**
+	 * Speichert den Spieler
+	 */
 	Player player;
+	/**
+	 * Platzhalter fuer die NPC- und Enemy-Avatare
+	 */
 	String avatar;
 	
+	/**
+	 * Konstruktor der Statusleiste
+	 * @param player - Spieler, von dem der Status gezeichnet wird
+	 */
 	public Status(Player player)
 	{
 		this.player = player;
 	}
 	
+	/**
+	 * Zeichnet die Statusleiste
+	 */
 	public void draw()
 	{
 		Font font = new Font("Arial", Font.BOLD, 18);
@@ -33,6 +50,9 @@ public class Status
 		StdDraw.picture(503, 28, "images/status/dialog_field.png");
 	}
 	
+	/**
+	 * Zeichnet die NPC- und Enemy-Dialoge
+	 */
 	public void drawDialog(String [] dialog)
 	{
 		StdDraw.picture(503, 28, "images/status/dialog_field.png");
@@ -49,6 +69,10 @@ public class Status
 			StdDraw.textLeft(353, 48 - l * 15, dialog[l]);
 	}
 	
+	/**
+	 * Zeichnet die Interaktions-Info (Druecke E fuer Interaktion)
+	 * @param dialog - Interaktionsdialog
+	 */
 	public void drawInfo(String [] dialog)
 	{
 		StdDraw.picture(503, 28, "images/status/dialog_field.png");
@@ -64,6 +88,10 @@ public class Status
 			StdDraw.textLeft(353, 48 - l * 15, dialog[l]);
 	}
 	
+	/**
+	 * Setzt das zu zeichnende Avatar
+	 * @param avatar - Zu zeichnendes Avatar
+	 */
 	public void setAvatar(String avatar)
 	{
 		this.avatar = avatar;

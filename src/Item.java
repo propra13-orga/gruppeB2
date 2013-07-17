@@ -1,7 +1,7 @@
 import java.awt.Rectangle;
 
 /**
- *  <i>Item</i>. Diese abstrakte Klasse stellen die diversen Items des Spiels dar.
+ *  Diese abstrakte Klasse stellen die diversen Items des Spiels dar.
  *  Sie erben von der Klasse Rectangle, um die Kollisionen mit dem Spieler zu realisieren.
  * 
  *  <p>
@@ -12,10 +12,6 @@ import java.awt.Rectangle;
 abstract class Item extends Rectangle
 {
 	private static final long serialVersionUID = 1L;
-	
-	//Speichert einen Wahrheitswert, ob dieser Block gerade auf dem Spielfeld zu sehen
-	//ist (gezeichnet werden soll) oder nicht
-	protected boolean hidden;
 	
     /**
      * Konstruktor eines Item-Objekts
@@ -29,8 +25,17 @@ abstract class Item extends Rectangle
 	{
 		super(posX, posY, sizeX, sizeY);
 	}
-	
+
+	/**
+	 * Gibt eine String-Repraesentation des Item-Objekts zurueck
+	 */
 	public abstract String toString();
+	/**
+	 * Zeichnet das Item-Objekt auf dem Spielfeld
+	 */
 	public abstract void drawImg();
+	/**
+	 * Prueft die Kollision mit dem Spieler
+	 */
 	public abstract boolean checkCollision(Player player);
 }

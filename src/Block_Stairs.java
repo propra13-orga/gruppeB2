@@ -1,15 +1,17 @@
 import java.awt.Rectangle;
 
 /**
- *  <i>Stairs</i>. Respaesentiert das Stairs-Objekt, welches den Eingang 
- *  eines neuen Levels darstellt. Eventuell, um zum vorherigen Level
+ *  Respaesentiert das Stairs-Objekt, welches den Eingang 
+ *  eines neuen Raums darstellt. Auch, um zum vorherigen Raum
  *  zu kommen.
  */
 public class Block_Stairs extends Block_Block
 {
 	private static final long serialVersionUID = 1L;
 	
-	//x- und y-Position, an welcher der Eingang sich auf dem Spielfeld befindet.
+	/**
+	 * Speichert die x- und y-Position des Blocks auf dem Spielfeld
+	 */
 	private double posX, posY;
 	
     /**
@@ -17,6 +19,8 @@ public class Block_Stairs extends Block_Block
      *
      * @param posX - die x-Position der Treppe (Rectangle)
      * @param posY - die y-Position der Treppe (Rectangle)
+     * @param sizeX - x-Groesse des Objekts
+     * @param sizeY - y-Groesse des Objekts
      */
 	public Block_Stairs(int posX, int posY, int sizeX, int sizeY)
 	{
@@ -28,6 +32,12 @@ public class Block_Stairs extends Block_Block
 		this.posY = posY;
 	}
 	
+	/**
+	 * Prueft die Kollision des Stair-Objektes mit dem uebergebenen Rectangle.
+	 * 
+	 * @param rect - Das Rectangle-Objekt fuer welches die Kollision geprueft wird
+	 * @return ein <b>int</b>, ob eine Kollision stattfindet oder nicht
+	 */
 	public int checkCollision(Rectangle rect)
 	{
 		if(this.intersects(rect) && rect instanceof Player)

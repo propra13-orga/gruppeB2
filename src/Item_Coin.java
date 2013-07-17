@@ -1,12 +1,29 @@
 
-
+/**
+ * Stellt die einsammelbaren Muenzen des Spielfeldes dar. Erben von der Klasse
+ * Item.
+ * @author Mike Bechtel
+ *
+ */
 public class Item_Coin extends Item
 {
 	private static final long serialVersionUID = 1L;
 	
+	/**
+	 * Speichern x- und y-Position auf dem Spielfeld
+	 */
 	private double posX, posY;	
+	
+	/**
+	 * Speichert den Muenzwert des Coins-Objekts
+	 */
 	private final int value;
 
+	/**
+	 * Konstruktor eines Coin-Objektes
+	 * @param posX - x-Position auf dem Spielfeld
+	 * @param posY - y-Position auf dem Spielfeld
+	 */
 	public Item_Coin(int posX, int posY) 
 	{
 		super(posX, posY, 32, 32);
@@ -18,6 +35,14 @@ public class Item_Coin extends Item
 		value = (int)(Math.random() * ((100 - 10) + 1) + 10);
 	}
 	
+	/**
+	 * Konstruktor eines Coin-Objektes
+	 * @param posX - x-Position auf dem Spielfeld
+	 * @param posY - y-Position auf dem Spielfeld
+	 * @param sizeX - x-Groesse des Objekts
+	 * @param sizeY - y-Groesse des Objekts
+	 * @param value - Muenzwert der Coins
+	 */
 	public Item_Coin(int posX, int posY, int sizeX, int sizeY, int value)
 	{
 		super(posX, posY, sizeX, sizeY);
@@ -25,11 +50,18 @@ public class Item_Coin extends Item
 		this.value = value;
 	}
 	
+	/**
+	 * Gibt den Muenzwert der Coins zurueck
+	 * @return Muenzwert
+	 */
 	public int getValue()
 	{
 		return value;
 	}
 	
+	/**
+	 * Prueft die Kollision mit dem Spieler
+	 */
 	public boolean checkCollision(Player player)
 	{
 		if(this.intersects(player))
@@ -41,11 +73,17 @@ public class Item_Coin extends Item
 			return false;
 	}
 
+	/**
+	 * Gibt eine String-Repraesentation des Coin-Objekts zurueck
+	 */
 	public String toString() 
 	{
 		return "Coin";
 	}
 
+	/**
+	 * Zeichnet das Coins-Objekt (je nach Wert ein anderes Bild)
+	 */
 	public void drawImg() 
 	{
 		if(value < 50)

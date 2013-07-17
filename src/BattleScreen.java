@@ -5,53 +5,137 @@ import java.io.*;
 
 import javax.swing.JOptionPane;
 
-
+/**
+ * Die Hauptklasse des Kampfsystem. Kuemmert sich um die Logik und laesst die
+ * entsprechenden Layer des Kampfes zeichnen. Empfangt ausserdem die Tasteneingaben
+ * @author Mike Bechtel
+ *
+ */
 public class BattleScreen 
 {	
-	long delta = 0;
-	long last = 0;
-	long fps = 0;
+	/**
+	 * Diese drei Variablen dienen zur fluessigen und gleichmaessig schnellen Darstellung
+	 * von Animationen
+	 */
+	long delta, last, fps;
 	
+	/**
+	 * Eltern-Spielfeld, auf dem der Kampf ausgeloest wurde
+	 */
 	GameField parent;
 	
-	boolean introPlayed, showIntroDialog, selectionOn, angrOn, magicOn, inventarOn, escapeOn, itemUseOn, winOn, loseOn;
+	/**
+	 * <b>booleans</b> speichern, welches Layer zu zeichnen ist und welches nicht
+	 */
+	boolean introPlayed, showIntroDialog, selectionOn, angrOn, magicOn, inventarOn, escapeOn, itemUseOn, winOn, loseOn, lvlOn, newAttOn, newMagOn;
 
+	/**
+	 * Speichert, ob der Spieler am Ende des Kampfes gewonnen oder verloren hat
+	 */
 	boolean playerWins, playerLose;
 	
+	/**
+	 * Speichert, ob gerade ein Angriff des Spielers bzw. des Gegners in Gange ist
+	 */
 	boolean playerAttacks, enemyAttacks;
-	boolean animationFinished;
 	
+	/**
+	 * Speichert, ob dem Spieler die XP gutgeschrieben wurden
+	 */
+	boolean gotXP = false;
+	
+	/**
+	 * Speichert die vom Gegner benutzte Attacke / Magie
+	 */
 	double action = -1;
 	
+	/**
+	 * Speichert, ob der Kampf noch laeuft oder nicht
+	 */
 	boolean battleOn;
 	
+	/**
+	 * Speichert die Schriftart
+	 */
 	Font font;
 	
+	/**
+	 * Speichert den Gegner
+	 */
 	Enemy enemy;
+	/**
+	 * Speichert den Spieler
+	 */
 	Player player;
 	
+	/**
+	 * Speichert die Groesse des angezeigen Fensters
+	 */
 	private double width, heigth;
 	
+	/**
+	 * Speichert den x-Wert der Fenstermitte
+	 */
 	double screenMidX;
+	/**
+	 * Speichert den y-Wert der Fenstermitte
+	 */
 	double screenMidY;
 	
+	/**
+	 * Hilfsvariablen zur Animation
+	 */
 	double time, anim;
 	
+	/**
+	 * Der Manager, der die Tasteneingaben verarbeitet
+	 */
 	Manager_Key key;
+	/**
+	 * Sound-Manager, in dem die verschiedenen Sound gespeichert sind
+	 */
 	Manager_Sound snd;
 	
+	/**
+	 * Diese Klasse sorgt fuer das Zeichnen auf dem BattleScreen. Ist in verschiedene
+	 * Layer aufgeteilt
+	 */
 	BattleDialog dialogs;
-	BattleLogic logic;
 	
+	/**
+	 * Speichert die ausgewaehlte Selektion bzw. Item-Selektion
+	 */
 	int selection, itemSel;
+	/**
+	 * Hilftvariablen zur Darstellung des Items-Menu
+	 */
 	int lower, upper;
 
+	/**
+	 * Speichert die ausgewaehlte Attacke
+	 */
 	Attack attack;
+	/**
+	 * Speichert den ausgewaehlten Zauber
+	 */
 	Magic magic;
 	
+	/**
+	 * Speichert den errechneten Schaden eines Angriffs
+	 */
+	double dmg;
+	
+	/**
+	 * Konstruktor des Kampfes. Die Schriftart wird eingelesen, die Fenstermitte wird
+	 * berechnet und die zu Begin anzuzeigenden Layer werden gesetzt.
+	 * @param field - Spielfeld, auf dem der Kampf ausgeloest wurde
+	 * @param enemy - Gegner, der den Kampf ausgeloest hat
+	 */
 	public BattleScreen(GameField field, Enemy enemy)
 	{
 		battleOn = true;
+
+		delta = last = fps = 0;
 		
 		parent = field;
 		
@@ -79,7 +163,6 @@ public class BattleScreen
 		this.snd = field.snd;
 		
 		dialogs = new BattleDialog(this);
-		logic = new BattleLogic(this);
 		
 		time = 0;
 		anim = 0;
@@ -100,7 +183,7 @@ public class BattleScreen
 		
 		escapeOn = false;
 		
-		winOn = loseOn = false;
+		winOn = loseOn = lvlOn = newAttOn = newMagOn = false;
 		
 		selection = 1;
 		itemSel = 1;
@@ -109,6 +192,9 @@ public class BattleScreen
 		this.run();
 	}
 	
+	/**
+	 * Methode, die den Uebergang vom Spielfeld zum Kampf ausfuehrt
+	 */
 	private void playBlending()
 	{	
 		for(int i = 1; i <= 50; i++)
@@ -123,6 +209,9 @@ public class BattleScreen
 		last = System.nanoTime();
 	}
 	
+	/**
+	 * Zeichnet den Intro-Dialog solange bis der Spieler weiter gedrueckt hat
+	 */
 	private void playIntro()
 	{
 		StdDraw.show(5);
@@ -152,6 +241,9 @@ public class BattleScreen
 		}
 	}
 	
+	/**
+	 * Zeichnet den Kampf
+	 */
 	private void drawBattle()
 	{		
 		
@@ -168,6 +260,9 @@ public class BattleScreen
 
 //		drawStatus();		
 		
+
+		drawStatus();	
+		
 		
 		if(playerAttacks)
 			executeAttack(selection);
@@ -178,6 +273,12 @@ public class BattleScreen
 			dialogs.showWinDialog();
 		else if(loseOn)
 			dialogs.showLoseDialog();
+		else if(lvlOn)
+			dialogs.showLevelUp();
+		else if(newAttOn)
+			dialogs.showNewAttack();
+		else if(newMagOn)
+			dialogs.showNewMagic();
 		
 		else if(showIntroDialog)
 			dialogs.showIntroDialog();
@@ -198,13 +299,14 @@ public class BattleScreen
 		}		
 		
 		else if(escapeOn)
-			dialogs.showEscapeDialog();
-		
-
-		drawStatus();		
+			dialogs.showEscapeDialog();	
 		
 	}
 	
+	/**
+	 * Zeichnet die Statusleisten des Spieler und des Gegners
+	 * (Lebenspunkte, Mana)
+	 */
 	private void drawStatus()
 	{
 		StdDraw.setFont(font);
@@ -236,6 +338,10 @@ public class BattleScreen
 		StdDraw.text(screenMidX + 120, screenMidY - 75, (int)player.getHealth() + "/" + (int)player.getMaxHealth()); 
 	}
 	
+	/**
+	 * Methode, die den Angriff des Players ausfuehrt und zeichnen laesst.
+	 * @param selection - ausgewaehlte Attacke / Magie
+	 */
 	public void executeAttack(int selection)
 	{
 		if(angrOn)
@@ -254,7 +360,11 @@ public class BattleScreen
 				StdDraw.picture(screenMidX + 280 - time, screenMidY - 42, attack.getImageSrc());
 			
 			if(anim > 149 && attack.dealDmg())
-				enemy.decreaseHealth((attack.getStrength() * (player.getAtt() / (10.0 + (enemy.getDef() / 30))) + 1) / 50);
+			{
+				dmg = computeDamage(attack);
+				
+				enemy.decreaseHealth(dmg / 50);
+			}
 			else if(!attack.dealDmg())
 				player.handleAttack(attack);
 			
@@ -276,6 +386,12 @@ public class BattleScreen
 				{
 					winOn = true;
 					enemyAttacks = false;
+					
+					if(!this.gotXP)
+					{
+						player.increaseXP(enemy.givesXP());
+						gotXP = true;
+					}
 				}
 			}
 
@@ -290,8 +406,12 @@ public class BattleScreen
 			else if(anim < 30 && !magic.dealDmg())
 				StdDraw.picture(screenMidX + 280 - time, screenMidY - 42, magic.getImageSrc());
 			
-			if(anim > 149 && magic.dealDmg())
-				enemy.decreaseHealth(magic.getStrength() / 50);
+			if(anim > 149 && magic.dealDmg())			
+			{
+				dmg = computeDamage(magic);
+				
+				enemy.decreaseHealth(dmg / 50);
+			}
 			else if(!magic.dealDmg())
 				player.handleMagic(magic);
 			
@@ -314,6 +434,12 @@ public class BattleScreen
 				{
 					winOn = true;
 					enemyAttacks = false;
+					
+					if(!this.gotXP)
+					{
+						player.increaseXP(enemy.givesXP());
+						gotXP = true;
+					}
 				}
 			}
 		}
@@ -332,14 +458,22 @@ public class BattleScreen
 		}
 	}
 	
+	/**
+	 * Methode, die den Angriff des Gegners ausfuehrt und zeichnen laesst.
+	 */
 	private void executeEnemyAttack()
 	{
 		if(action == -1)
 		{
 			action = (int)(Math.random() * ((2 - 1) + 1) + 1);
 			
-			if(action == 2 && enemy.getMana() >= enemy.getEnemyMagic().manaCost())
-				magic = enemy.getEnemyMagic();
+			if(enemy.getEnemyMagic() != null)
+			{
+				if(action == 2 && enemy.getMana() >= enemy.getEnemyMagic().manaCost())
+					magic = enemy.getEnemyMagic();
+				else
+					attack = enemy.getEnemyAttack();
+			}
 			else
 				attack = enemy.getEnemyAttack();
 		}
@@ -359,7 +493,11 @@ public class BattleScreen
 				StdDraw.picture(screenMidX - 270 + time, screenMidY + 100, attack.getImageSrc());
 			
 			if(anim > 249 && attack.dealDmg())
-				player.decreaseHealth((attack.getStrength() * (enemy.getAtt() / (10.0 + (player.getDef() / 30.0))) + 1.0) / 50.0);
+			{
+				dmg = computeEnemyDamage(attack);
+				
+				player.decreaseHealth(dmg / 50);
+			}
 			else if(!attack.dealDmg())
 				enemy.handleAttack(attack);
 			
@@ -393,7 +531,11 @@ public class BattleScreen
 				StdDraw.picture(screenMidX - 270 + time, screenMidY + 100, magic.getImageSrc());
 			
 			if(anim > 249 && magic.dealDmg())
-				player.decreaseHealth((magic.getStrength() * (enemy.getSpez() / (10.0 + (player.getSpez() / 20))) + 1) / 50);
+			{
+				dmg = computeEnemyDamage(magic);
+				
+				player.decreaseHealth(dmg / 50);
+			}
 			else if(!magic.dealDmg())
 				enemy.handleMagic(magic);
 			
@@ -418,6 +560,12 @@ public class BattleScreen
 		}
 	}
 	
+	/**
+	 * Spielschleife des Kampfes. Wird solange ausgefuehrt, wie der Kampf noch
+	 * aktiv ist. </br></br>
+	 * Nach dem Kampf wird wieder zum Spielfeld gewechselt und die Spielschleife des
+	 * Spielfeldes wird wieder aufgerufen.
+	 */
 	private void run()
 	{
 		while(battleOn)
@@ -434,24 +582,19 @@ public class BattleScreen
 					
 					if(!playerAttacks && !enemyAttacks)
 					{
-						if((winOn || loseOn) && dialogs.anim >= 300)
+						if((winOn || loseOn || lvlOn || newAttOn || newMagOn) && dialogs.anim >= 350)
 							key.handleKeyInput();
-						else if(!winOn && !loseOn)
+						else if(!winOn && !loseOn && !lvlOn && !newAttOn && !newMagOn)
 							key.handleKeyInput();
 					}
 					
 					drawBattle();
-					
-//					System.out.println("Player: " + player.getDef() + ", Enemy: " + enemy.getHealth());
 				}
 			}
 		}
 
 		if(playerWins)
-		{
-			player.increaseXP(enemy.givesXP());
 			player.increaseCoins(enemy.givesGold());
-		}
 			
 		parent.player1.resetTemps();
 		parent.mapScreen = true;
@@ -463,11 +606,312 @@ public class BattleScreen
 
 	}
 	
+	/**
+	 * Berechnet die fuer den letzten Spielschleifendurchlauf benoetigte Zeit in
+	 * Nanosekunden (fuer fluessige Animationen)
+	 */
 	private void computeDelta()
 	{
 		delta = System.nanoTime() - last;
 		last = System.nanoTime();
 		
 		fps = ((long) 1e9)/delta;
+	}
+	
+	/**
+	 * Berechnetes den von einer Attacke verursachten Schaden
+	 * @param attack - Benutzte Attacke
+	 * @return Verursachter Schaden
+	 */
+	private double computeDamage(Attack attack)
+	{
+		//Grundschaden eines Angriffs
+		double damage = (attack.getStrength() * (player.getAtt() / (10.0 + (enemy.getDef() / 30))) + 1);
+		
+		if(attack.getType().equalsIgnoreCase("Normal"))
+		{
+			if(enemy.getType().equalsIgnoreCase("Hip"))
+				damage = damage * 1.3;
+			else if(enemy.getType().equalsIgnoreCase("Cool"))
+				damage = damage * 0.85;
+			else if(enemy.getType().equalsIgnoreCase("Swag"))
+				damage = damage * 0.8;
+		}
+			
+		else if(attack.getType().equalsIgnoreCase("True"))
+		{
+			if(enemy.getType().equalsIgnoreCase("Swag"))
+				damage = damage * 1.6;
+			else if(enemy.getType().equalsIgnoreCase("Whore"))
+				damage = damage * 0.65;
+			else if(enemy.getType().equalsIgnoreCase("Duckf."))
+				damage = damage * 0.8;
+		}
+			
+		else if(attack.getType().equalsIgnoreCase("Knowl."))
+		{
+			if(enemy.getType().equalsIgnoreCase("Swag"))
+				damage = damage * 1.45;
+			else if(enemy.getType().equalsIgnoreCase("Duckf."))
+				damage = damage * 1.3;
+			else if(enemy.getType().equalsIgnoreCase("Dumb"))
+				damage = damage * 0.7;
+		}
+			
+		else if(attack.getType().equalsIgnoreCase("Brutal"))
+		{
+			if(enemy.getType().equalsIgnoreCase("Dumb"))
+				damage = damage * 1.7;
+			else if(enemy.getType().equalsIgnoreCase("Whore"))
+				damage = damage * 1.4;
+			else if(enemy.getType().equalsIgnoreCase("Hip"))
+				damage = damage * 1.275;
+			else if(enemy.getType().equalsIgnoreCase("Star"))
+				damage = damage * 0.75;
+		}
+			
+		else if(attack.getType().equalsIgnoreCase("Psy."))
+		{
+			if(enemy.getType().equalsIgnoreCase("Star"))
+				damage = damage * 1.25;
+			else if(enemy.getType().equalsIgnoreCase("Whore"))
+				damage = damage * 1.3;
+			else if(enemy.getType().equalsIgnoreCase("Dumb"))
+				damage = damage * 0.8;
+		}
+			
+		else if(attack.getType().equalsIgnoreCase("Abzug"))
+		{
+			if(enemy.getType().equalsIgnoreCase("Cool"))
+				damage = damage * 1.5;
+			else if(enemy.getType().equalsIgnoreCase("Duckf."))
+				damage = damage * 1.2;
+			else if(enemy.getType().equalsIgnoreCase("Hip"))
+				damage = damage * 0.75;
+		}
+	
+		
+		return damage;
+	}
+	
+	
+	/**
+	 * Berechnetes den von einem Zauber verursachten Schaden
+	 * @param attack - Benutzter Zauber
+	 * @return Verursachter Schaden
+	 */
+	private double computeDamage(Magic attack)
+	{
+		//Grundschaden eines Zaubers
+		double damage = (attack.getStrength() * (1.4 * player.getSpez() / (10.0 + (enemy.getSpez() / 30))) + 1);
+		
+		if(attack.getType().equalsIgnoreCase("Magic"))
+		{
+			if(enemy.getType().equalsIgnoreCase("Hip"))
+				damage = damage * 1.35;
+			else if(enemy.getType().equalsIgnoreCase("Cool"))
+				damage = damage * 1.5;
+			else if(enemy.getType().equalsIgnoreCase("Swag"))
+				damage = damage * 0.6;
+		}
+			
+		else if(attack.getType().equalsIgnoreCase("Feuer"))
+		{
+			if(enemy.getType().equalsIgnoreCase("Whore"))
+				damage = damage * 1.6;
+			else if(enemy.getType().equalsIgnoreCase("Duckf."))
+				damage = damage * 1.55;
+			else if(enemy.getType().equalsIgnoreCase("Dumb"))
+				damage = damage * 0.8;
+		}
+			
+		else if(attack.getType().equalsIgnoreCase("Wasser"))
+		{
+			if(enemy.getType().equalsIgnoreCase("Whore"))
+				damage = damage * 1.4;
+			else if(enemy.getType().equalsIgnoreCase("Swag"))
+				damage = damage * 1.25;
+			else if(enemy.getType().equalsIgnoreCase("Hip"))
+				damage = damage * 0.8;
+			else if(enemy.getType().equalsIgnoreCase("Cool"))
+				damage = damage * 0.75;
+		}
+			
+		else if(attack.getType().equalsIgnoreCase("Chemisch"))
+		{
+			if(enemy.getType().equalsIgnoreCase("Dumb"))
+				damage = damage * 1.65;
+			else if(enemy.getType().equalsIgnoreCase("Cool"))
+				damage = damage * 1.4;
+			else if(enemy.getType().equalsIgnoreCase("Whore"))
+				damage = damage * 0.75;
+			else if(enemy.getType().equalsIgnoreCase("Duckf."))
+				damage = damage * 0.675;
+		}
+			
+		else if(attack.getType().equalsIgnoreCase("Tod"))
+		{
+			if(enemy.getType().equalsIgnoreCase("Star"))
+				damage = damage * 1.2;
+			else
+				damage = damage * 1.75;
+		}
+			
+		else if(attack.getType().equalsIgnoreCase("Goettl."))
+		{
+			damage = damage * 2;
+		}
+	
+		
+		return damage;
+	}
+	
+	/**
+	 * Berechnetes den von einer Attacke verursachten Schaden des Gegners
+	 * @param attack - Benutzte Attacke
+	 * @return Verursachter Schaden
+	 */
+	private double computeEnemyDamage(Attack attack)
+	{
+		//Grundschaden eines Angriffs
+		double damage = (attack.getStrength() * (enemy.getAtt() / (10.0 + (player.getDef() / 30))) + 1);
+		
+		if(attack.getType().equalsIgnoreCase("Hip"))
+		{
+			if(player.getEquippedArmor().getType().equalsIgnoreCase("Abzug"))
+				damage = damage * 1.4;
+			else if(player.getEquippedArmor().getType().equalsIgnoreCase("Brutal"))
+				damage = damage * 1.25;
+			else if(player.getEquippedArmor().getType().equalsIgnoreCase("True"))
+				damage = damage * 0.6;
+		}
+			
+		else if(attack.getType().equalsIgnoreCase("Swag"))
+		{
+			if(player.getEquippedArmor().getType().equalsIgnoreCase("Psy."))
+				damage = damage * 1.35;
+			else if(player.getEquippedArmor().getType().equalsIgnoreCase("Normal"))
+				damage = damage * 1.5;
+			else if(player.getEquippedArmor().getType().equalsIgnoreCase("True"))
+				damage = damage * 0.7;
+		}
+			
+		else if(attack.getType().equalsIgnoreCase("Whore"))
+		{
+			if(player.getEquippedArmor().getType().equalsIgnoreCase("Psy."))
+				damage = damage * 1.45;
+			else if(player.getEquippedArmor().getType().equalsIgnoreCase("Knowl."))
+				damage = damage * 1.3;
+			else if(player.getEquippedArmor().getType().equalsIgnoreCase("Abzug"))
+				damage = damage * 0.7;
+		}
+			
+		else if(attack.getType().equalsIgnoreCase("Duckf."))
+		{
+			if(player.getEquippedArmor().getType().equalsIgnoreCase("Normal"))
+				damage = damage * 1.7;
+			else if(player.getEquippedArmor().getType().equalsIgnoreCase("True"))
+				damage = damage * 1.4;
+			else if(player.getEquippedArmor().getType().equalsIgnoreCase("Brutal"))
+				damage = damage * 0.75;
+		}
+			
+		else if(attack.getType().equalsIgnoreCase("Dumb"))
+		{
+			if(player.getEquippedArmor().getType().equalsIgnoreCase("Abzug"))
+				damage = damage * 1.25;
+			else if(player.getEquippedArmor().getType().equalsIgnoreCase("True"))
+				damage = damage * 1.3;
+			else if(player.getEquippedArmor().getType().equalsIgnoreCase("Knowl."))
+				damage = damage * 0.8;
+		}
+			
+		else if(attack.getType().equalsIgnoreCase("Cool"))
+		{
+			if(player.getEquippedArmor().getType().equalsIgnoreCase("Knowl."))
+				damage = damage * 1.5;
+			else if(player.getEquippedArmor().getType().equalsIgnoreCase("Abzug"))
+				damage = damage * 1.2;
+			else if(player.getEquippedArmor().getType().equalsIgnoreCase("Brutal"))
+				damage = damage * 0.75;
+		}
+	
+		
+		return damage;
+	}
+	
+	
+	/**
+	 * Berechnetes den von einem Zauber verursachten Schaden des Gegners
+	 * @param attack - Benutzter Zauber
+	 * @return Verursachter Schaden
+	 */
+	private double computeEnemyDamage(Magic attack)
+	{
+		//Grundschaden eines Zaubers
+		double damage = (attack.getStrength() * (1.25 * enemy.getSpez() / (10.0 + (player.getSpez() / 30))) + 1);
+		
+		if(attack.getType().equalsIgnoreCase("Hip"))
+		{
+			if(player.getEquippedArmor().getType().equalsIgnoreCase("Abzug"))
+				damage = damage * 1.4;
+			else if(player.getEquippedArmor().getType().equalsIgnoreCase("Brutal"))
+				damage = damage * 1.25;
+			else if(player.getEquippedArmor().getType().equalsIgnoreCase("True"))
+				damage = damage * 0.6;
+		}
+			
+		else if(attack.getType().equalsIgnoreCase("Swag"))
+		{
+			if(player.getEquippedArmor().getType().equalsIgnoreCase("Psy."))
+				damage = damage * 1.35;
+			else if(player.getEquippedArmor().getType().equalsIgnoreCase("Normal"))
+				damage = damage * 1.5;
+			else if(player.getEquippedArmor().getType().equalsIgnoreCase("True"))
+				damage = damage * 0.7;
+		}
+			
+		else if(attack.getType().equalsIgnoreCase("Whore"))
+		{
+			if(player.getEquippedArmor().getType().equalsIgnoreCase("Psy."))
+				damage = damage * 1.45;
+			else if(player.getEquippedArmor().getType().equalsIgnoreCase("Knowl."))
+				damage = damage * 1.3;
+			else if(player.getEquippedArmor().getType().equalsIgnoreCase("Abzug"))
+				damage = damage * 0.7;
+		}
+			
+		else if(attack.getType().equalsIgnoreCase("Duckf."))
+		{
+			if(player.getEquippedArmor().getType().equalsIgnoreCase("Normal"))
+				damage = damage * 1.7;
+			else if(player.getEquippedArmor().getType().equalsIgnoreCase("True"))
+				damage = damage * 1.4;
+			else if(player.getEquippedArmor().getType().equalsIgnoreCase("Brutal"))
+				damage = damage * 0.75;
+		}
+			
+		else if(attack.getType().equalsIgnoreCase("Dumb"))
+		{
+			if(player.getEquippedArmor().getType().equalsIgnoreCase("Abzug"))
+				damage = damage * 1.25;
+			else if(player.getEquippedArmor().getType().equalsIgnoreCase("True"))
+				damage = damage * 1.3;
+			else if(player.getEquippedArmor().getType().equalsIgnoreCase("Knowl."))
+				damage = damage * 0.8;
+		}
+			
+		else if(attack.getType().equalsIgnoreCase("Cool"))
+		{
+			if(player.getEquippedArmor().getType().equalsIgnoreCase("Knowl."))
+				damage = damage * 1.5;
+			else if(player.getEquippedArmor().getType().equalsIgnoreCase("Abzug"))
+				damage = damage * 1.2;
+			else if(player.getEquippedArmor().getType().equalsIgnoreCase("Brutal"))
+				damage = damage * 0.75;
+		}
+	
+		
+		return damage;
 	}
 }

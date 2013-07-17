@@ -1,17 +1,36 @@
 import java.awt.Color;
 import java.awt.Font;
 
-
+/**
+ * Diese Klasse enthaelt alle shopbaren Items
+ * @author Mike Bechtel
+ *
+ */
 public class Shop_Items 
 {
+	/**
+	 * Speichert den geoeffneten Shop
+	 */
 	Shop shop;
+	/**
+	 * Speichert die Item-Beschreibungen
+	 */
 	Shop_Descriptions desc;
 	
+	/**
+	 * Speichert die x- und y-Fenstermitte
+	 */
 	double screenMidX, screenMidY;
 	
+	/**
+	 * Speichert die Schriftart
+	 */
 	Font font;
-	Font fontBold;
 	
+	/**
+	 * Konstruktor der Shop-Items
+	 * @param shop - Zugehoeriger Shop
+	 */
 	public Shop_Items(Shop shop)
 	{
 		this.shop = shop;
@@ -21,9 +40,11 @@ public class Shop_Items
 		this.screenMidY = shop.screenMidY;
 		
 		this.font = shop.font;
-		this.fontBold = shop.fontBold;
 	}
 	
+	/**
+	 * Zeigt die shopbaren Waffen an
+	 */
 	public void showWeapons()
 	{
 		shop.maxSelection = 0;
@@ -55,6 +76,9 @@ public class Shop_Items
 		shop.item = weapons[shop.selection];
 	}
 	
+	/**
+	 * Zeigt die shopbaren Ruestungen an
+	 */
 	public void showArmors()
 	{
 		shop.maxSelection = 0;
@@ -86,6 +110,9 @@ public class Shop_Items
 		shop.item = armors[shop.selection];
 	}
 	
+	/**
+	 * Zeigt die shopbaren Items an
+	 */
 	public void showItems()
 	{
 		shop.maxSelection = 0;
@@ -117,7 +144,10 @@ public class Shop_Items
 		shop.item = items[shop.selection];
 	}
 	
-	
+	/**
+	 * Zeigt einen Bestaetigungsdialog an, ob das ausgewaehlte Item wirklich
+	 * gekauft werden soll
+	 */
 	public void showConfirmDialog()
 	{
 		StdDraw.picture(screenMidX, screenMidY, "images/shop/bg_confirm.png");
@@ -134,6 +164,9 @@ public class Shop_Items
 			StdDraw.picture(screenMidX + 5, screenMidY - 35, "images/menu/in_game/selection_arrow.png");			
 	}
 	
+	/**
+	 * Zeigt an, ob der Kauf eines Items erfolgreich war
+	 */
 	public void showSuccess()
 	{
 		StdDraw.picture(screenMidX, screenMidY, "images/shop/bg_confirm.png");
@@ -143,6 +176,9 @@ public class Shop_Items
 		StdDraw.textLeft(screenMidX - 70, screenMidY - 30, "reich gekauft.");
 	}
 	
+	/**
+	 * Zeigt an, ob der Kauf eines Items nicht erfolgreich war
+	 */
 	public void showError()
 	{
 		StdDraw.picture(screenMidX, screenMidY, "images/shop/bg_confirm.png");
@@ -154,17 +190,25 @@ public class Shop_Items
 	
 	//------------------------------------------------------------------------------------------
 
-	
+	/**
+	 * Speichert die shopbaren Waffen
+	 */
 	private Weapon[] weapons = new Weapon[] {
 			new Weapon_Kurzschwert(0,0), new Weapon_Streitkolben(0,0), new Weapon_Kleine_Axt(0,0),
 			new Weapon_Langschwert(0,0), new Weapon_Krummsaebel(0,0), new Weapon_Krummschwert(0,0),
 			new Weapon_Morgenstern(0,0), new Weapon_Grosse_Axt(0,0), new Weapon_Prunkschwert(0,0)
 	};
 	
+	/**
+	 * Speichert die shopbaren Ruestungen
+	 */
 	private Armor[] armors = new Armor[] {
 			new Armor_Bauernkleidung(0,0), new Armor_Leder_Harnisch(0,0)
 	};
 	
+	/**
+	 * Speichert die shopbaren Items
+	 */
 	private Collectable[] items = new Collectable[] {
 			new Item_HealthBottle(0,0), new Item_ManaBottle(0,0)
 	};

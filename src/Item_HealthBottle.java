@@ -1,11 +1,24 @@
 
-
+/**
+ * Stellt die einsammelbaren Lebensportionen des Spielfeldes dar. Erben von der Klasse
+ * Item.
+ * @author Mike Bechtel
+ *
+ */
 public class Item_HealthBottle extends Collectable
 {
 	private static final long serialVersionUID = 1L;
-	
+
+	/**
+	 * Speichern x- und y-Position auf dem Spielfeld
+	 */
 	private double posX, posY;	
 
+	/**
+	 * Konstruktor eines HealthBottle-Objektes
+	 * @param posX - x-Position auf dem Spielfeld
+	 * @param posY - y-Position auf dem Spielfeld
+	 */
 	public Item_HealthBottle(int posX, int posY) 
 	{
 		super(posX, posY, 32, 32, 1);
@@ -15,7 +28,13 @@ public class Item_HealthBottle extends Collectable
 		
 		this.picture = "images/items/health_bottle.png";
 	}
-
+	
+	/**
+	 * Konstruktor eines HealthBottle-Objektes
+	 * @param posX - x-Position auf dem Spielfeld
+	 * @param posY - y-Position auf dem Spielfeld
+	 * @param anzahl - Stapelgroesse
+	 */
 	public Item_HealthBottle(int posX, int posY, int anzahl) 
 	{
 		super(posX, posY, 32, 32, anzahl);
@@ -26,6 +45,9 @@ public class Item_HealthBottle extends Collectable
 		this.picture = "images/items/health_bottle.png";
 	}
 	
+	/**
+	 * Prueft die Kollision mit dem Spieler
+	 */
 	public int checkCollision(Player player)
 	{
 		if(this.intersects(player))
@@ -50,16 +72,26 @@ public class Item_HealthBottle extends Collectable
 			return Direction.NO_COLLISION;
 	}
 
+	/**
+	 * Gibt eine String-Repraesentation des HealthBottle-Objekts zurueck
+	 */
 	public String toString() 
 	{
 		return "Heiltrank";
 	}
 
+	/**
+	 * Zeichnet das HealthBottle-Objekt auf dem Spielfeld
+	 */
 	public void drawImg() 
 	{
 		StdDraw.picture(posX, posY, "images/items/health_bottle.png");
 	}
-	
+
+	/**
+	 * Gibt zurueck, ob das Objekt vom Spieler benutzt wurde und fuehrt auch
+	 * ggf. direkt eine entsprechende Aktion aus
+	 */
 	public boolean useItem(Player player) 
 	{
 		if(player.getHealth() < player.getMaxHealth())
@@ -71,16 +103,25 @@ public class Item_HealthBottle extends Collectable
 			return false;
 	}
 	
+	/**
+	 * Gibt den Bonus des Objektes zurueck
+	 */
 	public int getBonus()
 	{
 		return 50;
 	}
-	
+
+	/**
+	 * Gibt eine Typbeschreibung des Objektes zurueck
+	 */
 	public int type()
 	{
 		return CollectableTypes.HEALTH_BOTTLE;
 	}
 	
+	/**
+	 * Gibt zurueck, ob das Item ausgeruestet ist.
+	 */
 	public boolean isEquipped() 
 	{
 		return false;

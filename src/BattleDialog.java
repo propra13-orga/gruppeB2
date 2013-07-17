@@ -6,19 +6,53 @@ import java.io.IOException;
 
 import javax.swing.JOptionPane;
 
-
+/**
+ * Die Klasse Battle-Dialog liefert Methoden, um die einzelnen Dialoge
+ * und Layer im Kampfsystem darzustellen
+ * @author Mike Bechtel
+ *
+ */
 public class BattleDialog 
 {
+	/**
+	 * Speichert den Eltern-BattleScreen, auf dem die DIaloge gezeichnet werden
+	 */
 	BattleScreen battle;
 	
+	/**
+	 * Speichert die Schriftart
+	 */
 	Font font;
-	Font fontBold;
 	
+	/**
+	 * Speichert die x-und y-Mitte der Zeichenflaeche
+	 */
 	double screenMidX, screenMidY;
 	
+	/**
+	 * Hilfsvariable fuer die richtige Auswahl im Item-Menu
+	 */
 	int posAbs;
+	
+	/**
+	 * Hilfsvariable zur animierten Darstellung bestimmter Dialoge
+	 */
 	int anim;
 	
+
+	/**
+	 * Speichert eine neu erlernbare Attacke
+	 */
+	Attack newAtt = null;
+	/**
+	 * Speichert einen neu erlernbaren Zauber
+	 */
+	Magic newMag = null;
+	
+	/**
+	 * Konstruktor eines BattleDialogs.
+	 * @param battle - Eltern-BattleScreen, auf dem die Dialoge gezeichnet werden
+	 */
 	public BattleDialog(BattleScreen battle)
 	{
 		this.battle = battle;
@@ -39,6 +73,9 @@ public class BattleDialog
 		}
 	}
 	
+	/**
+	 * Zeichnet den Intro-Dialog des Battles (Gegner moechte kaempfen)
+	 */
 	public void showIntroDialog()
 	{
 		StdDraw.setFont(font);
@@ -48,6 +85,10 @@ public class BattleDialog
 		StdDraw.textLeft(screenMidX - 220, screenMidY - 160, "möchte kämpfen");
 	}
 	
+	/**
+	 * Zeichnet das Hauptselektionsmenu (Angr, Magic, Items, Flucht)
+	 * @param selection - ausgewaehltes Menu-Element
+	 */
 	public void showSelectionDialog(int selection)
 	{
 		StdDraw.setFont(font);
@@ -69,6 +110,10 @@ public class BattleDialog
 		}
 	}
 	
+	/**
+	 * Zeichnet das Selektionsmenu der moeglichen Angriffe
+	 * @param selection - ausgewaehlte Attacke
+	 */
 	public void showAngrDialog(int selection)
 	{
 		StdDraw.setFont(font);
@@ -95,6 +140,10 @@ public class BattleDialog
 		this.showStats(battle.player.getAttack(selection));
 	}
 	
+	/**
+	 * Zeichnet das Selektionsmenu der moeglichen Zauber
+	 * @param selection - ausgewaehlter Zauber
+	 */
 	public void showMagicDialog(int selection)
 	{
 		StdDraw.setFont(font);
@@ -121,6 +170,10 @@ public class BattleDialog
 		this.showStats(battle.player.getMagic(selection));
 	}
 	
+	/**
+	 * Zeichnet das Selektionsmenu der Item-Auswahl
+	 * @param selection - ausgewaehltes Item
+	 */
 	public void showItemDialog(int selection)
 	{
 		StdDraw.setPenColor(Color.WHITE);
@@ -171,6 +224,11 @@ public class BattleDialog
 		}
 	}
 	
+	/**
+	 * Zeichnet ein Info-Fenster, in dem die Eigenschaften der ausgewaehlten Attacke kurz
+	 * beschrieben werden
+	 * @param selection - ausgewaehlte Attacke
+	 */
 	public void showStats(Attack attack)
 	{
 		StdDraw.setFont(font);
@@ -183,6 +241,11 @@ public class BattleDialog
 		StdDraw.textRight(screenMidX - 26, screenMidY - 82, attack.getDmgType() + " " + (int)attack.getStrength());
 	}
 	
+	/**
+	 * Zeichnet ein Info-Fenster, in dem die Eigenschaften des ausgewaehlten Zaubers kurz
+	 * beschrieben werden
+	 * @param selection - ausgewaehlter Zauber
+	 */
 	public void showStats(Magic magic)
 	{
 		StdDraw.setFont(font);
@@ -195,6 +258,10 @@ public class BattleDialog
 		StdDraw.textRight(screenMidX - 26, screenMidY - 82, magic.getDmgType() + " " + (int)magic.getStrength());
 	}
 
+	/**
+	 * Schreibt in das Textfeld waehrend des Angriffs den Anwender und den Namen der Attacke
+	 * @param attack - benutzte Attacke
+	 */
 	public void showAttack(Attack attack)
 	{
 		StdDraw.setFont(font);
@@ -209,6 +276,10 @@ public class BattleDialog
 		
 	}
 	
+	/**
+	 * Schreibt in das Textfeld waehrend des Angriffs den Anwender und den Namen des Zaubers
+	 * @param attack - benutzter Zauber
+	 */
 	public void showMagic(Magic magic)
 	{
 		StdDraw.setFont(font);
@@ -222,6 +293,10 @@ public class BattleDialog
 		StdDraw.textLeft(screenMidX - 220, screenMidY - 160, "ben. " + magic.getName().toUpperCase());	
 	}
 	
+	/**
+	 * Schreibt in das Textfeld waehrend des Angriffs den Effekt der benutzten Attacke
+	 * @param attack - benutzte Attacke
+	 */
 	public void showEffect(Attack attack)
 	{		
 		StdDraw.setFont(font);
@@ -286,6 +361,11 @@ public class BattleDialog
 			StdDraw.textLeft(screenMidX - 220, screenMidY - 160, "ben. " + attack.getName().toUpperCase());	
 		}
 	}
+	
+	/**
+	 * Schreibt in das Textfeld waehrend des Angriffs den Effekt des benutzten Zaubers
+	 * @param attack - benutzter Zauber
+	 */
 	public void showEffect(Magic magic)
 	{
 		StdDraw.setFont(font);
@@ -350,6 +430,12 @@ public class BattleDialog
 			StdDraw.textLeft(screenMidX - 220, screenMidY - 160, "ben. " + magic.getName().toUpperCase());	
 		}
 	}
+	
+	/**
+	 * Zeigt an, falls der Spieler einen Zauber auswaehlt, der mehr Mana kostet, als der
+	 * Spieler zur Verfuegung hat
+	 * @param magic - Magie, die benutzt werden will
+	 */
 	public void showNoMana(Magic magic)
 	{
 		StdDraw.setFont(font);
@@ -359,6 +445,9 @@ public class BattleDialog
 		StdDraw.textLeft(screenMidX - 220, screenMidY - 160, "Benötigt: " + (int)magic.manaCost());		
 	}
 	
+	/**
+	 * Info-Dialog, wenn der Spieler den Gegner besiegt hat (erhaelt Erfahrung und Gold)
+	 */
 	public void showWinDialog()
 	{	
 		battle.playerWins = true;
@@ -392,11 +481,104 @@ public class BattleDialog
 			StdDraw.textLeft(screenMidX - 220, screenMidY - 130, battle.player.getPlayerName() + " erhält");
 			StdDraw.textLeft(screenMidX - 220, screenMidY - 160, "" + battle.enemy.givesXP() + " XP und " + battle.enemy.givesGold() + " Gold.");
 		
-			if(anim < 300)
+			if(anim < 350)
 				anim++;
+			else if(anim == 350)
+			{
+				if(battle.player.canLevelUp())
+				{
+					battle.lvlOn = true;
+					battle.winOn = false;
+					anim = 150;
+				}
+			}
 		}
 	}
 	
+	/**
+	 * Zeichnet den Dialog, wenn der Spieler ein neues Level erreicht
+	 */
+	public void showLevelUp()
+	{
+		StdDraw.setFont(font);
+		StdDraw.setPenColor(Color.white);
+		
+		if(anim == 150)
+			battle.player.levelUp();
+		
+		StdDraw.picture(screenMidX + 150, screenMidY - 50, "images/battle/logic/lvl_up.png");
+		StdDraw.textLeft(screenMidX + 90, screenMidY + 0, "ATT: " + battle.player.getAttPure());
+		StdDraw.textLeft(screenMidX + 90, screenMidY - 30, "DEF: " + battle.player.getDefPure());
+		StdDraw.textLeft(screenMidX + 90, screenMidY - 60, "SPEZ:" + battle.player.getSpez());
+		StdDraw.textLeft(screenMidX + 90, screenMidY - 90, "GENA:" + battle.player.getGena());
+	
+		StdDraw.textLeft(screenMidX - 220, screenMidY - 130, battle.player.getPlayerName() + " erreicht");
+		StdDraw.textLeft(screenMidX - 220, screenMidY - 160, "Level " + battle.player.getLevel());
+	
+		if(anim < 350)
+			anim++;
+		else if(anim == 350)
+		{
+			if(battle.player.learnsNewAttack())
+			{
+				battle.newAttOn = true;
+				battle.lvlOn = false;
+				anim = 150;
+			}
+			else if(battle.player.learnsNewMagic())
+			{
+				battle.newMagOn = true;
+				battle.lvlOn = false;
+				anim = 150;
+			}
+		}
+	}
+	
+	/**
+	 * Zeigt den Dialog an, dass der Spieler eine neue Attacke gelernt hat
+	 */
+	public void showNewAttack()
+	{
+		StdDraw.setFont(font);
+		StdDraw.setPenColor(Color.white);
+		
+		if(anim == 150)
+		{
+			newAtt = Attacks.learnAtt(battle.player.getLevel());
+			battle.player.learnAttack(newAtt);
+		}
+		
+		StdDraw.textLeft(screenMidX - 220, screenMidY - 130, battle.player.getPlayerName() + " erlernt");
+		StdDraw.textLeft(screenMidX - 220, screenMidY - 160, "" + newAtt.getName().toUpperCase());
+	
+		if(anim < 350)
+			anim++;
+	}
+	
+	/**
+	 * Zeigt den Dialog an, dass der Spieler einen neuen Zauber gelernt hat
+	 */
+	public void showNewMagic()
+	{
+		StdDraw.setFont(font);
+		StdDraw.setPenColor(Color.white);
+		
+		if(anim == 150)
+		{
+			newMag = Attacks.learnMag(battle.player.getLevel());
+			battle.player.learnMagic(newMag);
+		}
+		
+		StdDraw.textLeft(screenMidX - 220, screenMidY - 130, battle.player.getPlayerName() + " erlernt");
+		StdDraw.textLeft(screenMidX - 220, screenMidY - 160, "" + newMag.getName().toUpperCase());
+	
+		if(anim < 350)
+			anim++;
+	}
+	
+	/**
+	 * Zeichnet den Dialog, wenn der Spieler vom Gegner besiegt wurde
+	 */
 	public void showLoseDialog()
 	{	
 		battle.playerLose = true;
@@ -429,6 +611,9 @@ public class BattleDialog
 		}
 	}
 	
+	/**
+	 * Zeichnet die Info, wenn der Gegner vor dem Kampf fluechtet
+	 */
 	public void showEscapeDialog()
 	{
 		StdDraw.setFont(font);

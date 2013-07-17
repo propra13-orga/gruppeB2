@@ -4,35 +4,76 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 /**
- *  <i>ReadLevel</i>. Klasse, welche das Level aus einer Textdatei einliest
+ *  Klasse, welche die Level und die jeweiligen Raeume aus Textdateien einliest.
+ *  @author Mike Bechtel
  */
 public class Manager_Level 
 {
-	//FileReader und BufferedReader um die Datei einzulesen
+	/**
+	 * FileReader zum Einlesen der Datei
+	 */
 	private FileReader readFile;
+	/**
+	 * BufferedReader zum Zeilenweisen lesen einer Textdatei
+	 */
 	private BufferedReader lineRead;
-	
-	//das eigentliche Feld, gespeichert als char-Array
+
+	/**
+	 * Speichert die Bloecke des Spielfeldes als Character
+	 */
 	private char [][] field;
+	/**
+	 * Speichert die Bloecke des Spielfeldes als Block-Objekt
+	 */
 	private Block_Block [][] fieldInit;
 	
+	/**
+	 * Speichert die Zeilen und Spalten des Spielfeldes
+	 */
 	private int rows, columns;
 	
+	/**
+	 * Speichert die Tile-Groesse
+	 */
 	private int sizeX, sizeY;
 
+	/**
+	 * Speichert die Startposition des Players in dem Raum
+	 */
 	private int [] startPos;
+	/**
+	 * Speichert die Position, zu der der Spieler zurueckkehrt, wenn er einen Raum
+	 * zurueckgeht
+	 */
 	private int [] backPos;
 	
+	/**
+	 * ArrayList zum Speichern der Items in dem Raum
+	 */
 	private ArrayList<Item> items;
+	/**
+	 * ArrayList zum Speichern der NPCs in dem Raum
+	 */
 	private ArrayList<NPC> npcs;
+	/**
+	 * ArrayList zum Speichern der Gegner in dem Raum
+	 */
 	private ArrayList<Enemy> enemys;
+	/**
+	 * ArrayList zum Speichern der aufsammelbaren Items in dem Raum
+	 */
 	private ArrayList<Collectable> collectables;
 	
-	private double checkPointX, checkPointY;
 	/**
-     * Konstruktor des ReadLevel-Objekts
-     *
-     */
+	 * Speicher einen moeglichen CheckPoint im Raum
+	 */
+	private double checkPointX, checkPointY;
+
+	/**
+	 * Konstruktor des Managers
+	 * @param sizeX - Tile-Groesse X
+	 * @param sizeY - Tile-Groesse Y
+	 */
 	public Manager_Level(int sizeX, int sizeY)
 	{
 		this.sizeX = sizeX;
@@ -53,7 +94,7 @@ public class Manager_Level
     /**
      * Liest eine Textdatei ein, welche das Spielfeld darstellt. Speichert diese
      * Zeichen in ein char-Array, aus welchem dann ein Object-Array der Bloecke
-     * erstellt wird
+     * erstellt wird. Zudem werden die verschiedenen Array-Listen gefuellt.
      * 
      * @param lvl - Einzulesende Datei als String (Dateiname)
      * 
@@ -107,6 +148,11 @@ public class Manager_Level
 		return fieldInit;
 	}
 	
+	/**
+	 * Liest die einzelnen Zeichen des Textdatei zur Darstellung und Speicherung der Bloecke
+	 * @param file - einzulesende Datei
+	 * @return <b>char</b>-Array welches die Bloecke repraesentiert
+	 */
 	private char [][] readField(String file)
 	{
 		ArrayList<String> lines = new ArrayList<String>();
@@ -148,6 +194,10 @@ public class Manager_Level
 			return field;
 	}
 	
+	/**
+	 * Liest die in dem Raum enthaltenen Items ein und fuellt so die ArrayList <i>items</i>
+	 * @param file - einzulesende Datei
+	 */
 	private void readItems(String file)
 	{
 		ArrayList<String> lines = new ArrayList<String>();
@@ -196,7 +246,12 @@ public class Manager_Level
 			System.exit(0);
 		}
 	}
-	
+
+	/**
+	 * Liest die in dem Raum enthaltenen Trigger ein und fuellt so die 
+	 * verschiedenen Trigger (Start Position, Checkpoint, etc)
+	 * @param file - einzulesende Datei
+	 */
 	private void readTriggers(String file)
 	{
 		ArrayList<String> lines = new ArrayList<String>();
@@ -245,7 +300,11 @@ public class Manager_Level
 			System.exit(0);
 		}
 	}
-	
+
+	/**
+	 * Liest die in dem Raum enthaltenen NPCs ein und fuellt so die ArrayList <i>npcs</i>
+	 * @param file - einzulesende Datei
+	 */
 	private void readNPC(String file)
 	{
 		ArrayList<String> lines = new ArrayList<String>();
@@ -296,7 +355,11 @@ public class Manager_Level
 			System.exit(0);
 		}
 	}
-	
+
+	/**
+	 * Liest die in dem Raum enthaltenen Gegner ein und fuellt so die ArrayList <i>enemys</i>
+	 * @param file - einzulesende Datei
+	 */
 	private void readEnemy(String file)
 	{
 		ArrayList<String> lines = new ArrayList<String>();
@@ -337,6 +400,11 @@ public class Manager_Level
 				case "ENEMY_KIDHIPSTER_LEFT": enemys.add(new Enemy_KidHipster(posX, posY, Direction.LEFT, 50)); break;
 				case "ENEMY_KIDHIPSTER_UP": enemys.add(new Enemy_KidHipster(posX, posY, Direction.UP, 50)); break;
 				case "ENEMY_KIDHIPSTER_DOWN": enemys.add(new Enemy_KidHipster(posX, posY, Direction.DOWN, 50)); break;
+
+				case "ENEMY_ATTENTIONWHORE_RIGHT": enemys.add(new Enemy_AttentionWhore(posX, posY, Direction.RIGHT, 50)); break;
+				case "ENEMY_ATTENTIONWHORE_LEFT": enemys.add(new Enemy_AttentionWhore(posX, posY, Direction.LEFT, 50)); break;
+				case "ENEMY_ATTENTIONWHORE_UP": enemys.add(new Enemy_AttentionWhore(posX, posY, Direction.UP, 50)); break;
+				case "ENEMY_ATTENTIONWHORE_DOWN": enemys.add(new Enemy_AttentionWhore(posX, posY, Direction.DOWN, 50)); break;
 				}
 			}	
 		}
@@ -346,7 +414,11 @@ public class Manager_Level
 			System.exit(0);
 		}
 	}
-	
+
+	/**
+	 * Liest die in dem Raum enthaltenen aufsammelbaren Items ein und fuellt so die ArrayList <i>collectables</i>
+	 * @param file - einzulesende Datei
+	 */
 	private void readCollectables(String file)
 	{
 		ArrayList<String> lines = new ArrayList<String>();
@@ -415,7 +487,10 @@ public class Manager_Level
 	
 	//-----------------------------------------------------------------------------
 		
-	
+	/**
+	 * Gibt die Startposition des Spieler in dem Raum zurueck
+	 * @return Startposition des Spielers
+	 */
 	public int[] getStartPosition()
 	{
 		if(startPos.equals(null))
@@ -428,6 +503,10 @@ public class Manager_Level
 			return startPos;
 	}
 	
+	/**
+	 * Gibt die Back-Position des Spieler in dem Raum zurueck
+	 * @return Back-Position des Spielers
+	 */
 	public int[] getBackPosition()
 	{
 		if(startPos.equals(null))
@@ -440,31 +519,55 @@ public class Manager_Level
 			return backPos;
 	}
 	
+	/**
+	 * Gibt die ArrayList der Items zurueck
+	 * @return ArrayList der Items
+	 */
 	public ArrayList<Item> getItems()
 	{
 		return items;
 	}
-	
+
+	/**
+	 * Gibt die ArrayList der NPCs zurueck
+	 * @return ArrayList der NPCs
+	 */
 	public ArrayList<NPC> getNPC()
 	{
 		return npcs;
 	}
-	
+
+	/**
+	 * Gibt die ArrayList der Gegner zurueck
+	 * @return ArrayList der Gegner
+	 */
 	public ArrayList<Enemy> getEnemys()
 	{
 		return enemys;
 	}
-	
+
+	/**
+	 * Gibt die ArrayList der aufsammelbaren Items zurueck
+	 * @return ArrayList der aufsammelbaren Items
+	 */
 	public ArrayList<Collectable> getCollectables()
 	{
 		return collectables;
 	}
 	
+	/**
+	 * Gibt die x-Pos eines moeglichen CheckPoints zurueck
+	 * @return x-Pos des CheckPoints
+	 */
 	public double getCheckPointX()
 	{
 		return checkPointX;
 	}
-	
+
+	/**
+	 * Gibt die y-Pos eines moeglichen CheckPoints zurueck
+	 * @return y-Pos des CheckPoints
+	 */
 	public double getCheckPointY()
 	{
 		return checkPointY;

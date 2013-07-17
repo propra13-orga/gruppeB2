@@ -2,7 +2,7 @@ import java.util.*;
 
 
 /**
- *  <i>GameField</i>. Stellt das eigentliche Spielfeld dar. Erzeugt das zuge-
+ *  Stellt das eigentliche Spielfeld dar. Erzeugt das zuge-
  *  hoerige Frame und enthalt die Spielschleife. 
  *  Die Kollisionsabfrage und Logik wird hier behandelt. Zudem werden hier
  *  die einzelnen Level geladen.
@@ -10,63 +10,119 @@ import java.util.*;
  */
 public class GameField
 {
+	/**
+	 * Hilfsvariable zur fluessigen Animation
+	 */
 	long delta = 0;
+	/**
+	 * Hilfsvariable zur fluessigen Animation
+	 */
 	long last = 0;
+	/**
+	 * Hilfsvariable zur fluessigen Animation
+	 */
 	long fps = 0;
-	
-	//In diesem String-Array sind die einzelnen Level (Dateinamen) gespeichert.
+
+	/**
+	 * Speichert das Array, in dem die Level-Dateipfade gespeichert sind
+	 */
 	String [] lvlArray;
+	/**
+	 * Speichert das momentane Level / den momentanen Raum
+	 */
 	int currentLvl;
-	
-	//Array, in welchem die Objekte des Spielfeldes gespeichert sind
+
+
+	/**
+	 * Speichert die Bloecke des Spielfeldes zur konkreten Darstellung
+	 */
 	Block_Block[][] field;
 
-	//Eine Klasse ReadLevel, welche sich um das Einlesen der Level aus
-	//Textdatein kuemmert
+
+	/**
+	 * Level-Manager zum Einlesen der Level- und Raum-Textdateien
+	 */
 	Manager_Level lvl;
+	/**
+	 * Key-Manager zur Behandlung von Tasten-Eingaben
+	 */
 	Manager_Key key;
+	/**
+	 * Sound-Manager, der die Sound-Dateien zu Beginn laeft und bei bedarf abspielt
+	 */
 	Manager_Sound snd;
 	
+	/**
+	 * Klasse zur Darstellung der Statusleiste
+	 */
 	Status status;
 	
-	//Zeilen und Spalten des Spielfeldes
+	/**
+	 * Speichert Zeilen bzw. Spalten des Spielfelds
+	 */
 	int rows, columns;
-	
-	//Gibt zurueck, ob an einer Stelle (links, rechts, oben, unten) eine
-	//Kollision auftrat
+
+	/**
+	 * <b>booleans</b>, die speichert, ob und wo eine Kollision auftrat
+	 */
 	boolean collideLeft, collideRight, collideUp, collideDown, inGameMenu;
+	/**
+	 * Diese <b>booleans</b> speichern, welche Szene den Fokus hat (Spielfeld oder Battle)
+	 */
 	public boolean mapScreen, battleScreen;
-	
-	//Der Spieler
+
+	/**
+	 * Speichert das Spieler-Objekt
+	 */
 	Player player1;
 	
+	/**
+	 * Speichert die Items in dem jeweiligen Raum
+	 */
 	ArrayList<Item> items;
+	/**
+	 * Speichert die NPCs in dem jeweiligen Raum
+	 */
 	ArrayList<NPC> npc;
+	/**
+	 * Speichert die Gegner in dem jeweiligen Raum
+	 */
 	ArrayList<Enemy> enemy;
+	/**
+	 * Speichert die aufsammelbaren Items in dem jeweiligen Raum
+	 */
 	ArrayList<Collectable> collectables;
 	
-	//x- und y-Position des Spielers und x- und y-Position eines Spielfeldblockes 
-	//(zur Kollisionsabfrage und Logik)		
-	double pX, pY, fX, fY, eX, eY;
-	int setBack;
-	double diffX, diffY;
-	
-	
+	/**
+	 * Zaehlt, wie oft die E-Taste gedrueckt wurde (Fuer die Dialoge)
+	 */
 	int countE = 0;
+	/**
+	 * Speichert, ob der Spieler mit einem NPC interagiert hat
+	 */
 	boolean interacted = false;
+	/**
+	 * Speichert die von Spieler gewaehlte Dialog-Option
+	 */
 	String option = "";
 	
-	
-	//x- und y-Position des Spielers zu Beginn des Levels
+	/**
+	 * Speichert die x- und y-Position des Spielers
+	 */
 	int[] playerPos;
+	/**
+	 * Speichert die x- bzw. y-Position des Spielers
+	 */
 	double playerX, playerY;
-	
-	//Lebt der Spieler noch? - Spaeter evtl. nicht mehr noetig wegen Lebenspunkten
+
+	/**
+	 * Speichert, ob der Spieler am leben ist
+	 */
 	boolean isAlive = true;
 	
     /**
      * Konstruktor des Spielfeldes
-     *
+     *@param snd - Sound Manager wird vom Hauptmenu uebergeben
      */
 	public GameField(Manager_Sound snd)
 	{	
@@ -96,8 +152,9 @@ public class GameField
 	}
 		
     /**
-     * Initialisiert das Spielfeld aus dem char-Array <i>feld</i> und erzeugt
-     * die zugehoerigen Objekte.
+     * Initialisiert das Spielfeld mittels des Level-Managers
+     * @param back - Ist der Spieler in einen vorherigen Raum gegangen
+     * @param load - Wurde ein CheckPoint geladen
      */
 	public void initLvl(boolean back, boolean load)
 	{		
@@ -138,7 +195,7 @@ public class GameField
 	}
 	
 	/**
-	 * Berechnung der Kollisionen, deren Folgen und der Spiellogik
+	 * Berechnung die gesamte Spiellogik (Kollision, NPC-Interaktionen, Gegener-Interaktionen, etc)
 	 */
 	public void doLogic()
 	{	
@@ -365,7 +422,7 @@ public class GameField
 	}
 	
 	/**
-	 * zeichnet aktuelles Spielfeld mit allen aktiven Elementen
+	 * Zeichnet aktuelles Spielfeld mit allen aktiven Elementen
 	 */
 	public void draw()
 	{
@@ -396,8 +453,8 @@ public class GameField
 	}
 
     /**
-     * Spielschleife. Wird w�hrend des Spiels permanent durchlaufen. Hier werden
-     * Animationen realisiert und spielbezogene (interne) Werte gepr�ft und ggf.
+     * Spielschleife. Wird waehrend des Spiels permanent durchlaufen. Hier werden
+     * Animationen realisiert und spielbezogene (interne) Werte geprueft und ggf.
      * aktualisiert.
      *
      */
@@ -435,6 +492,10 @@ public class GameField
 		}
 	}
 	
+	/**
+	 * Behandelt auftretende Kollisionen mit Bloecken, NPCs, Gegner, etc.
+	 * @param col - <b>int</b> ob und wo eine Kollision auftrat
+	 */
 	private void handleCollision(int col)
 	{
 		switch(col)
@@ -471,6 +532,9 @@ public class GameField
 		}
 	}
 	
+	/**
+	 * Hilfsmethode fuer fluessige Animationen
+	 */
 	private void computeDelta()
 	{
 		delta = System.nanoTime() - last;
