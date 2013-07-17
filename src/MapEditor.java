@@ -2,7 +2,6 @@
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.KeyEvent;
-import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -17,8 +16,6 @@ public class MapEditor
 	
 	MapEditCursor cursor = new MapEditCursor(0, 0);
 	MapIntroduction intro = new MapIntroduction();
-	
-	private int posX, posY;
 	
 	private int step;
 	

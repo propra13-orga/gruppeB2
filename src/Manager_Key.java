@@ -135,15 +135,57 @@ public class Manager_Key
 		}
 		
 		else if(battle != null)
-		{
-			if(StdDraw.isKeyPressedSingle(KeyEvent.VK_E))
-				battle.pressedE = true;
-
-			if(StdDraw.isKeyPressedSingle(KeyEvent.VK_R))
-				battle.pressedR = true;
-			
-			if(battle.selectionOn)
+		{			
+			if(battle.winOn)
 			{
+				if(StdDraw.isKeyPressedSingle(KeyEvent.VK_E) || StdDraw.isKeyPressedSingle(KeyEvent.VK_ENTER))
+				{
+					battle.battleOn = false;
+					battle.snd.stopSound(7);
+				}
+			}
+			else if(battle.loseOn)
+			{
+				if(StdDraw.isKeyPressedSingle(KeyEvent.VK_E) || StdDraw.isKeyPressedSingle(KeyEvent.VK_ENTER))
+				{
+					battle.battleOn = false;
+				}
+			}
+			else if(battle.showIntroDialog)
+			{
+				if(StdDraw.isKeyPressedSingle(KeyEvent.VK_E))
+				{
+					battle.showIntroDialog = false;
+					battle.selectionOn = true;
+				}
+			}
+			else if(battle.selectionOn)
+			{
+				if(StdDraw.isKeyPressedSingle(KeyEvent.VK_E))
+				{
+					battle.selectionOn = false;
+					
+					switch(battle.selection)
+					{
+					case 1: battle.angrOn = true; break;
+					case 2: battle.magicOn = true; break;
+					case 3: 
+						battle.inventarOn = true; 
+						
+						battle.lower = 0;
+
+						if(battle.parent.player1.inventory.size() > 4)
+							battle.upper = 4;
+						else
+							battle.upper = battle.parent.player1.inventory.size();
+						
+						break;
+					case 4: battle.escapeOn = true; break;
+					}
+					
+					battle.selection = 1;
+				}
+				
 				if(StdDraw.isKeyPressed(KeyEvent.VK_LEFT))
 				{
 					if(battle.selection == 2)
@@ -174,8 +216,22 @@ public class Manager_Key
 				}
 			}
 			
-			if(battle.angrOn)
+			else if(battle.angrOn)
 			{
+				if(StdDraw.isKeyPressedSingle(KeyEvent.VK_E) || StdDraw.isKeyPressedSingle(KeyEvent.VK_ENTER))
+				{
+					battle.playerAttacks = true;
+					battle.executeAttack(battle.selection);
+				}
+				
+				if(StdDraw.isKeyPressedSingle(KeyEvent.VK_R) || StdDraw.isKeyPressedSingle(KeyEvent.VK_ESCAPE))
+				{
+					battle.selection = 1;
+					
+					battle.angrOn = false;
+					battle.selectionOn = true;
+				}
+				
 				if(StdDraw.isKeyPressedSingle(KeyEvent.VK_UP))
 				{
 					if(battle.selection > 1)
@@ -188,8 +244,22 @@ public class Manager_Key
 				}
 			}
 			
-			if(battle.magicOn)
-			{
+			else if(battle.magicOn)
+			{				
+				if(StdDraw.isKeyPressedSingle(KeyEvent.VK_E) || StdDraw.isKeyPressedSingle(KeyEvent.VK_ENTER))
+				{
+					battle.playerAttacks = true;
+					battle.executeAttack(battle.selection);
+				}
+			
+				if(StdDraw.isKeyPressedSingle(KeyEvent.VK_R) || StdDraw.isKeyPressedSingle(KeyEvent.VK_ESCAPE))
+				{
+					battle.selection = 2;
+				
+					battle.magicOn = false;
+					battle.selectionOn = true;
+				}
+			
 				if(StdDraw.isKeyPressedSingle(KeyEvent.VK_UP))
 				{
 					if(battle.selection > 1)
@@ -201,9 +271,10 @@ public class Manager_Key
 						battle.selection++;
 				}
 			}
+			
 			else if(battle.inventarOn && !battle.itemUseOn)
 			{
-				if(StdDraw.isKeyPressedSingle(KeyEvent.VK_ENTER))
+				if(StdDraw.isKeyPressedSingle(KeyEvent.VK_E) || StdDraw.isKeyPressedSingle(KeyEvent.VK_ENTER))
 				{
 					int size = battle.parent.player1.inventory.size();
 					
@@ -244,7 +315,7 @@ public class Manager_Key
 						battle.itemSel++;
 				}
 				
-				if(StdDraw.isKeyPressedSingle(KeyEvent.VK_ESCAPE))
+				if(StdDraw.isKeyPressedSingle(KeyEvent.VK_R) || StdDraw.isKeyPressedSingle(KeyEvent.VK_ESCAPE))
 				{
 					battle.inventarOn = false;
 					battle.selectionOn = true;
@@ -254,7 +325,7 @@ public class Manager_Key
 			}
 			else if(battle.itemUseOn)
 			{
-				if(StdDraw.isKeyPressedSingle(KeyEvent.VK_ENTER))
+				if(StdDraw.isKeyPressedSingle(KeyEvent.VK_E) || StdDraw.isKeyPressedSingle(KeyEvent.VK_ENTER))
 				{
 					int size = battle.parent.player1.inventory.size();
 					
@@ -334,10 +405,18 @@ public class Manager_Key
 					}
 				}
 				
-				if(StdDraw.isKeyPressedSingle(KeyEvent.VK_ESCAPE))
+				if(StdDraw.isKeyPressedSingle(KeyEvent.VK_R) || StdDraw.isKeyPressedSingle(KeyEvent.VK_ESCAPE))
 				{
 					battle.itemUseOn = false;
 					battle.selection = battle.itemSel;
+				}
+			}
+			
+			else if(battle.escapeOn)
+			{
+				if(StdDraw.isKeyPressedSingle(KeyEvent.VK_E) || StdDraw.isKeyPressedSingle(KeyEvent.VK_ENTER))
+				{
+					battle.battleOn = false;
 				}
 			}
 		}

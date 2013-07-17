@@ -31,12 +31,14 @@ public class Player extends Rectangle
 	
 	private String name;
 	private int level;
+	private int XP;
+	
 	private double speed;
 	
-	private int attack;
-	private int defense;
-	private int spez;
-	private int gena;
+	double attack, tempAtt;
+	double defense, tempDef;
+	double spez, tempSpez;
+	double gena, tempGena;
 	
 	private CheckPoint checkPoint;
 	
@@ -70,6 +72,8 @@ public class Player extends Rectangle
 		this.eqWep = new Weapon_Faust();
 		this.eqArm = new Armor_None();
 		
+		tempAtt = tempDef = tempSpez = tempGena = 0;
+		
 		//nur Testweise
 		//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		setHealth(10);
@@ -77,8 +81,11 @@ public class Player extends Rectangle
 		setMana(10);
 		setMaxMana(100);
 		lives = 3;
+		
 		speed = 125;
-		level = 15;
+		
+		XP = 0;
+		level = 1;
 		
 		name = "Player";
 		
@@ -444,6 +451,24 @@ public class Player extends Rectangle
 		return level;
 	}
 	
+	public int getXP()
+	{
+		return XP;
+	}
+	
+	public void increaseXP(int amount)
+	{
+		XP += amount;
+	}
+	
+	public void decreaseXP(int amount)
+	{
+		XP -= amount;
+		
+		if(XP <= 0)
+			XP = 0;
+	}
+	
 	public void setMaxHealth(int amount)
 	{
 		maxHealth = amount;
@@ -597,7 +622,7 @@ public class Player extends Rectangle
 	
 	public int getAtt()
 	{
-		return attack;
+		return (int)(attack + tempAtt);
 	}
 	
 	public void increaseDef(int amount)
@@ -612,7 +637,7 @@ public class Player extends Rectangle
 	
 	public int getDef()
 	{
-		return defense;
+		return (int)(defense + tempDef);
 	}
 	
 	public void increaseSpez(int amount)
@@ -627,7 +652,7 @@ public class Player extends Rectangle
 	
 	public int getSpez()
 	{
-		return spez;
+		return (int)(spez + tempSpez);
 	}
 	
 	public void increaseGena(int amount)
@@ -642,7 +667,7 @@ public class Player extends Rectangle
 	
 	public int getGena()
 	{
-		return gena;
+		return (int)(gena + tempGena);
 	}
 	
 	//------------------------------------------------------------------------------------------
@@ -652,10 +677,22 @@ public class Player extends Rectangle
 		switch(magic.getEffect())
 		{
 		case "none": break;
-		case "vert.": this.increaseDef((int)magic.getStrength()); break;
-		case "angr.": this.increaseAtt((int)magic.getStrength()); break;
-		case "spez": this.increaseSpez((int)magic.getStrength()); break;
-		case "gena": this.increaseGena((int)magic.getStrength()); break;
+		case "vert.": 
+			if(tempDef <= 30)
+				tempDef += (magic.getStrength()/200); 
+			break;
+		case "angr.":
+			if(tempAtt <= 30)
+				tempAtt += (magic.getStrength()/200); 
+			break;
+		case "spez": 
+			if(tempSpez <= 25)
+				tempSpez += (magic.getStrength()/200); 
+			break;
+		case "gena": 
+			if(tempGena <= 20)
+				tempGena += (magic.getStrength()/200); 
+			break;
 		
 		default: break;
 		}
@@ -666,13 +703,30 @@ public class Player extends Rectangle
 		switch(attack.getEffect())
 		{
 		case "none": break;
-		case "vert.": this.increaseDef((int)attack.getStrength()); break;
-		case "angr.": this.increaseAtt((int)attack.getStrength()); break;
-		case "spez": this.increaseSpez((int)attack.getStrength()); break;
-		case "gena": this.increaseGena((int)attack.getStrength()); break;
+		case "vert.": 
+			if(tempDef <= 30)
+				tempDef += (attack.getStrength()/200); 
+			break;
+		case "angr.": 
+			if(tempAtt <= 30)
+				tempAtt += (attack.getStrength()/200); 
+			break;
+		case "spez": 
+			if(tempSpez <= 25)
+				tempSpez += (attack.getStrength()/200); 
+			break;
+		case "gena": 
+			if(tempGena <= 20)
+				tempGena += (attack.getStrength()/200); 
+			break;
 		
 		default: break;
 		}
+	}
+	
+	public void resetTemps()
+	{
+		tempDef = tempAtt = tempSpez = tempGena = 0;
 	}
 	
 	//------------------------------------------------------------------------------------------

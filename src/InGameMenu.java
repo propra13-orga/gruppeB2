@@ -22,8 +22,6 @@ public class InGameMenu
 	double screenMidY;
 	
 	Manager_Key key;
-	boolean pressedE;
-	boolean pressedESC;
 	
 	int selection, itemSel;
 	int upper, lower, posAbs;
@@ -50,9 +48,6 @@ public class InGameMenu
 		screenMidY = ((field.rows + 2) * 40 + 80) / 2 - 40;
 		
 		this.key = new Manager_Key(this);
-		
-		pressedE = false;
-		pressedESC = false;
 		
 		selection = 1;
 		itemSel = 1;

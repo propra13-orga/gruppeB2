@@ -9,8 +9,16 @@ public class Enemy_KidHipster extends Enemy
 	
 	final double SPEED = 0.02;
 	
-	private double armor;
-	private double attack;
+	private Attack[] attacks = new Attack[]
+			{
+			Attacks.kidhipster_smartphone,
+			Attacks.kidhipster_metrobarriere
+			};
+	
+	private Magic[] magics = new Magic[]
+			{
+			Attacks.kidhipster_obey
+			};
 	
 	private final String AVATAR = "images/enemy/kid_hipster/avatar.png";	
 	
@@ -29,9 +37,6 @@ public class Enemy_KidHipster extends Enemy
 	int swpR = 0;
 	int swpU = 0;
 	int swpD = 0;
-	
-	double health, maxHealth;
-	double mana, maxMana;
 	
 	private final String DIRECTION;
 	private final int LEVEL;
@@ -53,8 +58,17 @@ public class Enemy_KidHipster extends Enemy
 		this.maxMana = 20 + 10 * LEVEL;
 		this.mana = maxMana;
 		
-		this.armor = LEVEL * 5;
-		this.attack = 30;
+		this.defense = LEVEL * 5;
+		this.attack = LEVEL * 5;
+		this.spez = LEVEL * 2;
+		this.gena = LEVEL * 2;
+		
+		this.xp = LEVEL * 20;
+		this.gold = LEVEL * 50 + (int)(Math.random() * ((50 - 10) + 10) + 10);
+
+		this.attacks[0].setStrength(20);
+		this.attacks[1].setStrength(10);
+		this.magics[0].setStrength(30);
 	}
 	
 	public Enemy_KidHipster(int posX, int posY, String direction, int level, long delay)
@@ -69,13 +83,18 @@ public class Enemy_KidHipster extends Enemy
 		this.DIRECTION = direction;
 		this.LEVEL = level;
 		
-		this.maxHealth = 50 + 15 * level;
+		this.maxHealth = 50 + 15 * LEVEL;
 		this.health = maxHealth;
-		this.maxMana = 20 + 10 * level;
+		this.maxMana = 20 + 10 * LEVEL;
 		this.mana = maxMana;
-
-		this.armor = LEVEL * 5;
-		this.attack = 30;
+		
+		this.defense = LEVEL * 5;
+		this.attack = LEVEL * 5;
+		this.spez = LEVEL * 2;
+		this.gena = LEVEL * 2;
+		
+		this.xp = LEVEL * 20;
+		this.gold = LEVEL * 50 + (int)(Math.random() * ((50 - 10) + 10) + 10);
 	}
 
 	public void drawImg() 
@@ -394,89 +413,21 @@ public class Enemy_KidHipster extends Enemy
 			return "Keine Richtung";
 	}
 	
-	//----------------------------------------------------------------------------------------
-	
-	public void increaseHealth(double amount)
-	{
-		health = health + amount;
-		
-		if(health > maxHealth)
-			health = maxHealth;
-	}
-	
-	public void decreaseHealth(double amount)
-	{
-		health = health - amount;
-		
-		if(health < 0)
-			health = 0;
-	}
-	
-	public void increaseMana(double amount)
-	{
-		mana = mana + amount;
-		
-		if(mana > maxMana)
-			mana = maxMana;
-	}
-	
-	public void decreaseMana(double amount)
-	{
-		mana = mana - amount;
-		
-		if(mana < 0)
-			mana = 0;
-	}
-	
-	public double getMaxHealth()
-	{
-		return maxHealth;
-	}
-	
-	public double getHealth()
-	{
-		return health;
-	}
-	
-	public double getMaxMana()
-	{
-		return maxMana;
-	}
-	
-	public double getMana()
-	{
-		return mana;
-	}
 	
 	//----------------------------------------------------------------------------------------
-
-	public double getArmor()
+	
+	public Attack getEnemyAttack()
 	{
-		return armor;
+		double att= Math.random();
+
+		if(att < 0.75)
+			return this.attacks[0];
+		else
+			return this.attacks[1];
 	}
 	
-	public double getAttack()
+	public Magic getEnemyMagic()
 	{
-		return attack;
-	}
-	
-	public void increaseArmor(double amount)
-	{
-		armor += amount;
-	}
-
-	public void increaseAttack(double amount)
-	{
-		attack += amount;
-	}
-	
-	public void decreaseArmor(double amount)
-	{
-		armor -= amount;
-	}
-
-	public void decreaseAttack(double amount)
-	{
-		attack -= amount;
+		return this.magics[0];
 	}
 }

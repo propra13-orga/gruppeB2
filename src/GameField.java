@@ -340,7 +340,7 @@ public class GameField
 										battleScreen = true;
 										
 										snd.playSound(0);
-										new BattleScreen(this, snd, nextEnemy);
+										new BattleScreen(this, nextEnemy);
 									}
 								
 							}

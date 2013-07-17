@@ -1,4 +1,3 @@
-import java.awt.Rectangle;
 
 public class MapEditCursor extends Block_Block
 {

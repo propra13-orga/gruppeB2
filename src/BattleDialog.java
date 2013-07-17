@@ -17,6 +17,7 @@ public class BattleDialog
 	double screenMidX, screenMidY;
 	
 	int posAbs;
+	int anim;
 	
 	public BattleDialog(BattleScreen battle)
 	{
@@ -24,6 +25,8 @@ public class BattleDialog
 		
 		this.screenMidX = battle.screenMidX;
 		this.screenMidY = battle.screenMidY;
+		
+		anim = 0;
 		
 		try 
 		{
@@ -197,31 +200,89 @@ public class BattleDialog
 		StdDraw.setFont(font);
 		StdDraw.setPenColor(Color.white);
 
-		StdDraw.textLeft(screenMidX - 220, screenMidY - 130, battle.player.getPlayerName());		
+		if(battle.enemyAttacks)
+			StdDraw.textLeft(screenMidX - 220, screenMidY - 130, battle.enemy.getName());
+		else
+			StdDraw.textLeft(screenMidX - 220, screenMidY - 130, battle.player.getPlayerName());
+		
 		StdDraw.textLeft(screenMidX - 220, screenMidY - 160, "ben. " + attack.getName().toUpperCase());	
 		
 	}
+	
 	public void showMagic(Magic magic)
 	{
 		StdDraw.setFont(font);
 		StdDraw.setPenColor(Color.white);
 
-		StdDraw.textLeft(screenMidX - 220, screenMidY - 130, battle.player.getPlayerName());		
+		if(battle.enemyAttacks)
+			StdDraw.textLeft(screenMidX - 220, screenMidY - 130, battle.enemy.getName());
+		else
+			StdDraw.textLeft(screenMidX - 220, screenMidY - 130, battle.player.getPlayerName());
+		
 		StdDraw.textLeft(screenMidX - 220, screenMidY - 160, "ben. " + magic.getName().toUpperCase());	
 	}
+	
 	public void showEffect(Attack attack)
-	{
+	{		
 		StdDraw.setFont(font);
 		StdDraw.setPenColor(Color.white);
 
 		if(!attack.getEffect().equals("none"))
 		{
-			StdDraw.textLeft(screenMidX - 220, screenMidY - 130, battle.player.getPlayerName());		
-			StdDraw.textLeft(screenMidX - 220, screenMidY - 160, attack.getDesc());	
+			if(battle.playerAttacks && !battle.enemyAttacks)
+			{
+				StdDraw.textLeft(screenMidX - 220, screenMidY - 130, battle.player.getPlayerName());
+				
+				if(attack.getEffect().equals("vert.") && battle.player.tempDef >= 30)
+				{		
+					StdDraw.textLeft(screenMidX - 220, screenMidY - 160, "DEF maximal.");
+				}
+				else if(attack.getEffect().equals("angr.") && battle.player.tempAtt >= 30)
+				{
+					StdDraw.textLeft(screenMidX - 220, screenMidY - 160, "ATT maximal.");					
+				}
+				else if(attack.getEffect().equals("gena") && battle.player.tempGena >= 20)
+				{
+					StdDraw.textLeft(screenMidX - 220, screenMidY - 160, "GENA maximal.");
+				}
+				else if(attack.getEffect().equals("spez") && battle.player.tempSpez >= 25)
+				{
+					StdDraw.textLeft(screenMidX - 220, screenMidY - 160, "SPEZ maximal.");	
+				}
+				else
+					StdDraw.textLeft(screenMidX - 220, screenMidY - 160, attack.getDesc());	
+			}
+			else
+			{
+				StdDraw.textLeft(screenMidX - 220, screenMidY - 130, battle.enemy.getName());
+				
+				if(attack.getEffect().equals("vert.") && battle.enemy.tempDef >= 30)
+				{
+					StdDraw.textLeft(screenMidX - 220, screenMidY - 160, "DEF maximal.");
+				}
+				else if(attack.getEffect().equals("angr.") && battle.enemy.tempAtt >= 30)
+				{
+					StdDraw.textLeft(screenMidX - 220, screenMidY - 160, "ATT maximal.");						
+				}
+				else if(attack.getEffect().equals("gena") && battle.enemy.tempGena >= 20)
+				{
+					StdDraw.textLeft(screenMidX - 220, screenMidY - 160, "GENA maximal.");		
+				}
+				else if(attack.getEffect().equals("spez") && battle.enemy.tempSpez >= 25)
+				{
+					StdDraw.textLeft(screenMidX - 220, screenMidY - 160, "SPEZ maximal.");		
+				}
+				else
+					StdDraw.textLeft(screenMidX - 220, screenMidY - 160, attack.getDesc());	
+			}
 		}
 		else
 		{
-			StdDraw.textLeft(screenMidX - 220, screenMidY - 130, battle.player.getPlayerName());		
+			if(battle.enemyAttacks)
+				StdDraw.textLeft(screenMidX - 220, screenMidY - 130, battle.enemy.getName());
+			else
+				StdDraw.textLeft(screenMidX - 220, screenMidY - 130, battle.player.getPlayerName());
+					
 			StdDraw.textLeft(screenMidX - 220, screenMidY - 160, "ben. " + attack.getName().toUpperCase());	
 		}
 	}
@@ -232,12 +293,60 @@ public class BattleDialog
 
 		if(!magic.getEffect().equals("none"))
 		{
-			StdDraw.textLeft(screenMidX - 220, screenMidY - 130, battle.player.getPlayerName());		
-			StdDraw.textLeft(screenMidX - 220, screenMidY - 160, magic.getEffect().toUpperCase() + " steigt.");	
+			if(battle.enemyAttacks)
+			{
+				StdDraw.textLeft(screenMidX - 220, screenMidY - 130, battle.enemy.getName());
+				
+				if(magic.getEffect().equals("vert.") && battle.player.tempDef >= 30)
+				{
+					StdDraw.textLeft(screenMidX - 220, screenMidY - 160, "DEF maximal.");	
+				}
+				else if(magic.getEffect().equals("angr.") && battle.player.tempAtt >= 30)
+				{
+					StdDraw.textLeft(screenMidX - 220, screenMidY - 160, "ATT maximal.");					
+				}
+				else if(magic.getEffect().equals("gena") && battle.player.tempGena >= 20)
+				{
+					StdDraw.textLeft(screenMidX - 220, screenMidY - 160, "GENA maximal.");	
+				}
+				else if(magic.getEffect().equals("spez") && battle.player.tempSpez >= 25)
+				{
+					StdDraw.textLeft(screenMidX - 220, screenMidY - 160, "SPEZ maximal.");	
+				}
+				else
+					StdDraw.textLeft(screenMidX - 220, screenMidY - 160, magic.getEffect().toUpperCase() + " steigt.");	
+			}
+			else
+			{
+				StdDraw.textLeft(screenMidX - 220, screenMidY - 130, battle.player.getPlayerName());
+				
+				if(magic.getEffect().equals("vert.") && battle.enemy.tempDef >= 30)
+				{
+					StdDraw.textLeft(screenMidX - 220, screenMidY - 160, "DEF maximal.");	
+				}
+				else if(magic.getEffect().equals("angr.") && battle.enemy.tempAtt >= 30)
+				{
+					StdDraw.textLeft(screenMidX - 220, screenMidY - 160, "ATT maximal.");						
+				}
+				else if(magic.getEffect().equals("gena") && battle.enemy.tempGena >= 20)
+				{
+					StdDraw.textLeft(screenMidX - 220, screenMidY - 160, "GENA maximal.");	
+				}
+				else if(magic.getEffect().equals("spez") && battle.enemy.tempSpez >= 25)
+				{
+					StdDraw.textLeft(screenMidX - 220, screenMidY - 160, "SPEZ maximal.");		
+				}
+				else
+					StdDraw.textLeft(screenMidX - 220, screenMidY - 160, magic.getEffect().toUpperCase() + " steigt.");	
+			}
 		}
 		else
 		{
-			StdDraw.textLeft(screenMidX - 220, screenMidY - 130, battle.player.getPlayerName());		
+			if(battle.enemyAttacks)
+				StdDraw.textLeft(screenMidX - 220, screenMidY - 130, battle.enemy.getName());
+			else
+				StdDraw.textLeft(screenMidX - 220, screenMidY - 130, battle.player.getPlayerName());
+				
 			StdDraw.textLeft(screenMidX - 220, screenMidY - 160, "ben. " + magic.getName().toUpperCase());	
 		}
 	}
@@ -248,6 +357,76 @@ public class BattleDialog
 
 		StdDraw.textLeft(screenMidX - 220, screenMidY - 130, "Nicht genug Mana!");		
 		StdDraw.textLeft(screenMidX - 220, screenMidY - 160, "Benötigt: " + (int)magic.manaCost());		
+	}
+	
+	public void showWinDialog()
+	{	
+		battle.playerWins = true;
+		
+		if(anim == 0)
+		{
+			battle.snd.stopSound(0);
+			battle.snd.playSound(7);
+		}
+		
+		if(anim < 25)
+		{
+			StdDraw.picture(screenMidX - 270 + battle.time + 4*anim, screenMidY + 100, "images/enemy/" + battle.enemy.toString() + "/battle.png");
+			
+			StdDraw.setPenColor(Color.black);
+			StdDraw.filledRectangle(screenMidX - 270 + battle.time + 110, screenMidY + 100, 40, 80);
+		}
+
+		StdDraw.setFont(font);
+		StdDraw.setPenColor(Color.white);
+		
+		if(anim < 200)
+		{
+			StdDraw.textLeft(screenMidX - 220, screenMidY - 130, battle.enemy.getName().toUpperCase());
+			StdDraw.textLeft(screenMidX - 220, screenMidY - 160, "wurde besiegt.");
+			
+			anim++;
+		}
+		else
+		{
+			StdDraw.textLeft(screenMidX - 220, screenMidY - 130, battle.player.getPlayerName() + " erhält");
+			StdDraw.textLeft(screenMidX - 220, screenMidY - 160, "" + battle.enemy.givesXP() + " XP und " + battle.enemy.givesGold() + " Gold.");
+		
+			if(anim < 300)
+				anim++;
+		}
+	}
+	
+	public void showLoseDialog()
+	{	
+		battle.playerLose = true;
+		
+		if(anim < 25)
+		{
+			StdDraw.picture(screenMidX + 280 - battle.time - 4*anim, screenMidY - 42, "images/player/battle.png");
+			
+			StdDraw.setPenColor(Color.black);
+			StdDraw.filledRectangle(screenMidX + 280 - battle.time - 130, screenMidY - 42, 40, 80);
+		}
+
+		StdDraw.setFont(font);
+		StdDraw.setPenColor(Color.white);
+		
+		if(anim < 200)
+		{
+			StdDraw.textLeft(screenMidX - 220, screenMidY - 130, battle.enemy.getName().toUpperCase());
+			StdDraw.textLeft(screenMidX - 220, screenMidY - 160, "besiegt " + battle.player.getPlayerName().toUpperCase());
+			
+			anim++;
+		}
+		else
+		{
+			StdDraw.textLeft(screenMidX - 220, screenMidY - 130, battle.player.getPlayerName() + " wird");
+			StdDraw.textLeft(screenMidX - 220, screenMidY - 160, "zu Tode geswagt.");
+		
+			if(anim < 300)
+				anim++;
+		}
 	}
 	
 	public void showEscapeDialog()

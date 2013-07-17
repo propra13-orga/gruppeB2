@@ -153,7 +153,8 @@ public class Shop
 		{
 			StdDraw.show(5);
 			{
-				key.handleKeyInput();
+				if(!errorOn && !successOn)
+					key.handleKeyInput();
 				
 				field.draw();
 				field.player1.draw();
