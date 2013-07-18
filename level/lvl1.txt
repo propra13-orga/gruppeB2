@@ -1,0 +1,27 @@
+XXXXXXXXXXXXXXXX
+X              X
+X              X
+X              X
+X              E
+X            SSX
+X              X
+X            S X
+XXXXXXXXXXXXXXXX
+
+[triggers]
+1,7 = TRIGGER_PLAYER_START
+14,4 = TRIGGER_PLAYER_BACK
+
+[items]
+1,1 = ITEM_COINS
+2,1 = ITEM_COINS
+3,1 = ITEM_COINS
+
+[npc]
+13,6 = NPC_SHOP_LEFT
+
+[enemy]
+
+[collectables]
+14,1 = ITEM_HEALTH_BOTTLE
+13,1 = ITEM_MANA_BOTTLE

@@ -1,0 +1,35 @@
+XXXXXXXXXXXXXXXXXX
+X                X
+X     X   X      X
+X     X   X      X
+T     X   X      X
+XXXXXXX   X      X
+X         X      X
+X  XXXX   X      X
+X     X   XXXXXXXX
+X     X          X
+X     X          E
+XXXXXXXXXXXXXXXXXX
+
+[triggers]
+1,4 = TRIGGER_PLAYER_START
+16,10 = TRIGGER_PLAYER_BACK
+2,10 = TRIGGER_SAVEPOINT
+
+[items]
+11,7 = ITEM_HEART
+12,7 = ITEM_HEART
+4,10 = ITEM_HEART
+13,7 = ITEM_COINS
+14,7 = ITEM_COINS
+5,10 = ITEM_COINS
+15,7 = ITEM_MANA
+16,7 = ITEM_MANA
+5,9 = ITEM_MANA
+
+[npc]
+1,10 = NPC_CHECKPOINT
+
+[enemy]
+
+[collectables]

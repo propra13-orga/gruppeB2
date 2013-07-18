@@ -1,0 +1,33 @@
+XXXXXXXXXXXXXXXX
+X       X      X
+X       X      X
+X       X      X
+X              E
+X          X   X
+X          X   X
+X          X   X
+XXXXXXXXXXXXXXXX
+
+[triggers]
+1,4 = TRIGGER_PLAYER_START
+14,4 = TRIGGER_PLAYER_BACK
+
+[items]
+9,1 = ITEM_COINS
+10,1 = ITEM_COINS
+11,1 = ITEM_COINS
+12,1 = ITEM_COINS
+13,1 = ITEM_COINS
+14,1 = ITEM_COINS
+
+[npc]
+
+[enemy]
+14,4 = BOSS_MICKI_LEFT
+11,1 = ENEMY_KIDHIPSTER_DOWN
+8,7 = ENEMY_KIDHIPSTER_UP
+
+[collectables]
+12,7 = ITEM_HEALTH_BOTTLE
+13,7 = ITEM_HELTH_BOTTLE
+14,7 = ITEM_MANA_BOTTLE

@@ -1,0 +1,21 @@
+Map-Anleitung zum erstellen eines Raumes
+
+Zuerst wird das Spielfeld eingegeben. Dieses Feld muss quadratisch sein, damit es eingelesen werden kann.
+
+Folgende Legende gilt für die Map:
+
+X - Wall
+E - Exit
+T - Stairs
+(Leerzeichen) - Floor
+
+Nach der Eingabe der Map werden Trigger, Items, NPC, etc. eingegeben. Dabei werden die einzelnen
+Trigger, Items, etc. nach dem "Sprungpunkt" ([trigger], [items], ...) eingegeben.
+
+Musterbeispiel:
+
+[items]
+4,6 = ITEM_HEALTH
+
+Erzeugt ein Herz-Item auf dem Feld (4,6) wobei 4 = x-Coord. und 6 = y-Coord. gemessen von
+der oberen linken Ecke (0,0).

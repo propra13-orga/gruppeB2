@@ -1,87 +1,61 @@
-import java.awt.event.KeyEvent;
 
+import java.awt.Rectangle;
 
-public class Npc extends Block
+/**
+ *  Diese abstrakte Klasse stellen die NPCs des Spiels dar.
+ *  Sie erben von der Klasse Rectangle, um die Kollisionen mit dem Spieler zu realisieren.
+ * 
+ *  <p>
+ *  Die vererbten, abstrakten Methoden beschreiben genauer die Eigenschaften eines
+ *  NPC fuer die Logik des Spiels.
+ *  </p>
+ */
+abstract class NPC extends Rectangle
 {
 	private static final long serialVersionUID = 1L;
-
-	private int posX, posY, pX, pY;
 	
-	//aktiviert Npc
-	private boolean help;
-	
-	//Moegliche Anzeige an der unteren Leiste
-	private boolean helpDisplay;
-
-	public Npc(int posX, int posY) 
+    /**
+     * Konstruktor eines NPC-Objekts
+     *
+     * @param posX - die x-Position (Feld) des NPC (Rectangle)
+     * @param posY - die y-Position (Feld) des NPC (Rectangle)
+     * @param sizeX - die x-Groesse des NPC fuer die Kollision(Rectangle)
+     * @param sizeY - die y-Groesse des NPC fuer die Kollision(Rectangle)
+     */
+	public NPC(int posX, int posY, int sizeX, int sizeY)
 	{
-		
-		super(posX, posY, 40, 40);
-		
-		this.posX = posX;
-		this.posY = posY;
-		pX = 0;
-		pY = 0;
-	}
-
-	@Override
-	boolean isSolid() 
-	{
-		return true;
-	}
-
-	@Override
-	public String toString() 
-	{
-		return "npc";
-	}
-
-	@Override
-	void drawImg()
-	{
-		if(help==true)
-		{
-			StdDraw.picture(posX, posY, "images/npc/npc2.png");
-			if(helpDisplay==true)
-				{
-					//Anzeige auf der unteren Leiste
-					StdDraw.picture(pX-64, pY, "images/npc/npcActive.png");
-					//bei gedruekter Leertaste, mehr Infos zu sehen
-					if(StdDraw.isKeyPressed(KeyEvent.VK_SPACE))
-						StdDraw.picture(pX-64, pY, "images/npc/npcActive2.png");
-				}
-				
-		}
-		else
-			StdDraw.picture(posX, posY, "images/npc/npc.png");
+		super(posX, posY, sizeX, sizeY);
 	}
 	
-	public boolean isHelp()
-	{
-		return help;
-	}
-
-	public void setHelp(boolean help
-			) {
-		this.help = help;
-	}
-	
-	public boolean isHelpDisplay() 
-	{
-		return helpDisplay;
-	}
+	/**
+	 * Zeichnet den NPC auf das Spielfeld
+	 */
+	public abstract void drawImg();
 
 	/**
-	 *  Anzeige von Npc Infos an der unteren Leiste
-	 * 
-	 * @param helpDisplay setzt fest, dass an der unteren Leiste Npc Infos angezeigt werde
-	 * @param posX uebergibt an pX die Position weiter
-	 * @param posY uebergibt an pY die Position weiter
+	 * Prueft Kollisionen mit dem Rectangle <i>rect</i>
+	 * @param rect - Rectangle, mit dem die Kollision geprueft wird
 	 */
-	public void setHelpDisplay(boolean helpDisplay, int posX, int posY)
-	{
-		this.helpDisplay = helpDisplay;
-		this.pX = posX;
-		this.pY = posY;
-	}
+	public abstract int checkCollision(Rectangle rect);
+	/**
+	 * Gibt zurueck, ob der Spieler sich im Aktionsradius befindet
+	 * @param player - Player, der ueberprueft wird
+	 */
+	public abstract boolean playerInRange(Player player);
+
+	/**
+	 * Gibt den Dateipfad des Avatars zurueck
+	 */
+	public abstract String getAvatar();	
+	/**
+	 * Gibt die Dialogseite <i>page</i> zurueck
+	 * @param page - Seite, die zurueckgegeben wird
+	 */
+	public abstract String [] getDialog(int page);
+	/**
+	 * Prueft, ob die Dialogseite <i>page</i> ein Auswahldialog ist
+	 * @param page - Seite, die ueberprueft wird
+	 * @return <b>true</b> wenn die Dialogseite Auswahldialog ist, <b>false</b> sonst
+	 */
+	public abstract boolean isOptionDialog(int page);
 }

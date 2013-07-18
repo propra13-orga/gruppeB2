@@ -1,17 +1,31 @@
 import javax.swing.JOptionPane;
-
-
 public class MainMenu
 {
+	/**
+	 * Speichert die x- bzw. y-Position der Maus
+	 */
 	private double mouseX, mouseY;
+	/**
+	 * Speichert den Sound-Manager, der die Sound laedt und wiedergibt
+	 */
+	Manager_Sound snd;
 	
+	/**
+	 * Konstruktor des MainMenu
+	 * @param w - Fensterbreite
+	 * @param h - Fensterhoehe
+	 */
 	public MainMenu(int w, int h)
 	{
+		snd = new Manager_Sound();
 		StdDraw.setCanvasSize(w, h);
-		//this.intro();
+		this.intro();
 		this.run();
 	}
 	
+	/**
+	 * Zeichnet das Menu
+	 */
 	public void draw()
 	{
 		if(mouseX < 0.5 && mouseX > 0.28 && mouseY < 0.93 && mouseY > 0.88)
@@ -26,6 +40,9 @@ public class MainMenu
 			StdDraw.picture(0.5, 0.5, "images/menu/main/Main.png");
 	}
 	
+	/**
+	 * Spielschleife des MainMenu
+	 */
 	public void run()
 	{
 		while(true)
@@ -35,6 +52,9 @@ public class MainMenu
 		}
 	}
 	
+	/**
+	 * Behandelt die Logik des Menu (Mausklicks)
+	 */
 	public void doLogic()
 	{
 		mouseX = StdDraw.mouseX();
@@ -42,21 +62,24 @@ public class MainMenu
 		
 		if(mouseX < 0.5 && mouseX > 0.28 && mouseY < 0.93 && mouseY > 0.88 && StdDraw.mouseClicked())
 		{
-			new GameField();
+			snd.stopSound(6);
+			new GameField(snd);
 		}
 		if(mouseX < 0.496 && mouseX > 0.28 && mouseY < 0.797 && mouseY > 0.752 && StdDraw.mouseClicked())
 		{ 
-			//Speilstand wird geladen
-			new GameField("savegame"); 
+			
 		}
 		if(mouseX < 0.488 && mouseX > 0.281 && mouseY < 0.67 && mouseY > 0.622 && StdDraw.mouseClicked())
 		{ 
-			
+			new MapEditor();
 		}
 		if(mouseX < 0.485 && mouseX > 0.289 && mouseY < 0.544 && mouseY > 0.492 && StdDraw.mouseClicked())
 			System.exit(0);
 	}
 	
+	/**
+	 * Spielt das Intro und den Sound ab
+	 */
 	public void intro()
 	{
 		try
@@ -71,6 +94,9 @@ public class MainMenu
 			{
 				StdDraw.picture(0.5, 0.5, "images/intro/Sponge"+i+".png");
 				Thread.sleep(100);
+				
+				if(i == 5)
+					snd.playSound(6);
 			}
 		}catch(InterruptedException e)
 		{

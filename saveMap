@@ -1,0 +1,18 @@
+XXXXXXXXXXXXXXX
+X             X
+X     XXX     X
+X     X       X
+X   XXX       X
+X     X       X
+X     XXXX    X
+X     X       X
+X     X       X
+X     X       X
+X     X       X
+X     X       X
+X             X
+X             X
+XXXXXXXXXXXXXXX
+
+[items]
+3,7 = TRIGGER_PLAYER_START

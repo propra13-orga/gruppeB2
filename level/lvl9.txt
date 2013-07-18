@@ -1,0 +1,34 @@
+XXXXXXXXXXXXXXXXXXXXXXX
+X                     X
+X                     X
+XXXXXXXXXXXXXXXXXXX   X
+X                 X   X
+X                 X   X
+X   XXXXXXXXXXX   X   X
+X   X        EX   X   X
+X   X  XXXXXXXX   X   X
+X   X             X   X
+X   XXXXXXXXXXXXXXX   X
+X                     X
+X                     X
+XXXXXXXXXXXXXXXXXXXXXXX
+
+[triggers]
+1,1 = TRIGGER_PLAYER_START
+12,7 = TRIGGER_PLAYER_BACK
+
+[items]
+1,12 = ITEM_HEART
+17,9 = ITEM_HEART
+14,12 = ITEM_COINS
+15,12 = ITEM_COINS
+8,5 = ITEM_COINS
+9,5 = ITEM_COINS
+21,1 = ITEM_MANA
+17,4 = ITEM_MANA
+
+[npc]
+
+[enemy]
+
+[collectables]
