@@ -5,7 +5,7 @@ import java.awt.Rectangle;
  * @author Mike Bechtel
  *
  */
-public class Enemy_AttentionWhore extends Enemy
+public class Enemy_Duckface extends Enemy
 {
 	private static final long serialVersionUID = 1L;
 
@@ -20,7 +20,7 @@ public class Enemy_AttentionWhore extends Enemy
 	final double SPEED = 0.02;
 	
 	/**
-	 * Array, in dem die Attacken gespeichert werden, die dem AttentionWhore
+	 * Array, in dem die Attacken gespeichert werden, die dem Duckface
 	 * zur Verfuegung stehen
 	 */
 	private Attack[] attacks = new Attack[]
@@ -30,17 +30,26 @@ public class Enemy_AttentionWhore extends Enemy
 			};
 	
 	/**
+	 * Array, in dem die Zauber gespeichert werden, die dem Duckface
+	 * zur Verfuegung stehen
+	 */
+	private Magic[] magics = new Magic[]
+			{
+			Attacks.duckface_duckface
+			};
+	
+	/**
 	 * Dateipfad der Avatars (fuer Spielfelddialog)
 	 */
-	private final String AVATAR = "images/enemy/attention_whore/avatar.png";	
+	private final String AVATAR = "images/enemy/duckface/avatar.png";	
 	
 	/**
 	 * Array mit den Dialog-Seiten
 	 */
 	private final String [][] DIALOG = new String[][]
 			{
-			{"Hast du schon meine neue", "Gucci-Tasche gesehen!", "Megasuess!!!", "                                      weiter mit [e]"},
-			{"Ach du nervst mich jetzt", "schon.", "Geh mir aus dem Weg!", "                                      weiter mit [e]"}
+			{"Hey lass uns ein Foto", "machen! Hehe!", "Duckface!!!", "                                      weiter mit [e]"},
+			{"Quack, quack, quack!", "Ey du machst ja", "garnicht mit!!", "                                      weiter mit [e]"}
 			};
 	
 	/**
@@ -81,13 +90,13 @@ public class Enemy_AttentionWhore extends Enemy
 	
 	
 	/**
-	 * Konstruktor einer AttentionWhore
+	 * Konstruktor einer Duckface
 	 * @param posX - x-Position auf dem Spielfeld
 	 * @param posY - y-Position auf dem Spielfeld
 	 * @param direction - Ausrichtung des Gegners auf dem Feld
 	 * @param delay - Hilfsvariable zur fluessigen Animation
 	 */
-	public Enemy_AttentionWhore(int posX, int posY, String direction, long delay)
+	public Enemy_Duckface(int posX, int posY, String direction, long delay)
 	{
 		super(posX, posY, 40, 40);
 		
@@ -97,36 +106,37 @@ public class Enemy_AttentionWhore extends Enemy
 		this.posY = posY;
 		
 		this.DIRECTION = direction;
-		this.LEVEL = (int)(Math.random() * ((8 - 4) + 4) + 4);
+		this.LEVEL = (int)(Math.random() * ((10 - 4) + 4) + 4);
 		
-		this.maxHealth = 30 + 16 * LEVEL;
+		this.maxHealth = 30 + 18 * LEVEL;
 		this.health = maxHealth;
-		this.maxMana = 10 * LEVEL;
+		this.maxMana = 15 * LEVEL;
 		this.mana = maxMana;
 		
-		this.defense = LEVEL * 4;
-		this.attack = LEVEL * 4;
-		this.spez = LEVEL * 3;
-		this.gena = LEVEL * 2;
+		this.defense = LEVEL * 3;
+		this.attack = LEVEL * 5;
+		this.spez = LEVEL * 4.5;
+		this.gena = LEVEL * 3;
 		
-		this.xp = LEVEL * 15;
-		this.gold = LEVEL * 50 + (int)(Math.random() * ((50 - 10) + 10) + 10);
+		this.xp = LEVEL * 23;
+		this.gold = LEVEL * 70 + (int)(Math.random() * ((60 - 10) + 10) + 10);
 
-		this.type = Types.whore;
+		this.type = Types.duckface;
 		
 		this.attacks[0].setStrength(20);
 		this.attacks[1].setStrength(35);
+		this.magics[0].setStrength(30);
 	}
 	
 	/**
-	 * Konstruktor einer AttentionWhore
+	 * Konstruktor einer Duckface
 	 * @param posX - x-Position auf dem Spielfeld
 	 * @param posY - y-Position auf dem Spielfeld
 	 * @param direction - Ausrichtung des Gegners auf dem Feld
 	 * @param level - Level des Gegners
 	 * @param delay - Hilfsvariable zur fluessigen Animation
 	 */
-	public Enemy_AttentionWhore(int posX, int posY, String direction, int level, long delay)
+	public Enemy_Duckface(int posX, int posY, String direction, int level, long delay)
 	{
 		super(posX, posY, 40, 40);
 		
@@ -138,23 +148,24 @@ public class Enemy_AttentionWhore extends Enemy
 		this.DIRECTION = direction;
 		this.LEVEL = level;
 		
-		this.maxHealth = 30 + 16 * LEVEL;
+		this.maxHealth = 30 + 18 * LEVEL;
 		this.health = maxHealth;
-		this.maxMana = 10 * LEVEL;
+		this.maxMana = 15 * LEVEL;
 		this.mana = maxMana;
 		
-		this.defense = LEVEL * 4;
-		this.attack = LEVEL * 4;
-		this.spez = LEVEL * 3;
-		this.gena = LEVEL * 2;
+		this.defense = LEVEL * 3;
+		this.attack = LEVEL * 5;
+		this.spez = LEVEL * 4.5;
+		this.gena = LEVEL * 3;
 		
-		this.xp = LEVEL * 15;
-		this.gold = LEVEL * 50 + (int)(Math.random() * ((50 - 10) + 10) + 10);
+		this.xp = LEVEL * 23;
+		this.gold = LEVEL * 70 + (int)(Math.random() * ((60 - 10) + 10) + 10);
 
-		this.type = Types.whore;
+		this.type = Types.duckface;
 		
 		this.attacks[0].setStrength(20);
 		this.attacks[1].setStrength(35);
+		this.magics[0].setStrength(30);
 	}
 
 	/**
@@ -165,16 +176,16 @@ public class Enemy_AttentionWhore extends Enemy
 		switch(DIRECTION)
 		{
 		case Direction.DOWN: 
-			StdDraw.picture(posX, posY, "images/enemy/attention_whore/attention_whore_down_2.png"); 
+			StdDraw.picture(posX, posY, "images/enemy/duckface/duckface_down_2.png"); 
 			break;
 		case Direction.UP: 
-			StdDraw.picture(posX, posY, "images/enemy/attention_whore/attention_whore_up_2.png"); 
+			StdDraw.picture(posX, posY, "images/enemy/duckface/duckface_up_2.png"); 
 			break;
 		case Direction.LEFT: 
-			StdDraw.picture(posX, posY, "images/enemy/attention_whore/attention_whore_left_2.png"); 
+			StdDraw.picture(posX, posY, "images/enemy/duckface/duckface_left_2.png"); 
 			break;
 		case Direction.RIGHT: 
-			StdDraw.picture(posX, posY, "images/enemy/attention_whore/attention_whore_right_2.png"); 
+			StdDraw.picture(posX, posY, "images/enemy/duckface/duckface_right_2.png"); 
 			break;
 		}
 	}
@@ -382,23 +393,23 @@ public class Enemy_AttentionWhore extends Enemy
 		{
 			if(swpL < 500)
 			{
-				StdDraw.picture(posX, posY, "images/enemy/attention_whore/attention_whore_left_1.png");
+				StdDraw.picture(posX, posY, "images/enemy/duckface/duckface_left_1.png");
 				StdDraw.picture(posX, posY + 26, "images/enemy/inRange.png");
 				swpL++;
 			}
 			else if(swpL < 1000)
 			{
-				StdDraw.picture(posX, posY, "images/enemy/attention_whore/attention_whore_left_2.png");
+				StdDraw.picture(posX, posY, "images/enemy/duckface/duckface_left_2.png");
 				swpL++;				
 			}
 			else if(swpL < 1500)
 			{
-				StdDraw.picture(posX, posY, "images/enemy/attention_whore/attention_whore_left_3.png");
+				StdDraw.picture(posX, posY, "images/enemy/duckface/duckface_left_3.png");
 				swpL++;				
 			}				
 			else
 			{
-				StdDraw.picture(posX, posY, "images/enemy/attention_whore/attention_whore_left_2.png");
+				StdDraw.picture(posX, posY, "images/enemy/duckface/duckface_left_2.png");
 				swpL++;
 				
 				if(swpL == 1999)
@@ -409,22 +420,22 @@ public class Enemy_AttentionWhore extends Enemy
 		{
 			if(swpR < 500)
 			{
-				StdDraw.picture(posX, posY, "images/enemy/attention_whore/attention_whore_right_1.png");
+				StdDraw.picture(posX, posY, "images/enemy/duckface/duckface_right_1.png");
 				swpR++;
 			}
 			else if(swpR < 1000)
 			{
-				StdDraw.picture(posX, posY, "images/enemy/attention_whore/attention_whore_right_2.png");
+				StdDraw.picture(posX, posY, "images/enemy/duckface/duckface_right_2.png");
 				swpR++;				
 			}
 			else if(swpR < 1500)
 			{
-				StdDraw.picture(posX, posY, "images/enemy/attention_whore/attention_whore_right_3.png");
+				StdDraw.picture(posX, posY, "images/enemy/duckface/duckface_right_3.png");
 				swpR++;				
 			}				
 			else
 			{
-				StdDraw.picture(posX, posY, "images/enemy/attention_whore/attention_whore_right_2.png");
+				StdDraw.picture(posX, posY, "images/enemy/duckface/duckface_right_2.png");
 				swpR++;
 				
 				if(swpR == 1999)
@@ -435,22 +446,22 @@ public class Enemy_AttentionWhore extends Enemy
 		{
 			if(swpU < 500)
 			{
-				StdDraw.picture(posX, posY, "images/enemy/attention_whore/attention_whore_up_1.png");
+				StdDraw.picture(posX, posY, "images/enemy/duckface/duckface_up_1.png");
 				swpU++;
 			}
 			else if(swpU < 1000)
 			{
-				StdDraw.picture(posX, posY, "images/enemy/attention_whore/attention_whore_up_2.png");
+				StdDraw.picture(posX, posY, "images/enemy/duckface/duckface_up_2.png");
 				swpU++;				
 			}
 			else if(swpU < 1500)
 			{
-				StdDraw.picture(posX, posY, "images/enemy/attention_whore/attention_whore_up_3.png");
+				StdDraw.picture(posX, posY, "images/enemy/duckface/duckface_up_3.png");
 				swpU++;				
 			}				
 			else
 			{
-				StdDraw.picture(posX, posY, "images/enemy/attention_whore/attention_whore_up_2.png");
+				StdDraw.picture(posX, posY, "images/enemy/duckface/duckface_up_2.png");
 				swpU++;
 				
 				if(swpU == 1999)
@@ -461,22 +472,22 @@ public class Enemy_AttentionWhore extends Enemy
 		{
 			if(swpD < 500)
 			{
-				StdDraw.picture(posX, posY, "images/enemy/attention_whore/attention_whore_down_1.png");
+				StdDraw.picture(posX, posY, "images/enemy/duckface/duckface_down_1.png");
 				swpD++;
 			}
 			else if(swpD < 1000)
 			{
-				StdDraw.picture(posX, posY, "images/enemy/attention_whore/attention_whore_down_2.png");
+				StdDraw.picture(posX, posY, "images/enemy/duckface/duckface_down_2.png");
 				swpD++;				
 			}
 			else if(swpD < 1500)
 			{
-				StdDraw.picture(posX, posY, "images/enemy/attention_whore/attention_whore_down_3.png");
+				StdDraw.picture(posX, posY, "images/enemy/duckface/duckface_down_3.png");
 				swpD++;				
 			}				
 			else
 			{
-				StdDraw.picture(posX, posY, "images/enemy/attention_whore/attention_whore_down_2.png");
+				StdDraw.picture(posX, posY, "images/enemy/duckface/duckface_down_2.png");
 				swpD++;
 				
 				if(swpD == 1999)
@@ -494,7 +505,7 @@ public class Enemy_AttentionWhore extends Enemy
 	 */
 	public String toString()
 	{
-		return "attention_whore";
+		return "duckface";
 	}
 	
 	/**
@@ -502,7 +513,7 @@ public class Enemy_AttentionWhore extends Enemy
 	 */
 	public String getName()
 	{
-		return "Attention Whore";
+		return "Duckface";
 	}
 	
 	/**
@@ -543,6 +554,6 @@ public class Enemy_AttentionWhore extends Enemy
 	 */
 	public Magic getEnemyMagic()
 	{
-		return null;
+		return this.magics[0];
 	}
 }

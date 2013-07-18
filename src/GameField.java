@@ -215,7 +215,7 @@ public class GameField
 				{
 					if(player1.getLives() > 1)
 					{
-						player1.setHealth(100);
+						player1.setHealth(player1.getMaxHealth());
 						player1.setMana(0);
 						player1.decreaseLives(1);
 						
@@ -226,6 +226,8 @@ public class GameField
 						
 						items.clear();
 						npc.clear();
+						enemy.clear();
+						collectables.clear();
 						
 						initLvl(false, player1.getCheckPoint() != null);
 						break logicLoop;
@@ -396,7 +398,11 @@ public class GameField
 										mapScreen = false;
 										battleScreen = true;
 										
-										snd.playSound(0);
+										if(nextEnemy instanceof Boss_Micki)
+											snd.playSound(9);
+										else
+											snd.playSound(0);
+										
 										new BattleScreen(this, nextEnemy);
 									}
 								

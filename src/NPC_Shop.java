@@ -81,7 +81,7 @@ public class NPC_Shop extends NPC
 		switch(direction)
 		{
 		case Direction.DOWN: StdDraw.picture(posX, posY, "images/npc/shop/shop_down.png"); break;
-		case Direction.UP: StdDraw.picture(posX, posY, "images/npc/shop/shop_uo.png"); break;
+		case Direction.UP: StdDraw.picture(posX, posY, "images/npc/shop/shop_up.png"); break;
 		case Direction.LEFT: StdDraw.picture(posX, posY, "images/npc/shop/shop_left.png"); break;
 		case Direction.RIGHT: StdDraw.picture(posX, posY, "images/npc/shop/shop_right.png"); break;
 		}

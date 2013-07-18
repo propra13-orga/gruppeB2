@@ -405,6 +405,16 @@ public class Manager_Level
 				case "ENEMY_ATTENTIONWHORE_LEFT": enemys.add(new Enemy_AttentionWhore(posX, posY, Direction.LEFT, 50)); break;
 				case "ENEMY_ATTENTIONWHORE_UP": enemys.add(new Enemy_AttentionWhore(posX, posY, Direction.UP, 50)); break;
 				case "ENEMY_ATTENTIONWHORE_DOWN": enemys.add(new Enemy_AttentionWhore(posX, posY, Direction.DOWN, 50)); break;
+
+				case "ENEMY_DUCKFACE_RIGHT": enemys.add(new Enemy_Duckface(posX, posY, Direction.RIGHT, 50)); break;
+				case "ENEMY_DUCKFACE_LEFT": enemys.add(new Enemy_Duckface(posX, posY, Direction.LEFT, 50)); break;
+				case "ENEMY_DUCKFACE_UP": enemys.add(new Enemy_Duckface(posX, posY, Direction.UP, 50)); break;
+				case "ENEMY_DUCKFACE_DOWN": enemys.add(new Enemy_Duckface(posX, posY, Direction.DOWN, 50)); break;
+
+				case "BOSS_MICKI_RIGHT": enemys.add(new Boss_Micki(posX, posY, Direction.RIGHT, 50)); break;
+				case "BOSS_MICKI_LEFT": enemys.add(new Boss_Micki(posX, posY, Direction.LEFT, 50)); break;
+				case "BOSS_MICKI_UP": enemys.add(new Boss_Micki(posX, posY, Direction.UP, 50)); break;
+				case "BOSS_MICKI_DOWN": enemys.add(new Boss_Micki(posX, posY, Direction.DOWN, 50)); break;
 				}
 			}	
 		}

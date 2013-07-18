@@ -66,7 +66,7 @@ public final class Attacks
 		{
 		case 5: 
 			att = doener;
-			att.setStrength(55);
+			att.setStrength(50);
 			break;
 		
 		default: return null;
@@ -92,13 +92,17 @@ public final class Attacks
 	 */
 	public static Magic kidhipster_obey = new Magic("Obey", Types.swag, true, 15, 2);	
 	
-	//------------AttentionWhore----------------------------------------------------------------------------------	
+	//------------AttentionWhore / Duckface-------------------------------------------------------------------	
 	/**
-	 * Geschrei-Attacke der AttentionWhore
+	 * Geschrei-Attack
 	 */
 	public static Attack attention_geschrei = new Attack("Geschrei",Types.normal, "angr.", false, 2, "ist in Rage.");	
 	/**
-	 * Frauenlogik-Attacke der AttentionWhore
+	 * Frauenlogik-Attacke
 	 */
 	public static Attack attention_logic = new Attack("Frauenlogik", Types.whore, true, 3);
+	/**
+	 * Duckface-Magie des Duckface Gegners
+	 */
+	public static Magic duckface_duckface = new Magic("Duckface", Types.duckface, true, 25, 8);
 }

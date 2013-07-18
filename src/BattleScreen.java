@@ -27,7 +27,7 @@ public class BattleScreen
 	/**
 	 * <b>booleans</b> speichern, welches Layer zu zeichnen ist und welches nicht
 	 */
-	boolean introPlayed, showIntroDialog, selectionOn, angrOn, magicOn, inventarOn, escapeOn, itemUseOn, winOn, loseOn, lvlOn, newAttOn, newMagOn;
+	boolean introPlayed, showIntroDialog, selectionOn, angrOn, magicOn, inventarOn, escapeOn, itemUseOn, winOn, loseOn, lvlOn, newAttOn, newMagOn, noescapeOn;
 
 	/**
 	 * Speichert, ob der Spieler am Ende des Kampfes gewonnen oder verloren hat
@@ -181,7 +181,7 @@ public class BattleScreen
 		inventarOn = false;
 		itemUseOn = false;
 		
-		escapeOn = false;
+		escapeOn = noescapeOn = false;
 		
 		winOn = loseOn = lvlOn = newAttOn = newMagOn = false;
 		
@@ -297,9 +297,11 @@ public class BattleScreen
 			dialogs.showSelectionDialog(3);
 			dialogs.showItemDialog(selection);
 		}		
-		
+
 		else if(escapeOn)
 			dialogs.showEscapeDialog();	
+		else if(noescapeOn)
+			dialogs.showNoEscapeDialog();	
 		
 	}
 	
@@ -601,6 +603,7 @@ public class BattleScreen
 		parent.battleScreen = false;
 		parent.enemy.remove(enemy);
 		snd.stopSound(0);
+		snd.stopSound(9);
 		parent.player1.go();
 		parent.run();
 

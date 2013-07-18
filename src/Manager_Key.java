@@ -233,7 +233,14 @@ public class Manager_Key
 							battle.upper = battle.parent.player1.inventory.size();
 						
 						break;
-					case 4: battle.escapeOn = true; break;
+					case 4: 					
+						if(battle.enemy instanceof Boss_Micki)
+						{
+							battle.noescapeOn = true;
+						}
+						else
+							battle.escapeOn = true; 
+						break;
 					}
 					
 					battle.selection = 1;

@@ -1,4 +1,4 @@
-import java.awt.Rectangle;
+//import java.awt.Rectangle;
 
 /**
  *  Respaesentiert das Stairs-Objekt, welches den Eingang 
@@ -38,7 +38,7 @@ public class Block_Stairs extends Block_Block
 	 * @param rect - Das Rectangle-Objekt fuer welches die Kollision geprueft wird
 	 * @return ein <b>int</b>, ob eine Kollision stattfindet oder nicht
 	 */
-	public int checkCollision(Rectangle rect)
+	/*public int checkCollision(Rectangle rect)
 	{
 		if(this.intersects(rect) && rect instanceof Player)
 		{
@@ -46,7 +46,7 @@ public class Block_Stairs extends Block_Block
 		}
 		else
 			return Direction.NO_COLLISION;
-	}
+	}*/
 	
     /**
      * Methode zum Zeichnen des Objekts
@@ -62,7 +62,7 @@ public class Block_Stairs extends Block_Block
      */
 	public boolean isSolid()
 	{
-		return false;
+		return true;
 	}
 	
     /**

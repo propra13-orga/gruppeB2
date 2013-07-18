@@ -455,6 +455,7 @@ public class BattleDialog
 		if(anim == 0)
 		{
 			battle.snd.stopSound(0);
+			battle.snd.stopSound(9);
 			battle.snd.playSound(7);
 		}
 		
@@ -606,13 +607,13 @@ public class BattleDialog
 			StdDraw.textLeft(screenMidX - 220, screenMidY - 130, battle.player.getPlayerName() + " wird");
 			StdDraw.textLeft(screenMidX - 220, screenMidY - 160, "zu Tode geswagt.");
 		
-			if(anim < 300)
+			if(anim < 350)
 				anim++;
 		}
 	}
 	
 	/**
-	 * Zeichnet die Info, wenn der Gegner vor dem Kampf fluechtet
+	 * Zeichnet die Info, wenn man vor dem Kampf fluechtet
 	 */
 	public void showEscapeDialog()
 	{
@@ -620,5 +621,29 @@ public class BattleDialog
 		StdDraw.setPenColor(Color.white);
 
 		StdDraw.textLeft(screenMidX - 220, screenMidY - 130, "Du bist entkommen ...");
+	}
+	
+	/**
+	 * Zeichnet die Info, wenn der vor dem Kamp fluechtet, dies aber nicht moeglich ist
+	 */
+	public void showNoEscapeDialog()
+	{
+		StdDraw.setFont(font);
+		StdDraw.setPenColor(Color.white);
+
+		if(anim < 200)
+		{
+			StdDraw.textLeft(screenMidX - 220, screenMidY - 130, "Du kannst nicht aus");
+			StdDraw.textLeft(screenMidX - 220, screenMidY - 160, "Bosskaempfen fluechten!");
+			
+			anim++;
+		}
+		
+		if(anim == 200)
+		{
+			battle.noescapeOn = false;
+			battle.selectionOn = true;
+			anim = 0;
+		}
 	}
 }

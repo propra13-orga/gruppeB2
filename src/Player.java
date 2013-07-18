@@ -1090,7 +1090,7 @@ public class Player extends Rectangle
 	 */
 	public boolean learnsNewAttack()
 	{
-		if(this.level == 0 && this.level < 31)
+		if(this.level % 3 == 0 && this.level < 31)
 			return true;
 		else
 			return false;
@@ -1102,9 +1102,9 @@ public class Player extends Rectangle
 	 */
 	public boolean learnsNewMagic()
 	{
-		/*if(this.level % 5 == 0 && this.level < 51)
+		if(this.level % 5 == 0 && this.level < 51)
 			return true;
-		else*/
+		else
 			return false;
 	}
 	

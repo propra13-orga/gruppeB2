@@ -56,6 +56,10 @@ public class Manager_Sound
 			sounds.add(6, Applet.newAudioClip(file.toURL()));
 			file = new File("music/sounds/battle/victory.wav");
 			sounds.add(7, Applet.newAudioClip(file.toURL()));
+			file = new File("music/sounds/magic/duckface.wav");
+			sounds.add(8, Applet.newAudioClip(file.toURL()));
+			file = new File("music/sounds/battle/battle_02.wav");
+			sounds.add(9, Applet.newAudioClip(file.toURL()));
 			
 		} catch (MalformedURLException e) 
 		{
