@@ -19,7 +19,7 @@ public class MainMenu
 	{
 		snd = new Manager_Sound();
 		StdDraw.setCanvasSize(w, h);
-//		this.intro();
+		this.intro();
 		this.run();
 	}
 	
